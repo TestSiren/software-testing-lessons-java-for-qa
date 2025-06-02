@@ -8,6 +8,8 @@ package ru.stqa.geometry;
 (для вычисления площади можно использовать формулу Герона).
  */
 
+import java.util.Objects;
+
 public class Triangle {
     public double sideA;
     public double sideB;
@@ -55,5 +57,50 @@ public class Triangle {
         "\nПериметр:" + perimetr() +
         "\nПлощадь по формуле Герона:" + areaHeron()
         );
+    }
+
+    /*
+    Реализуйте тесты для сравнения треугольников (класс Triangle).
+    Доработайте функцию equals в этом классе, чтобы треугольники с одинаковыми сторонами считались равными
+    , независимо от порядка сторон (то есть, например, треугольник со сторонами 3, 4, 5
+    должен считаться равным треугольнику со сторонами 4, 5, 3).
+     */
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        Triangle triangle = (Triangle) o;
+        if (Double.compare(sideA, triangle.sideA) == 0 &&
+                Double.compare(sideB, triangle.sideB) == 0 &&
+                Double.compare(sideC, triangle.sideC) == 0) {
+            return true;
+        } else if (Double.compare(sideA, triangle.sideA) == 0 &&
+                Double.compare(sideB, triangle.sideC) == 0 &&
+                Double.compare(sideC, triangle.sideB) == 0) {
+            return true;
+        } else if (Double.compare(sideA, triangle.sideB) == 0 &&
+                Double.compare(sideB, triangle.sideA) == 0 &&
+                Double.compare(sideC, triangle.sideC) == 0) {
+            return true;
+        } else if (Double.compare(sideA, triangle.sideB) == 0 &&
+                Double.compare(sideB, triangle.sideC) == 0 &&
+                Double.compare(sideC, triangle.sideA) == 0) {
+            return true;
+        } else if (Double.compare(sideA, triangle.sideC) == 0 &&
+                Double.compare(sideB, triangle.sideA) == 0 &&
+                Double.compare(sideC, triangle.sideB) == 0) {
+            return true;
+        } else if (Double.compare(sideA, triangle.sideC) == 0 &&
+                Double.compare(sideB, triangle.sideB) == 0 &&
+                Double.compare(sideC, triangle.sideA) == 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(sideA, sideB, sideC);
     }
 }
