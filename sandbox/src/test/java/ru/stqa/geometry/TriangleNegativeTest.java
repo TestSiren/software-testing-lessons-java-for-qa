@@ -2,8 +2,6 @@ package ru.stqa.geometry;
 
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 public class TriangleNegativeTest {
     @Test
             public void sideAEqualsZero() {
@@ -35,22 +33,4 @@ public class TriangleNegativeTest {
     {
         Triangle triangle = new Triangle(1.0, 3.1, 5.0);
     }
-    @Test
-    public void sideAequalsSideB()
-    {
-        Triangle triangle = new Triangle(3.0, 3.0, 5.0);
-    }
-
-    @Test
-    public void sideAequalsSideC()
-    {
-        Triangle triangle = new Triangle(5.0, 3.0, 5.0);
-    }
-
-    @Test
-    public void sideBequalsSideC()
-    {
-        Triangle triangle = new Triangle(3.0, 2.0, 2.0);
-    }
-
 }

@@ -25,10 +25,6 @@ public class Triangle {
                 (sideA + sideC <= sideB) ||
                 (sideB + sideC <= sideA)) {
             throw new IllegalArgumentException("The sum of any two sides must be greater than the third");
-        } else if ((sideA == sideB) ||
-                (sideA == sideC) ||
-                (sideB == sideC)) {
-            throw new IllegalArgumentException("It's not Triangle!!!");
         }
 
         this.sideA = sideA;
