@@ -14,6 +14,23 @@ public class Triangle {
     public double sideC;
 
     public Triangle(double sideA, double sideB, double sideC){
+        /* Доработайте конструктор в классе Triangle, чтобы он выбрасывал исключение
+         при попытке создать треугольник с отрицательной длиной стороны, а также
+         в том случае, если нарушается неравенство треугольника
+         (сумма двух любых сторон должна быть не меньше третьей стороны).
+        */
+        if ((sideA <= 0) || (sideB <= 0) || (sideC <= 0)) {
+            throw new IllegalArgumentException("All sides must be positive and more than zero");
+        } else if ((sideA + sideB <= sideC) ||
+                (sideA + sideC <= sideB) ||
+                (sideB + sideC <= sideA)) {
+            throw new IllegalArgumentException("The sum of any two sides must be greater than the third");
+        } else if ((sideA == sideB) ||
+                (sideA == sideC) ||
+                (sideB == sideC)) {
+            throw new IllegalArgumentException("It's not Triangle!!!");
+        }
+
         this.sideA = sideA;
         this.sideB = sideB;
         this.sideC = sideC;
