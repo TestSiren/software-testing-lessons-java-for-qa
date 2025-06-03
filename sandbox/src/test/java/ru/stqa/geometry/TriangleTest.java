@@ -5,11 +5,11 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class TriangleTest {
-    Triangle triangle = new Triangle(5.0, 6.0, 7.0);
+    Triangle triangle1 = new Triangle(5.0, 6.0, 7.0);
 
     @Test
     public void calculateTriangle() {
-        triangle.printInfoTriangle();
+        triangle1.printInfoTriangle();
     }
 
     /*
@@ -36,5 +36,15 @@ public class TriangleTest {
         Triangle triangle = new Triangle(3.0, 4.0, 5.0);
         double expectedArea = 6.0;
         assertEquals(expectedArea, triangle.areaHeron());
+    }
+//    Triangle triangle1 = new Triangle(5.0, 6.0, 7.0);
+    @Test
+    public void correctEqualsTriangles() {
+        Triangle triangle2 = new Triangle(7.0, 5.0, 6.0);
+        Triangle triangle3 = new Triangle(6.0, 7.0, 5.0);
+        Triangle triangle4 = new Triangle(5.0, 6.0, 7.0);
+        System.out.println("equals: " + triangle1.equals(triangle2));
+        System.out.println("equals: " + triangle1.equals(triangle3));
+        System.out.println("equals: " + triangle1.equals(triangle4));
     }
 }

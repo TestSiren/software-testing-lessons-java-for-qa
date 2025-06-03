@@ -33,4 +33,14 @@ public class TriangleNegativeTest {
     {
         Triangle triangle = new Triangle(1.0, 3.1, 5.0);
     }
+    @Test
+    public void correctEqualsTriangles() {
+        Triangle triangle1 = new Triangle(5.0, 6.0, 7.0);
+        Triangle triangle2 = new Triangle(5.1, 5.0, 6.0);
+        Triangle triangle3 = new Triangle(5.0, 6.1, 7.0);
+        Triangle triangle4 = new Triangle(5.0, 6.0, 7.1);
+        System.out.println("equals: " + triangle1.equals(triangle2));
+        System.out.println("equals: " + triangle1.equals(triangle3));
+        System.out.println("equals: " + triangle1.equals(triangle4));
+    }
 }
