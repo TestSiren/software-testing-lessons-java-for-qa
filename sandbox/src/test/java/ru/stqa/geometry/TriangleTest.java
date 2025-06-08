@@ -39,8 +39,7 @@ public class TriangleTest {
     }
 //    Triangle triangle1 = new Triangle(5.0, 6.0, 7.0);
     @Test
-    public void correctEqualsTriangles() {
-        Triangle triangle2 = new Triangle(7.0, 5.0, 6.0);
+    public void correctEqualsTriangles() {        Triangle triangle2 = new Triangle(7.0, 5.0, 6.0);
         Triangle triangle3 = new Triangle(6.0, 7.0, 5.0);
         Triangle triangle4 = new Triangle(5.0, 6.0, 7.0);
         System.out.println("equals: " + triangle1.equals(triangle2));
