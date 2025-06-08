@@ -1,7 +1,9 @@
 package ru.stqa.addressbook.manager;
 
 import org.openqa.selenium.By;
-import ru.stqa.addressbook.models.AddressData;
+import org.openqa.selenium.WebElement;
+
+import java.util.List;
 
 public class AddressHelper extends HelperBase {
 
@@ -9,10 +11,10 @@ public class AddressHelper extends HelperBase {
         super(manager);
     }
 
-    public void CreationAddress(AddressData addressData) {
+    public void CreationAddress() {
         buttonClick(By.linkText("add new"));
 
-        type(By.name("firstname"), addressData.firstname());
+        type(By.name("firstname"), "firstname");
         type(By.name("middlename"), "Middle Name");
         type(By.name("lastname"), "Last Name");
         type(By.name("nickname"), "Nickname");
@@ -43,4 +45,18 @@ public class AddressHelper extends HelperBase {
     }
 
 
+    public int CheckCreationAddress() {
+        openAddressPage();
+        List<WebElement> rows = driver.findElements(By.cssSelector("tbody tr"));
+        if (!rows.isEmpty()) {
+            System.out.println("Найдены строки в таблице: " + rows.size());
+        } else {
+            System.out.println("Таблица пуста.");
+        }
+        return rows.size();
+    }
+
+    private void openAddressPage() {
+        buttonClick(By.linkText("home"));
+    }
 }
