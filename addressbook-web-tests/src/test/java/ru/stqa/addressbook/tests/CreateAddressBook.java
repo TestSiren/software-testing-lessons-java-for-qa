@@ -1,39 +1,18 @@
 package ru.stqa.addressbook.tests;
 
-import org.junit.Test;
-
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.JavascriptExecutor;
+import ru.stqa.addressbook.manager.GroupHelper;
 
 import java.util.*;
 
-public class CreateAddressBook {
-  private WebDriver driver;
-  private Map<String, Object> vars;
-  JavascriptExecutor js;
-  @BeforeEach
-  public void setUp() {
-    driver = new FirefoxDriver();
-    js = (JavascriptExecutor) driver;
-    vars = new HashMap<String, Object>();
-  }
-  @AfterEach
-  public void tearDown() {
-    driver.quit();
-  }
+public class CreateAddressBook extends TestBase{
+
   @Test
   public void createAddressBook() {
-    driver.get("http://localhost/addressbook/");
-    driver.manage().window().setSize(new Dimension(1516, 1019));
-    driver.findElement(By.name("user")).sendKeys("admin");
-    driver.findElement(By.xpath("//form[@id=\'LoginForm\']/input[3]")).click();
-    driver.findElement(By.linkText("add new")).click();
+    GroupHelper actions = app.groups();
+    actions.findElement(By.linkText("add new")).click();
     driver.findElement(By.name("firstname")).click();
     driver.findElement(By.name("firstname")).sendKeys("First Name");
     driver.findElement(By.name("middlename")).click();
