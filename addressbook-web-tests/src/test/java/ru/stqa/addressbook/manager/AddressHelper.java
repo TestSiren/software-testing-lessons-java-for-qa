@@ -62,5 +62,19 @@ public class AddressHelper extends HelperBase {
     }
 
     public void DeletedAddress() {
+        openAddressPage();
+            WebElement firstCheckbox = driver.findElement(By.cssSelector("input[name='selected[]']"));
+        firstCheckbox.click();
+        buttonClick(By.xpath("//input[@value='Delete']"));
+        driver.switchTo().alert().accept();
+        openAddressPage();
+    }
+
+    public void DeletedAllAddress() {
+        openAddressPage();
+        buttonClick(By.id("MassCB"));
+        buttonClick(By.xpath("//input[@value='Delete']"));
+        driver.switchTo().alert().accept();
+        openAddressPage();
     }
 }

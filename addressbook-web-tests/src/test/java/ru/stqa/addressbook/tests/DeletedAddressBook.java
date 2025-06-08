@@ -21,4 +21,17 @@ public class DeletedAddressBook extends TestBase {
     int afterAddress = actions.CheckCreationAddress();
     assertTrue(startedAddress > afterAddress);
   }
+
+  @Test
+  public void deletedAllAddressBook() {
+    AddressHelper actions = app.address();
+
+    int startedAddress = actions.CheckCreationAddress();
+
+    if (startedAddress==0){actions.CreationAddress(); startedAddress++;}
+    actions.DeletedAllAddress();
+
+    int afterAddress = actions.CheckCreationAddress();
+    assertTrue(startedAddress > afterAddress);
+  }
 }
