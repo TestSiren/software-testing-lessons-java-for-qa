@@ -1,12 +1,13 @@
 package ru.stqa.addressbook.manager;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
 public class ApplicationManager {
     public WebDriver driver;
+    private LoginHelper session;
+    public GroupHelper groups;
 
 
     public void init() {
@@ -14,23 +15,23 @@ public class ApplicationManager {
             driver = new FirefoxDriver();
             Runtime.getRuntime().addShutdownHook(new Thread(driver::quit));
             driver.manage().window().setSize(new Dimension(1721, 1033));
-            auth();
+            session.auth("admin", "secret");
         }
     }
 
-    public void openPage(String page) {
-        driver.findElement(By.linkText(page)).click();
+    public LoginHelper session(){
+        if(session==null) {
+            session = new LoginHelper(this);
+        }
+        return session;
     }
 
-    public void auth() {
-        driver.get("http://localhost/addressbook/");
-        driver.findElement(By.name("user")).click();
-        driver.findElement(By.name("user")).sendKeys("admin");
-        driver.findElement(By.name("pass")).sendKeys("secret");
-        driver.findElement(By.xpath("//input[@value='Login']")).click();
+    public GroupHelper groups(){
+        if(groups==null) {
+            groups = new GroupHelper(this);
+        }
+        return groups;
     }
 
-    public void logout() {
-        driver.findElement(By.linkText("Logout")).click();
-    }
+
 }

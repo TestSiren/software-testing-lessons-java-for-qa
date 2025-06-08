@@ -1,4 +1,4 @@
-package ru.stqa.addressbook.steps;
+package ru.stqa.addressbook.tests;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -17,7 +17,10 @@ public class TestBase {
 
     @AfterEach
     public void tearDown() {
-        app.logout();
+        app.session().logout();
+        /*Оставилалогаут в testBase, т.к. бывает что "сессия" не завершается в системах(не конкретно в этой).
+        И это может вызывать проблемы
+         */
     }
 
 }
