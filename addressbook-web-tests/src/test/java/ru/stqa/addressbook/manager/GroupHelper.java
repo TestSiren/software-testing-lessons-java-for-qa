@@ -25,7 +25,7 @@ public class GroupHelper {
     }
 
     private void openGroupPage() {
-        manager.driver.findElement(By.linkText("group page")).click();
+        manager.driver.findElement(By.linkText("groups")).click();
     }
 
     public void DeletedGroup() {
