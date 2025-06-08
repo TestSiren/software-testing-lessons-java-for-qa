@@ -48,15 +48,19 @@ public class AddressHelper extends HelperBase {
     public int CheckCreationAddress() {
         openAddressPage();
         List<WebElement> rows = driver.findElements(By.cssSelector("tbody tr"));
-        if (!rows.isEmpty()) {
+        int count = rows.size() > 1 ? rows.size() - 1 : 0; //первый tr это заголовки столбцов
+        if (count > 0) {
             System.out.println("Найдены строки в таблице: " + rows.size());
         } else {
             System.out.println("Таблица пуста.");
         }
-        return rows.size();
+        return count;
     }
 
     private void openAddressPage() {
         buttonClick(By.linkText("home"));
+    }
+
+    public void DeletedAddress() {
     }
 }
