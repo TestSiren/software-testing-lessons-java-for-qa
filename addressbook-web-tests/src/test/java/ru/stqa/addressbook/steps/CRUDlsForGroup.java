@@ -3,6 +3,8 @@ package ru.stqa.addressbook.steps;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import ru.stqa.addressbook.models.GroupData;
+
 import java.util.List;
 
 public class CRUDlsForGroup {
@@ -11,19 +13,22 @@ public class CRUDlsForGroup {
     public CRUDlsForGroup(WebDriver driver) {
         this.driver = driver;
     }
-    public void CreationGroup() {
+    public void CreationGroup(GroupData groupsData) {
         driver.findElement(By.name("new")).click();
         driver.findElement(By.name("group_name")).click();
-        driver.findElement(By.name("group_name")).sendKeys("group name");
-        driver.findElement(By.name("group_header")).sendKeys("group header");
+        driver.findElement(By.name("group_name")).sendKeys(groupsData.name());
+        driver.findElement(By.name("group_header")).click();
+        driver.findElement(By.name("group_header")).sendKeys(groupsData.header());
         driver.findElement(By.name("group_footer")).click();
-        driver.findElement(By.name("group_footer")).sendKeys("group footer");
+        driver.findElement(By.name("group_footer")).sendKeys(groupsData.footer());
         driver.findElement(By.name("submit")).click();
+    }
+
+    public void GoToLink() {
         driver.findElement(By.linkText("group page")).click();
         driver.findElement(By.cssSelector(".group")).click();
         driver.findElement(By.cssSelector("html")).click();
     }
-
 
     public void DeletedGroup() {
             driver.findElement(By.name("selected[]")).click();
