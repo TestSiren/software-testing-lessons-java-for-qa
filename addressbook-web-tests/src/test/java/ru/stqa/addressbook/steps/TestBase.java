@@ -34,4 +34,8 @@ public class TestBase {
     public void logout() {
         driver.findElement(By.linkText("Logout")).click();
     }
+    public void openPage(String page) {
+        driver.findElement(By.linkText(page)).click();
+    }
+
 }

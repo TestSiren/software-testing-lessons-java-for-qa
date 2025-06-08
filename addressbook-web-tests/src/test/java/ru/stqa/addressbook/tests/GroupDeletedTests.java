@@ -10,6 +10,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class GroupDeletedTests extends TestBase {
   @Test
   public void deleted() {
+    openPage("groups");
     CRUDlsForGroup deleted = new CRUDlsForGroup(driver);
     int size = deleted.CheckCreationGroups();
     if (size==0){ deleted.CreationGroup();size++;}
