@@ -10,13 +10,12 @@ public class LoginHelper {
     }
     public void auth(String login, String password) {
         manager.driver.get("http://localhost/addressbook/");
-        manager.driver.findElement(By.name("user")).click();
-        manager.driver.findElement(By.name("user")).sendKeys(login);
-        manager.driver.findElement(By.name("pass")).sendKeys(password);
-        manager.driver.findElement(By.xpath("//input[@value='Login']")).click();
+        manager.helper().type(By.name("user"), login);
+        manager.helper().type(By.name("pass"), password);
+        manager.helper().buttonClick(By.xpath("//input[@value='Login']"));
     }
 
     public void logout() {
-        manager.driver.findElement(By.linkText("Logout")).click();
+        manager.helper().buttonClick(By.linkText("Logout"));
     }
 }

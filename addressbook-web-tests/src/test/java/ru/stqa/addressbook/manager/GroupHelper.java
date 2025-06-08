@@ -9,30 +9,28 @@ import java.util.List;
 public class GroupHelper {
     private final ApplicationManager manager;
 
-    public GroupHelper (ApplicationManager manager){
+    public GroupHelper(ApplicationManager manager) {
         this.manager = manager;
     }
+
     public void CreationGroup(GroupData groupsData) {
         openGroupPage();
-        manager.driver.findElement(By.name("new")).click();
-        manager.driver.findElement(By.name("group_name")).click();
-        manager.driver.findElement(By.name("group_name")).sendKeys(groupsData.name());
-        manager.driver.findElement(By.name("group_header")).click();
-        manager.driver.findElement(By.name("group_header")).sendKeys(groupsData.header());
-        manager.driver.findElement(By.name("group_footer")).click();
-        manager.driver.findElement(By.name("group_footer")).sendKeys(groupsData.footer());
-        manager.driver.findElement(By.name("submit")).click();
+        manager.helper().buttonClick(By.name("new"));
+        manager.helper().type(By.name("group_name"), groupsData.name());
+        manager.helper().type(By.name("group_header"), groupsData.header());
+        manager.helper().type(By.name("group_footer"), groupsData.footer());
+        manager.helper().buttonClick(By.name("submit"));
     }
 
     private void openGroupPage() {
-        manager.driver.findElement(By.linkText("groups")).click();
+        manager.helper().buttonClick(By.linkText("groups"));
     }
 
     public void DeletedGroup() {
         openGroupPage();
-        manager.driver.findElement(By.name("selected[]")).click();
-        manager.driver.findElement(By.xpath("(//input[@name=\'delete\'])[2]")).click();
-        manager.driver.findElement(By.linkText("group page")).click();
+        manager.helper().buttonClick(By.name("selected[]"));
+        manager.helper().buttonClick(By.xpath("(//input[@name='delete'])[2]"));
+        manager.helper().buttonClick(By.linkText("groups"));
     }
 
     public int CheckCreationGroups() {

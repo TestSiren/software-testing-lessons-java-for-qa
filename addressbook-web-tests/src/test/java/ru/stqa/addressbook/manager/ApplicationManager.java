@@ -9,6 +9,7 @@ public class ApplicationManager {
     protected WebDriver driver;
     private LoginHelper session;
     private GroupHelper groups;
+    private HelperBase helper;
 
 
     public void init(String browser) {
@@ -38,6 +39,12 @@ public class ApplicationManager {
             groups = new GroupHelper(this);
         }
         return groups;
+    }
+    public HelperBase helper(){
+        if(helper==null) {
+            helper = new HelperBase(this);
+        }
+        return helper;
     }
 
 
