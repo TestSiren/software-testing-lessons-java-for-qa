@@ -9,7 +9,7 @@ import java.util.List;
 public class GroupHelper extends HelperBase {
 
     public GroupHelper(ApplicationManager manager) {
-        super(manager); // ← Вызов конструктора родителя HelperBase
+        super(manager);
     }
 
     public void CreationGroup(GroupData groupsData) {

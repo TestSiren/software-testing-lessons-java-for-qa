@@ -3,9 +3,6 @@ package ru.stqa.addressbook.manager;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import ru.stqa.addressbook.models.GroupData;
-
-import java.util.List;
 
 public class HelperBase {
     protected final ApplicationManager manager;
