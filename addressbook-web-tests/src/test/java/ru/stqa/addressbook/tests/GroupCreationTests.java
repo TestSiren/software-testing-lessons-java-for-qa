@@ -3,24 +3,26 @@ package ru.stqa.addressbook.tests;
 import org.junit.jupiter.api.Test;
 import ru.stqa.addressbook.models.GroupData;
 import ru.stqa.addressbook.steps.CRUDlsForGroup;
-import ru.stqa.addressbook.tests.TestBase;
+import ru.stqa.addressbook.steps.TestBase;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class GroupCreationTests extends TestBase{
+public class GroupCreationTests extends TestBase {
 
   @Test
   public void creationGroup(){
-    openPage("groups");
-    CRUDlsForGroup creation = new CRUDlsForGroup(driver);
-    int startedGroups = creation.CheckCreationGroups();
+    app.openPage("groups");
+    CRUDlsForGroup actions = new CRUDlsForGroup(app.driver);
+
+    int startedGroups = actions.CheckCreationGroups();
 
     var emptyGroup = new GroupData();
     var groupWithName = emptyGroup.withName("some Name");
-    creation.CreationGroup(groupWithName);
+    actions.CreationGroup(groupWithName);
 
-    creation.GoToLink();
-    int afterGroups = creation.CheckCreationGroups();
+    actions.GoToLink();
+    int afterGroups = actions.CheckCreationGroups();
+
     assertTrue(startedGroups < afterGroups);
 
   }

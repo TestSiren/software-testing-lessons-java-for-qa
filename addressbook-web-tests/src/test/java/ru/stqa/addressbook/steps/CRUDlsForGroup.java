@@ -26,8 +26,6 @@ public class CRUDlsForGroup {
 
     public void GoToLink() {
         driver.findElement(By.linkText("group page")).click();
-        driver.findElement(By.cssSelector(".group")).click();
-        driver.findElement(By.cssSelector("html")).click();
     }
 
     public void DeletedGroup() {
