@@ -13,6 +13,7 @@ public class GroupHelper {
         this.manager = manager;
     }
     public void CreationGroup(GroupData groupsData) {
+        openGroupPage();
         manager.driver.findElement(By.name("new")).click();
         manager.driver.findElement(By.name("group_name")).click();
         manager.driver.findElement(By.name("group_name")).sendKeys(groupsData.name());
@@ -23,17 +24,19 @@ public class GroupHelper {
         manager.driver.findElement(By.name("submit")).click();
     }
 
-    public void openGroupPage() {
+    private void openGroupPage() {
         manager.driver.findElement(By.linkText("group page")).click();
     }
 
     public void DeletedGroup() {
+        openGroupPage();
         manager.driver.findElement(By.name("selected[]")).click();
         manager.driver.findElement(By.xpath("(//input[@name=\'delete\'])[2]")).click();
         manager.driver.findElement(By.linkText("group page")).click();
     }
 
     public int CheckCreationGroups() {
+        openGroupPage();
         List<WebElement> groups = manager.driver.findElements(By.cssSelector("span.group"));
         if (!groups.isEmpty()) {
             System.out.println("Группы найдены: " + groups.size());

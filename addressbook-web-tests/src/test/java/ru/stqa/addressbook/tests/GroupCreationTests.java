@@ -13,15 +13,11 @@ public class GroupCreationTests extends TestBase {
   @Test
   public void creationGroup(){
     GroupHelper actions = app.groups();
-    actions.openGroupPage();
 
     int startedGroups = actions.CheckCreationGroups();
 
-    var emptyGroup = new GroupData();
-    var groupWithName = emptyGroup.withName("some Name");
-    actions.CreationGroup(groupWithName);
+    actions.CreationGroup(new GroupData().withName("some name"));
 
-    actions.openGroupPage();
     int afterGroups = actions.CheckCreationGroups();
 
     assertTrue(startedGroups < afterGroups);

@@ -14,8 +14,6 @@ public class GroupDeletedTests extends TestBase{
   @Test
   public void deleted() {
     GroupHelper actions = app.groups();
-    actions.openGroupPage();
-
     int size = actions.CheckCreationGroups();
 
     if (size==0){ actions.CreationGroup(new GroupData().withName("some name"));size++;}

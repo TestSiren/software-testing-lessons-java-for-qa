@@ -5,9 +5,9 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
 public class ApplicationManager {
-    public WebDriver driver;
+    protected WebDriver driver;
     private LoginHelper session;
-    public GroupHelper groups;
+    private GroupHelper groups;
 
 
     public void init() {
