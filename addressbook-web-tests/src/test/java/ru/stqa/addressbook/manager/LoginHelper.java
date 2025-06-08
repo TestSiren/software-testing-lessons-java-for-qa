@@ -2,20 +2,21 @@ package ru.stqa.addressbook.manager;
 
 import org.openqa.selenium.By;
 
-public class LoginHelper {
-    private final ApplicationManager manager;
+public class LoginHelper extends HelperBase {
 
-    public LoginHelper (ApplicationManager manager){
-        this.manager = manager;
+    public LoginHelper(ApplicationManager manager) {
+        super(manager);
     }
+
     public void auth(String login, String password) {
-        manager.driver.get("http://localhost/addressbook/");
-        manager.helper().type(By.name("user"), login);
-        manager.helper().type(By.name("pass"), password);
-        manager.helper().buttonClick(By.xpath("//input[@value='Login']"));
+        driver.get("http://localhost/addressbook/");
+        type(By.name("user"), login);
+        type(By.name("pass"), password);
+        buttonClick(By.xpath("//input[@value='Login']"));
     }
 
     public void logout() {
-        manager.helper().buttonClick(By.linkText("Logout"));
+        buttonClick(By.linkText("Logout"));
     }
 }
+
