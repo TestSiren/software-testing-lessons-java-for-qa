@@ -25,7 +25,7 @@ public class GroupHelper extends HelperBase {
         buttonClick(By.linkText("groups"));
     }
 
-    public void deletedGroup() {
+    public void deleteGroup() {
         openGroupPage();
         buttonClick(By.name("selected[]"));
         buttonClick(By.xpath("(//input[@name='delete'])[2]"));
