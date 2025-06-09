@@ -9,13 +9,13 @@ public class GroupCreationTests extends TestBase {
 
   @Test
   public void creationGroup(){
-    GroupHelper actions = app.groups();
+    GroupHelper groups = app.groups();
 
-    int startedGroups = actions.CheckCreationGroups();
+    int startedGroups = groups.CheckCreationGroups();
 
-    actions.CreationGroup(new GroupData().withName("some name"));
+    groups.CreationGroup(new GroupData().withName("some name"));
 
-    int afterGroups = actions.CheckCreationGroups();
+    int afterGroups = groups.CheckCreationGroups();
 
     assertTrue(startedGroups < afterGroups);
 
