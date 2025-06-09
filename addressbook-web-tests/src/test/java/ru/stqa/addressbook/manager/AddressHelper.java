@@ -45,7 +45,7 @@ public class AddressHelper extends HelperBase {
         buttonClick(By.linkText("home page"));
     }
 
-    public int getCreationAddress() {
+    public int getAddressCount() {
         openAddressPage();
         List<WebElement> rows = driver.findElements(By.cssSelector("tbody tr"));
         int count = rows.size() > 1 ? rows.size() - 1 : 0; // исключаем заголовок

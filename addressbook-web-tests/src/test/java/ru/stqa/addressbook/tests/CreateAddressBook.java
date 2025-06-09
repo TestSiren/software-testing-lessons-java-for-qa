@@ -11,11 +11,11 @@ public class CreateAddressBook extends TestBase {
   public void createAddressBook() {
     AddressHelper address = app.address();
 
-    int initialSize = address.getCreationAddress();
+    int initialSize = address.getAddressCount();
 
     address.createAddress();
 
-    int finalSize = address.getCreationAddress();
+    int finalSize = address.getAddressCount();
 
     assertTrue(initialSize < finalSize);
   }
