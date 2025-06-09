@@ -13,6 +13,7 @@ public class TestBase {
             app = new ApplicationManager();
             app.init(System.getProperty("browser", "firefox"));
         }
+        app.session().auth("admin", "secret");
     }
 
     @AfterEach

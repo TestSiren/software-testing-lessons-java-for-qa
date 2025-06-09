@@ -23,7 +23,6 @@ public class ApplicationManager {
             }
             Runtime.getRuntime().addShutdownHook(new Thread(driver::quit));
             driver.manage().window().setSize(new Dimension(1721, 1033));
-            session().auth("admin", "secret");
         }
     }
 
