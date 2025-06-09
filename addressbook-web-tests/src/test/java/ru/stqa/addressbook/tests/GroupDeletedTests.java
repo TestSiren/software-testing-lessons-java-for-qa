@@ -12,7 +12,7 @@ public class GroupDeletedTests extends TestBase{
     int initialSize = groups.getGroupsCount();
 
     if (initialSize==0){ groups.createGroup(new GroupData().withName("some name"));initialSize=groups.getGroupsCount();;}
-    groups.deletedGroup();
+    groups.deleteGroup();
 
     int finalSize = groups.getGroupsCount();
     assertTrue(initialSize > finalSize);
