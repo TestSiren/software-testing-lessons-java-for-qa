@@ -66,13 +66,13 @@ public class AddressHelper extends HelperBase {
             WebElement firstCheckbox = driver.findElement(By.cssSelector("input[name='selected[]']"));
         firstCheckbox.click();
         buttonClick(By.xpath("//input[@value='Delete']"));
-        //driver.switchTo().alert().accept();
     }
 
-    public void DeletedAllAddress() {
+    public void DeletedAllAddress(int count) {
         openAddressPage();
         buttonClick(By.id("MassCB"));
         buttonClick(By.xpath("//input[@value='Delete']"));
-        //driver.switchTo().alert().accept();
+        if (count == 0) {driver.switchTo().alert().accept();}
     }
+
 }
