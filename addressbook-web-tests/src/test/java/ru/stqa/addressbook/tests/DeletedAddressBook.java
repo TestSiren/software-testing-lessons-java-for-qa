@@ -12,46 +12,46 @@ public class DeletedAddressBook extends TestBase {
   public void deleteSingleAddressTest() {
     AddressHelper address = app.address();
 
-    int startedAddress = address.CheckCreationAddress();
-    if (startedAddress == 0) {
-      address.CreationAddress();
-      startedAddress++;
+    int initialSize = address.getCreationAddress();
+    if (initialSize == 0) {
+      address.createAddress();
+      initialSize++;
     }
 
-    address.DeletedAddress();
+    address.deleteAddress();
     assertFalse(address.acceptAlertIfPresent(), "Allert не показывается, если была хотя бы одна запись");
 
-    int afterAddress = address.CheckCreationAddress();
-    assertTrue(startedAddress > afterAddress, "Контакт должен быть удалён");
+    int finalSize = address.getCreationAddress();
+    assertTrue(initialSize > finalSize, "Контакт должен быть удалён");
   }
 
   @Test
   public void deleteAllAddressesTest() {
     AddressHelper address = app.address();
 
-    int startedAddress = address.CheckCreationAddress();
-    if (startedAddress == 0) {
-      address.CreationAddress();}
+    int initialSize = address.getCreationAddress();
+    if (initialSize == 0) {
+      address.createAddress();}
 
-    address.DeletedAllAddress();
+    address.deleteAllAddress();
     assertFalse(address.acceptAlertIfPresent(), "Allert не показывается, если была хотя бы одна запись");
 
-    int afterAddress = address.CheckCreationAddress();
-    assertTrue(afterAddress == 0, "Все контакты должны быть удалены");
+    int finalSize = address.getCreationAddress();
+    assertTrue(finalSize == 0, "Все контакты должны быть удалены");
   }
 
   @Test
   public void deleteAllAddressesWithoutCreationTest() {
     AddressHelper address = app.address();
 
-    int startedAddress = address.CheckCreationAddress();
-    if (startedAddress != 0) {
-      address.DeletedAllAddress();}
+    int initialSize = address.getCreationAddress();
+    if (initialSize != 0) {
+      address.deleteAllAddress();}
 
-    address.DeletedAllAddress();
+    address.deleteAllAddress();
     assertTrue(address.acceptAlertIfPresent(), "Должен появиться alert при попытке удалить без выбора");
 
-    int afterAddress = address.CheckCreationAddress();
-    assertTrue(startedAddress >= afterAddress, "Количество контактов не должно увеличиться");
+    int finalSize = address.getCreationAddress();
+    assertTrue(initialSize >= finalSize, "Количество контактов не должно увеличиться");
   }
 }

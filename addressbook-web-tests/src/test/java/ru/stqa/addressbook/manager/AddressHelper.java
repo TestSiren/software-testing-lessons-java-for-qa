@@ -12,7 +12,7 @@ public class AddressHelper extends HelperBase {
         super(manager);
     }
 
-    public void CreationAddress() {
+    public void createAddress() {
         buttonClick(By.linkText("add new"));
 
         type(By.name("firstname"), "firstname");
@@ -45,7 +45,7 @@ public class AddressHelper extends HelperBase {
         buttonClick(By.linkText("home page"));
     }
 
-    public int CheckCreationAddress() {
+    public int getCreationAddress() {
         openAddressPage();
         List<WebElement> rows = driver.findElements(By.cssSelector("tbody tr"));
         int count = rows.size() > 1 ? rows.size() - 1 : 0; // исключаем заголовок
@@ -56,14 +56,14 @@ public class AddressHelper extends HelperBase {
         buttonClick(By.linkText("home"));
     }
 
-    public void DeletedAddress() {
+    public void deleteAddress() {
         openAddressPage();
         WebElement firstCheckbox = driver.findElement(By.cssSelector("input[name='selected[]']"));
         firstCheckbox.click();
         buttonClick(By.xpath("//input[@value='Delete']"));
     }
 
-    public void DeletedAllAddress() {
+    public void deleteAllAddress() {
         openAddressPage();
         buttonClick(By.id("MassCB"));
         buttonClick(By.xpath("//input[@value='Delete']"));

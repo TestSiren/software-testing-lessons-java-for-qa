@@ -1,23 +1,22 @@
 package ru.stqa.addressbook.tests;
 
-import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 import ru.stqa.addressbook.manager.AddressHelper;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class CreateAddressBook extends TestBase {
 
-  //@Test
-  @RepeatedTest(5)  // сгенерировать данные в колве (n)
+  @Test
+  //@RepeatedTest(5)  // сгенерировать данные в колве (n) для тестирования удаления
   public void createAddressBook() {
     AddressHelper address = app.address();
 
-    int startedAddress = address.CheckCreationAddress();
+    int initialSize = address.getCreationAddress();
 
-    address.CreationAddress();
+    address.createAddress();
 
-    int afterAddress = address.CheckCreationAddress();
+    int finalSize = address.getCreationAddress();
 
-    assertTrue(startedAddress < afterAddress);
+    assertTrue(initialSize < finalSize);
   }
 }
