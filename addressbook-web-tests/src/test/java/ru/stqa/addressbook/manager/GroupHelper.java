@@ -12,7 +12,7 @@ public class GroupHelper extends HelperBase {
         super(manager);
     }
 
-    public void CreationGroup(GroupData groupsData) {
+    public void createGroup(GroupData groupsData) {
         openGroupPage();
         buttonClick(By.name("new"));
         type(By.name("group_name"), groupsData.name());
@@ -25,14 +25,14 @@ public class GroupHelper extends HelperBase {
         buttonClick(By.linkText("groups"));
     }
 
-    public void DeletedGroup() {
+    public void deletedGroup() {
         openGroupPage();
         buttonClick(By.name("selected[]"));
         buttonClick(By.xpath("(//input[@name='delete'])[2]"));
         buttonClick(By.linkText("groups"));
     }
 
-    public int CheckCreationGroups() {
+    public int getCreationGroups() {
         openGroupPage();
         List<WebElement> groups = driver.findElements(By.cssSelector("span.group"));
         if (!groups.isEmpty()) {
