@@ -73,6 +73,6 @@ public class AddressHelper extends HelperBase {
         openAddressPage();
         buttonClick(By.id("MassCB"));
         buttonClick(By.xpath("//input[@value='Delete']"));
-       // driver.switchTo().alert().accept();
+        //driver.switchTo().alert().accept();
     }
 }
