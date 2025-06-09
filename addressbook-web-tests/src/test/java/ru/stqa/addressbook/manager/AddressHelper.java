@@ -1,8 +1,9 @@
 package ru.stqa.addressbook.manager;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.WebElement;
-
+import org.openqa.selenium.Alert;
 import java.util.List;
 
 public class AddressHelper extends HelperBase {
@@ -44,16 +45,10 @@ public class AddressHelper extends HelperBase {
         buttonClick(By.linkText("home page"));
     }
 
-
     public int CheckCreationAddress() {
         openAddressPage();
         List<WebElement> rows = driver.findElements(By.cssSelector("tbody tr"));
-        int count = rows.size() > 1 ? rows.size() - 1 : 0; //первый tr это заголовки столбцов
-        if (count > 0) {
-            System.out.println("Найдены строки в таблице: " + rows.size());
-        } else {
-            System.out.println("Таблица пуста.");
-        }
+        int count = rows.size() > 1 ? rows.size() - 1 : 0; // исключаем заголовок
         return count;
     }
 
@@ -63,16 +58,24 @@ public class AddressHelper extends HelperBase {
 
     public void DeletedAddress() {
         openAddressPage();
-            WebElement firstCheckbox = driver.findElement(By.cssSelector("input[name='selected[]']"));
+        WebElement firstCheckbox = driver.findElement(By.cssSelector("input[name='selected[]']"));
         firstCheckbox.click();
         buttonClick(By.xpath("//input[@value='Delete']"));
     }
 
-    public void DeletedAllAddress(int count) {
+    public void DeletedAllAddress() {
         openAddressPage();
         buttonClick(By.id("MassCB"));
         buttonClick(By.xpath("//input[@value='Delete']"));
-        if (count == 0) {driver.switchTo().alert().accept();}
     }
 
+    public boolean acceptAlertIfPresent() {
+        try {
+            Alert alert = driver.switchTo().alert();
+            alert.accept();
+            return true;
+        } catch (NoAlertPresentException e) {
+            return false;
+        }
+    }
 }
