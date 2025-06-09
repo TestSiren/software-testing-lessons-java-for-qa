@@ -11,13 +11,13 @@ public class GroupCreationTests extends TestBase {
   public void creationGroup(){
     GroupHelper groups = app.groups();
 
-    int startedGroups = groups.CheckCreationGroups();
+    int initialSize = groups.getCreationGroups();
 
-    groups.CreationGroup(new GroupData().withName("some name"));
+    groups.createGroup(new GroupData().withName("some name"));
 
-    int afterGroups = groups.CheckCreationGroups();
+    int finalSize = groups.getCreationGroups();
 
-    assertTrue(startedGroups < afterGroups);
+    assertTrue(initialSize < finalSize);
 
   }
 }
