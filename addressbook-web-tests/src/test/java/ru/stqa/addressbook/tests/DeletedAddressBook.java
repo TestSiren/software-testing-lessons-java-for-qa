@@ -10,48 +10,48 @@ public class DeletedAddressBook extends TestBase {
 
   @Test
   public void deleteSingleAddressTest() {
-    AddressHelper actions = app.address();
+    AddressHelper address = app.address();
 
-    int startedAddress = actions.CheckCreationAddress();
+    int startedAddress = address.CheckCreationAddress();
     if (startedAddress == 0) {
-      actions.CreationAddress();
+      address.CreationAddress();
       startedAddress++;
     }
 
-    actions.DeletedAddress();
-    assertFalse(actions.acceptAlertIfPresent(), "Allert не показывается, если была хотя бы одна запись");
+    address.DeletedAddress();
+    assertFalse(address.acceptAlertIfPresent(), "Allert не показывается, если была хотя бы одна запись");
 
-    int afterAddress = actions.CheckCreationAddress();
+    int afterAddress = address.CheckCreationAddress();
     assertTrue(startedAddress > afterAddress, "Контакт должен быть удалён");
   }
 
   @Test
   public void deleteAllAddressesTest() {
-    AddressHelper actions = app.address();
+    AddressHelper address = app.address();
 
-    int startedAddress = actions.CheckCreationAddress();
+    int startedAddress = address.CheckCreationAddress();
     if (startedAddress == 0) {
-      actions.CreationAddress();}
+      address.CreationAddress();}
 
-    actions.DeletedAllAddress();
-    assertFalse(actions.acceptAlertIfPresent(), "Allert не показывается, если была хотя бы одна запись");
+    address.DeletedAllAddress();
+    assertFalse(address.acceptAlertIfPresent(), "Allert не показывается, если была хотя бы одна запись");
 
-    int afterAddress = actions.CheckCreationAddress();
+    int afterAddress = address.CheckCreationAddress();
     assertTrue(afterAddress == 0, "Все контакты должны быть удалены");
   }
 
   @Test
   public void deleteAllAddressesWithoutCreationTest() {
-    AddressHelper actions = app.address();
+    AddressHelper address = app.address();
 
-    int startedAddress = actions.CheckCreationAddress();
+    int startedAddress = address.CheckCreationAddress();
     if (startedAddress != 0) {
-      actions.DeletedAllAddress();}
+      address.DeletedAllAddress();}
 
-    actions.DeletedAllAddress();
-    assertTrue(actions.acceptAlertIfPresent(), "Должен появиться alert при попытке удалить без выбора");
+    address.DeletedAllAddress();
+    assertTrue(address.acceptAlertIfPresent(), "Должен появиться alert при попытке удалить без выбора");
 
-    int afterAddress = actions.CheckCreationAddress();
+    int afterAddress = address.CheckCreationAddress();
     assertTrue(startedAddress >= afterAddress, "Количество контактов не должно увеличиться");
   }
 }

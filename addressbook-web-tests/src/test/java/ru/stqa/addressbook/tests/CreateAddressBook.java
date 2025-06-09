@@ -10,13 +10,13 @@ public class CreateAddressBook extends TestBase {
   //@Test
   @RepeatedTest(5)  // сгенерировать данные в колве (n)
   public void createAddressBook() {
-    AddressHelper actions = app.address();
+    AddressHelper address = app.address();
 
-    int startedAddress = actions.CheckCreationAddress();
+    int startedAddress = address.CheckCreationAddress();
 
-    actions.CreationAddress();
+    address.CreationAddress();
 
-    int afterAddress = actions.CheckCreationAddress();
+    int afterAddress = address.CheckCreationAddress();
 
     assertTrue(startedAddress < afterAddress);
   }

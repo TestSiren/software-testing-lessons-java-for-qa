@@ -8,13 +8,13 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class GroupDeletedTests extends TestBase{
   @Test
   public void deleted() {
-    GroupHelper actions = app.groups();
-    int size = actions.CheckCreationGroups();
+    GroupHelper groups = app.groups();
+    int size = groups.CheckCreationGroups();
 
-    if (size==0){ actions.CreationGroup(new GroupData().withName("some name"));size++;}
-    actions.DeletedGroup();
+    if (size==0){ groups.CreationGroup(new GroupData().withName("some name"));size++;}
+    groups.DeletedGroup();
 
-    int AfterSize = actions.CheckCreationGroups();
+    int AfterSize = groups.CheckCreationGroups();
     assertTrue(size > AfterSize);
 
   }
