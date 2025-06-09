@@ -45,6 +45,8 @@ public class DeletedAddressBook extends TestBase {
     AddressHelper actions = app.address();
 
     int startedAddress = actions.CheckCreationAddress();
+    if (startedAddress != 0) {
+      actions.DeletedAllAddress();}
 
     actions.DeletedAllAddress();
     assertTrue(actions.acceptAlertIfPresent(), "Должен появиться alert при попытке удалить без выбора");

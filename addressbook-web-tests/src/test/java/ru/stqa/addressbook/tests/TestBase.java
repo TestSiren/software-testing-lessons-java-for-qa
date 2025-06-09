@@ -13,15 +13,11 @@ public class TestBase {
             app = new ApplicationManager();
             app.init(System.getProperty("browser", "firefox"));
         }
-        app.session().auth("admin", "secret"); //удалила, т.к. из-за того что я оставила разлогин
+        app.session().auth("admin", "secret");
     }
 
     @AfterEach
     public void tearDown() {
         app.session().logout();
-        /*Оставилалогаут в testBase, т.к. бывает что "сессия" не завершается в системах(не конкретно в этой).
-        И это может вызывать проблемы
-         */
     }
-
 }
