@@ -26,6 +26,13 @@ public class HelperBase {
             element.sendKeys(text);
         }
     }
+
+    protected void select(By locator, String value) {
+        WebElement element = driver.findElement(locator);
+        element.click();
+        element.findElement(By.xpath(String.format(".//option[. = '%s']", value))).click();
+    }
+
     protected boolean isElementPresent(By locator) {
         return !driver.findElements(locator).isEmpty();
     }

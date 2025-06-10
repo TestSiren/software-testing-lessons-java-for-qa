@@ -8,7 +8,7 @@ public class TestBase {
    public static ApplicationManager app;
 
     @BeforeEach
-    public void setUp() {
+    public void setUp() throws InterruptedException {
         if (app==null) {
             app = new ApplicationManager();
             app.init(System.getProperty("browser", "firefox"));
@@ -19,9 +19,5 @@ public class TestBase {
     @AfterEach
     public void tearDown() {
         app.session().logout();
-        /*Оставилалогаут в testBase, т.к. бывает что "сессия" не завершается в системах(не конкретно в этой).
-        И это может вызывать проблемы
-         */
     }
-
 }

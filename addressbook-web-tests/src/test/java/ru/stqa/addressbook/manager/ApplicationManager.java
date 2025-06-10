@@ -10,6 +10,7 @@ public class ApplicationManager {
     private LoginHelper session;
     private GroupHelper groups;
     private HelperBase helper;
+    private AddressHelper address;
 
 
     public void init(String browser) {
@@ -30,7 +31,15 @@ public class ApplicationManager {
         if(session==null) {
             session = new LoginHelper(this);
         }
+
         return session;
+    }
+
+    public AddressHelper address(){
+        if(address==null) {
+            address = new AddressHelper(this);
+        }
+        return address;
     }
 
     public GroupHelper groups(){
@@ -39,6 +48,7 @@ public class ApplicationManager {
         }
         return groups;
     }
+
     public HelperBase helper(){
         if(helper==null) {
             helper = new HelperBase(this);

@@ -9,12 +9,14 @@ public class GroupDeletedTests extends TestBase{
   @Test
   public void groupsDeletedTests() {
     GroupHelper groups = app.groups();
-    int initialSize = groups.getCreationGroups();
+    int initialSize = groups.getGroupsCount();
 
-    if (initialSize==0){ groups.createGroup(new GroupData().withName("some name"));initialSize=groups.getCreationGroups();;}
+
+    if (initialSize==0){ groups.createGroup(new GroupData().withName("some name"));initialSize=groups.getCreationGroups();}
+
     groups.deleteGroup();
 
-    int finalSize = groups.getCreationGroups();
+    int finalSize = groups.getGroupsCount();
     assertTrue(initialSize > finalSize);
 
   }

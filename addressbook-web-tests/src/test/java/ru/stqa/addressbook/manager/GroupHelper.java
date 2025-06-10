@@ -32,7 +32,7 @@ public class GroupHelper extends HelperBase {
         buttonClick(By.linkText("groups"));
     }
 
-    public int getCreationGroups() {
+    public int getGroupsCount() {
         openGroupPage();
         List<WebElement> groups = driver.findElements(By.cssSelector("span.group"));
         if (!groups.isEmpty()) {
