@@ -11,7 +11,9 @@ public class GroupDeletedTests extends TestBase{
     GroupHelper groups = app.groups();
     int initialSize = groups.getGroupsCount();
 
-    if (initialSize==0){ groups.createGroup(new GroupData().withName("some name"));initialSize=groups.getGroupsCount();;}
+
+    if (initialSize==0){ groups.createGroup(new GroupData().withName("some name"));initialSize=groups.getCreationGroups();}
+
     groups.deleteGroup();
 
     int finalSize = groups.getGroupsCount();
