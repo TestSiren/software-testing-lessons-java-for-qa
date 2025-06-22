@@ -20,4 +20,20 @@ public class GroupCreationTests extends TestBase {
     assertTrue(initialSize < finalSize);
 
   }
+  @Test
+  public void creationMultipleGroup(){
+    GroupHelper groups = app.groups();
+
+    int n = 5;
+
+    int initialSize = groups.getGroupsCount();
+    for (int i = 0; i < n; i++) {
+      groups.createGroup(new GroupData(randomString(i), "group header", "group footer"));
+    }
+
+    int finalSize = initialSize + n;
+
+    assertTrue(initialSize < finalSize);
+
+  }
 }
