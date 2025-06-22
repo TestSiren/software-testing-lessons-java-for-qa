@@ -25,4 +25,19 @@ public class GroupCreationTests extends TestBase {
     assertTrue(initialSize < finalSize);
 
   }
+
+  @ParameterizedTest
+  @MethodSource("ru.stqa.addressbook.dataproviders.GroupProvider#negativeGroupProvider")
+  public void cannotCreateGroup(GroupData group){
+    GroupHelper groups = app.groups();
+
+    int initialSize = groups.getGroupsCount();
+
+    groups.createGroup(group);
+
+    int finalSize = groups.getGroupsCount();
+
+    assertTrue(initialSize == finalSize);
+
+  }
 }

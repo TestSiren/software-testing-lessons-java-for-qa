@@ -8,9 +8,7 @@ import java.util.List;
 
 public class GroupProvider {
     public static List<GroupData> groupProvider(){
-        var result = new ArrayList<GroupData>(List.of(
-                new GroupData("group name'", "", ""))
-        );
+        var result = new ArrayList<GroupData>();
         for (var name : List.of("", "group name")){
             for (var header : (List.of("", "group header"))) {
                 for (var footer : (List.of("", "group footer"))){
@@ -23,5 +21,12 @@ public class GroupProvider {
         }
         return result;
     }
+
+    public static List<GroupData> negativeGroupProvider(){
+            var result = new ArrayList<GroupData>(List.of(
+                    new GroupData("group name'", "", ""))
+            );
+            return result;
+        }
 
 }
