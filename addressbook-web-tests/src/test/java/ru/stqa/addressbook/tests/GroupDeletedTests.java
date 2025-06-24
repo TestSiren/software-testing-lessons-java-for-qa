@@ -34,8 +34,16 @@ public class GroupDeletedTests extends TestBase{
     GroupHelper groups = app.groups();
 
     if (groups.getGroupsCount()==0){ groups.createGroup(new GroupData().withName("some name"));}
+    var oldGroups = app.groups().getListGroups();
 
     groups.deleteAllGroup();
+
+    var newGroups = app.groups().getListGroups();
+
+    var expectedList = new ArrayList<>(oldGroups);
+    expectedList.clear();
+
+    Assertions.assertEquals(newGroups, expectedList);
 
     Assertions.assertEquals(0, app.groups().getGroupsCount());
   }
