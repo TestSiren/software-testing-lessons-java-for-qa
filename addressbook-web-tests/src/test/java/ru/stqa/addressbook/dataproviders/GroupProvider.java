@@ -28,7 +28,7 @@ public class GroupProvider {
 
     public static List<GroupData> negativeGroupProvider() {
         var result = new ArrayList<GroupData>(List.of(
-                (new GroupData().withName(randomString(10)).withHeader(randomString(10)).withFooter(randomString(10)))));
+                (new GroupData().withName("'" + randomString(10)).withHeader(randomString(10)).withFooter(randomString(10)))));
         return result;
     }
 

@@ -34,7 +34,7 @@ public class GroupHelper extends HelperBase {
     }
     private void selectCheckbox(GroupData group){
         openGroupPage();
-        buttonClick(By.cssSelector(String.format(("input value ='%s'"), group.id())));
+        buttonClick(By.cssSelector(String.format(("input[value ='%s']"), group.id())));
     }
 
     public void deleteElement(GroupData group) {
