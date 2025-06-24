@@ -19,13 +19,13 @@ public class AddressProvider {
                             .withFirstname(firstname)
                             .withLastname(lastname)
                             .withEmail(email)
-                                    .withBday(randomInt("day"))
+                                    .withBday(randomDay())
                                     .withBmonth(randomMonths())
                             .withByear(randomYear())
-                            .withAday(randomInt("day"))
+                            .withAday(randomDay())
                             .withAmonth(randomMonths())
                             .withAyear(randomYear())
-                            .withMobile("123456")
+                            .withMobile("99999999999")
                             .withAddress("Test address"));
                 }
             }

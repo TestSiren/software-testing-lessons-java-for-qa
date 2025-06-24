@@ -29,17 +29,9 @@ public class TestBase {
         }
         return result;
     }
-    public static int randomInt(String type) {
+    public static int randomDay() {
         var rnd = new Random();
-        var result = 0;
-        if (type.equals("day")) {
-            result = rnd.nextInt(31)+1;
-        } else if (type.equals("year")) {
-            result = rnd.nextInt(2015 - 1900 + 1) + 1900;
-        } else {
-            result = rnd.nextInt(10000);
-        }
-        return result;
+        return (rnd.nextInt(31)+1);
     }
     public static String randomYear() {
         var rnd = new Random();
