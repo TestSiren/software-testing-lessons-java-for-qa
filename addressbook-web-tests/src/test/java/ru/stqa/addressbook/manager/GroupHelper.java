@@ -32,6 +32,10 @@ public class GroupHelper extends HelperBase {
         buttonClick(By.xpath("(//input[@name='delete'])[2]"));
         buttonClick(By.linkText("groups"));
     }
+    private void editGroup() {
+        buttonClick(By.xpath("(//input[@name='Edit group'])"));
+        buttonClick(By.linkText("groups"));
+    }
     private void selectCheckbox(GroupData group){
         openGroupPage();
         buttonClick(By.cssSelector(String.format(("input[value ='%s']"), group.id())));
@@ -53,6 +57,16 @@ public class GroupHelper extends HelperBase {
         return groups.size();
     }
 
+    public void modifyGroup(GroupData group, GroupData modifiedGroup) {
+        openGroupPage();
+        selectCheckbox(group);
+        editGroup();
+        type(By.name("group_name"), modifiedGroup.name());
+        type(By.name("group_header"), modifiedGroup.header());
+        type(By.name("group_footer"), modifiedGroup.footer());
+        buttonClick(By.name("Update"));
+        openGroupPage();
+    }
 
     public void deleteAllGroup() {
         openGroupPage();

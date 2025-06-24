@@ -7,7 +7,6 @@ import ru.stqa.addressbook.manager.GroupHelper;
 import java.util.ArrayList;
 import java.util.Random;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class GroupDeletedTests extends TestBase{
   @Test
