@@ -4,22 +4,29 @@ import org.junit.jupiter.api.Test;
 import ru.stqa.addressbook.models.GroupData;
 import ru.stqa.addressbook.manager.GroupHelper;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import java.util.ArrayList;
+import java.util.Random;
+
 
 public class GroupDeletedTests extends TestBase{
   @Test
   public void groupsDeletedTests() {
     GroupHelper groups = app.groups();
-    int initialSize = groups.getGroupsCount();
+    if (groups.getGroupsCount()==0){ groups.createGroup(new GroupData().withName("some name"));}
 
-if (initialSize == 0) {
-    groups.createGroup(new GroupData().withName("some name"));
-    initialSize = groups.getGroupsCount();
-}
-groups.deleteFirstElement();
+    var oldGroups = app.groups().getListGroups();
 
-    int finalSize = groups.getGroupsCount();
-    assertTrue(initialSize > finalSize);
+    var rnd = new Random();
+    var index = rnd.nextInt(oldGroups.size());
+
+    groups.deleteElement(oldGroups.get(index));
+    var newGroups = app.groups().getListGroups();
+
+
+    var expectedList = new ArrayList<>(oldGroups);
+    expectedList.remove(index);
+
+    Assertions.assertEquals(newGroups, expectedList);
 
   }
 
@@ -28,8 +35,16 @@ groups.deleteFirstElement();
     GroupHelper groups = app.groups();
 
     if (groups.getGroupsCount()==0){ groups.createGroup(new GroupData().withName("some name"));}
+    var oldGroups = app.groups().getListGroups();
 
     groups.deleteAllGroup();
+
+    var newGroups = app.groups().getListGroups();
+
+    var expectedList = new ArrayList<>(oldGroups);
+    expectedList.clear();
+
+    Assertions.assertEquals(newGroups, expectedList);
 
     Assertions.assertEquals(0, app.groups().getGroupsCount());
   }
