@@ -48,7 +48,10 @@ public class AddressHelper extends HelperBase {
         buttonClick(By.name("submit"));
         buttonClick(By.linkText("home page"));
     }
-
+    private void selectCheckbox(AddressData address){
+        openAddressPage();
+        buttonClick(By.cssSelector(String.format(("input[value ='%s']"), address.id())));
+    }
 
     public int getAddressCount() {
         openAddressPage();
@@ -61,10 +64,8 @@ public class AddressHelper extends HelperBase {
         buttonClick(By.linkText("home"));
     }
 
-    public void deleteAddress() {
-        openAddressPage();
-        WebElement firstCheckbox = driver.findElement(By.cssSelector("input[name='selected[]']"));
-        firstCheckbox.click();
+    public void deleteAddress(AddressData address) {
+        selectCheckbox(address);
         buttonClick(By.xpath("//input[@value='Delete']"));
     }
 

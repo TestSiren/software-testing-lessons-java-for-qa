@@ -6,6 +6,7 @@ import ru.stqa.addressbook.manager.AddressHelper;
 import ru.stqa.addressbook.models.AddressData;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -16,17 +17,23 @@ public class DeletedAddressBook extends TestBase {
   public void deleteSingleAddressTest() {
     AddressHelper address = app.address();
 
-    int initialSize = address.getAddressCount();
-    if (initialSize == 0) {
+    if (address.getAddressCount() == 0) {
       address.createAddress(new AddressData());
-      initialSize++;
     }
 
-    address.deleteAddress();
-    assertFalse(address.acceptAlertIfPresent(), "Allert не показывается, если была хотя бы одна запись");
+    var oldAddress= app.address().getListAddress();
+    var rnd = new Random();
+    var index = rnd.nextInt(oldAddress.size());
 
-    int finalSize = address.getAddressCount();
-    assertTrue(initialSize > finalSize, "Контакт должен быть удалён");
+    address.deleteAddress(oldAddress.get(index));
+    var newAddress= app.address().getListAddress();
+
+    var expectedList = new ArrayList<>(oldAddress);
+    expectedList.remove(index);
+
+    assertFalse(address.acceptAlertIfPresent(), "Allert не показывается, если была хотя бы одна запись");
+    Assertions.assertEquals(newAddress, expectedList);
+
   }
 
   @Test
