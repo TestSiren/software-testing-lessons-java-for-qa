@@ -22,6 +22,7 @@ public class GroupDeletedTests extends TestBase{
     groups.deleteElement(oldGroups.get(index));
     var newGroups = app.groups().getListGroups();
 
+
     var expectedList = new ArrayList<>(oldGroups);
     expectedList.remove(index);
 
