@@ -6,6 +6,7 @@ import ru.stqa.addressbook.models.GroupData;
 import ru.stqa.addressbook.manager.GroupHelper;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Random;
 public class GroupModificationTests extends TestBase {
     @Test
@@ -21,7 +22,12 @@ public class GroupModificationTests extends TestBase {
         groups.modifyGroup(oldGroups.get(index), testData);
         var newGroups = groups.getListGroups();
         var expectedList = new ArrayList<>(oldGroups);
-        expectedList.set(index, testData.withId(index));
-        newGroups.sort();
+        expectedList.set(index, testData.withId(oldGroups.get(index).id()));
+        Comparator<GroupData> compareById = (o1, o2) -> {
+            return Integer.compare(Integer.parseInt(o1.id()), Integer.parseInt(o2.id()));
+        };
+        newGroups.sort(compareById);
+        expectedList.sort(compareById);
+        Assertions.assertEquals(newGroups, expectedList);
     }
 }

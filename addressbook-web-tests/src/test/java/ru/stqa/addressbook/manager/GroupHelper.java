@@ -33,8 +33,7 @@ public class GroupHelper extends HelperBase {
         buttonClick(By.linkText("groups"));
     }
     private void editGroup() {
-        buttonClick(By.xpath("(//input[@name='Edit group'])"));
-        buttonClick(By.linkText("groups"));
+        buttonClick(By.xpath("(//input[@name='edit'])"));
     }
     private void selectCheckbox(GroupData group){
         openGroupPage();
@@ -64,7 +63,7 @@ public class GroupHelper extends HelperBase {
         type(By.name("group_name"), modifiedGroup.name());
         type(By.name("group_header"), modifiedGroup.header());
         type(By.name("group_footer"), modifiedGroup.footer());
-        buttonClick(By.name("Update"));
+        buttonClick(By.name("update"));
         openGroupPage();
     }
 
