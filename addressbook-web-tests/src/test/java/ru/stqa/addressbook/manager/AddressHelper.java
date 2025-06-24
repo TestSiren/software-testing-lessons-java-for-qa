@@ -5,6 +5,7 @@ import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.Alert;
 import java.util.List;
+import ru.stqa.addressbook.models.AddressData;
 
 public class AddressHelper extends HelperBase {
 
@@ -12,38 +13,39 @@ public class AddressHelper extends HelperBase {
         super(manager);
     }
 
-    public void createAddress() {
+    public void createAddress(AddressData addressData) {
         buttonClick(By.linkText("add new"));
 
-        type(By.name("firstname"), "firstname");
-        type(By.name("middlename"), "Middle Name");
-        type(By.name("lastname"), "Last Name");
-        type(By.name("nickname"), "Nickname");
-        type(By.name("title"), "Title");
-        type(By.name("company"), "Company");
-        type(By.name("address"), "Address");
-        type(By.name("home"), "Home");
-        type(By.name("mobile"), "Mobile");
-        type(By.name("work"), "Work");
-        type(By.name("fax"), "Fax");
-        type(By.name("email"), "E-mail");
-        type(By.name("email2"), "E-mail2");
-        type(By.name("email3"), "E-mail3");
-        type(By.name("homepage"), "Homepage");
+        type(By.name("firstname"), addressData.firstname());
+        type(By.name("middlename"), addressData.middlename());
+        type(By.name("lastname"), addressData.lastname());
+        type(By.name("nickname"), addressData.nickname());
+        type(By.name("title"), addressData.title());
+        type(By.name("company"), addressData.company());
+        type(By.name("address"), addressData.address());
+        type(By.name("home"), addressData.home());
+        type(By.name("mobile"), addressData.mobile());
+        type(By.name("work"), addressData.work());
+        type(By.name("fax"), addressData.fax());
+        type(By.name("email"), addressData.email());
+        type(By.name("email2"), addressData.email2());
+        type(By.name("email3"), addressData.email3());
+        type(By.name("homepage"), addressData.homepage());
 
-        select(By.name("bday"), "1");
-        select(By.name("bmonth"), "January");
-        type(By.name("byear"), "1990");
+        select(By.name("bday"), String.valueOf(addressData.bday()));
+        select(By.name("bmonth"), addressData.bmonth());
+        type(By.name("byear"), addressData.byear());
 
-        select(By.name("aday"), "1");
-        select(By.name("amonth"), "January");
-        type(By.name("ayear"), "2000");
+        select(By.name("aday"), String.valueOf(addressData.aday()));
+        select(By.name("amonth"), addressData.amonth());
+        type(By.name("ayear"), addressData.ayear());
 
-        select(By.name("new_group"), "some name");
+        select(By.name("new_group"), addressData.group());
 
         buttonClick(By.name("submit"));
         buttonClick(By.linkText("home page"));
     }
+
 
     public int getAddressCount() {
         openAddressPage();

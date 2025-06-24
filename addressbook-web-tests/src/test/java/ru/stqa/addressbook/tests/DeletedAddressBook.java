@@ -13,11 +13,11 @@ public class DeletedAddressBook extends TestBase {
     AddressHelper address = app.address();
 
     int initialSize = address.getAddressCount();
-    if (initialSize == 0) {
+   /* if (initialSize == 0) {
       address.createAddress();
       initialSize++;
     }
-
+*/
     address.deleteAddress();
     assertFalse(address.acceptAlertIfPresent(), "Allert не показывается, если была хотя бы одна запись");
 
@@ -30,9 +30,9 @@ public class DeletedAddressBook extends TestBase {
     AddressHelper address = app.address();
 
     int initialSize = address.getAddressCount();
-    if (initialSize == 0) {
+  /*  if (initialSize == 0) {
       address.createAddress();}
-
+*/
     address.deleteAllAddress();
     assertFalse(address.acceptAlertIfPresent(), "Allert не показывается, если была хотя бы одна запись");
 
