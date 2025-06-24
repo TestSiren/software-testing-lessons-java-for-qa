@@ -2,6 +2,8 @@ package ru.stqa.addressbook.tests;
 
 import org.junit.jupiter.api.Test;
 import ru.stqa.addressbook.manager.AddressHelper;
+import ru.stqa.addressbook.models.AddressData;
+import ru.stqa.addressbook.models.GroupData;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -13,11 +15,11 @@ public class DeletedAddressBook extends TestBase {
     AddressHelper address = app.address();
 
     int initialSize = address.getAddressCount();
-   /* if (initialSize == 0) {
-      address.createAddress();
+    if (initialSize == 0) {
+      address.createAddress(new AddressData());
       initialSize++;
     }
-*/
+
     address.deleteAddress();
     assertFalse(address.acceptAlertIfPresent(), "Allert не показывается, если была хотя бы одна запись");
 
@@ -30,9 +32,9 @@ public class DeletedAddressBook extends TestBase {
     AddressHelper address = app.address();
 
     int initialSize = address.getAddressCount();
-  /*  if (initialSize == 0) {
-      address.createAddress();}
-*/
+    if (initialSize == 0) {
+      address.createAddress(new AddressData());}
+
     address.deleteAllAddress();
     assertFalse(address.acceptAlertIfPresent(), "Allert не показывается, если была хотя бы одна запись");
 

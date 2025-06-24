@@ -12,7 +12,7 @@ public class GroupDeletedTests extends TestBase{
     GroupHelper groups = app.groups();
     int initialSize = groups.getGroupsCount();
 
-    if (initialSize==0){ groups.createGroup(new GroupData().withName("some name"));initialSize=groups.getGroupsCount();;}
+    if (initialSize==0){ groups.createGroup(new GroupData().withName("some name"));initialSize=groups.getGroupsCount();}
     groups.deleteFirstElement();
 
     int finalSize = groups.getGroupsCount();
@@ -23,10 +23,11 @@ public class GroupDeletedTests extends TestBase{
   @Test
   public void canRemoveAllGroupsAtOnce() {
     GroupHelper groups = app.groups();
-    int initialSize = groups.getGroupsCount();
 
-    if (initialSize==0){ groups.createGroup(new GroupData().withName("some name"));initialSize=groups.getGroupsCount();;}
+    if (groups.getGroupsCount()==0){ groups.createGroup(new GroupData().withName("some name"));}
+
     groups.deleteAllGroup();
+
     Assertions.assertEquals(0, app.groups().getGroupsCount());
   }
 }
