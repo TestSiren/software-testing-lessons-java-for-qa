@@ -25,11 +25,18 @@ public class GroupHelper extends HelperBase {
         buttonClick(By.linkText("groups"));
     }
 
-    public void deleteGroup() {
-        openGroupPage();
-        buttonClick(By.name("selected[]"));
+    private void deleteGroup() {
         buttonClick(By.xpath("(//input[@name='delete'])[2]"));
         buttonClick(By.linkText("groups"));
+    }
+    private void selectFirstCheckbox(){
+        openGroupPage();
+        buttonClick(By.name("selected[]"));
+    }
+
+    public void deleteFirstElement() {
+        selectFirstCheckbox();
+        deleteGroup();
     }
 
     public int getGroupsCount() {
@@ -41,5 +48,17 @@ public class GroupHelper extends HelperBase {
             System.out.println("Групп нет. Отображается только hr/bp.");
         }
         return groups.size();
+    }
+
+    public void deleteAllGroup() {
+        openGroupPage();
+        selectAllGroups();
+        deleteGroup();
+    }
+    private void selectAllGroups() {
+        var checkboxes = driver.findElements(By.name("selected[]"));
+        for (var checkbox : checkboxes) {
+            checkbox.click();
+    }
     }
 }
