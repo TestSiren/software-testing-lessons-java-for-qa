@@ -4,8 +4,11 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.Alert;
+
+import java.util.ArrayList;
 import java.util.List;
 import ru.stqa.addressbook.models.AddressData;
+import ru.stqa.addressbook.models.GroupData;
 
 public class AddressHelper extends HelperBase {
 
@@ -79,5 +82,18 @@ public class AddressHelper extends HelperBase {
         } catch (NoAlertPresentException e) {
             return false;
         }
+    }
+
+    public List<AddressData> getListAddress() {
+        openAddressPage();
+        var address = new ArrayList<AddressData>();
+        var rows = manager.driver.findElements(By.cssSelector("tr[name='entry']"));
+        for (var row : rows) {
+            var name = row.getText();
+            var checkbox = row.findElement(By.name("selected[]"));
+            var id = checkbox.getAttribute("value");
+            address.add(new AddressData().withId(id));
+        }
+        return address;
     }
 }
