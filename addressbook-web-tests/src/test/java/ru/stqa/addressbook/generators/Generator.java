@@ -5,6 +5,7 @@ import com.beust.jcommander.Parameter;
 import com.fasterxml.jackson.databind.*;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLMapper;
+import ru.stqa.addressbook.models.AddressData;
 import ru.stqa.addressbook.models.GroupData;
 import ru.stqa.addressbook.common.CommonFunctions;
 
@@ -65,7 +66,22 @@ public class Generator {
     }
 
     private Object generateAddress() {
-        return null;
+        var result = new ArrayList<AddressData>();
+        for (int i = 0; i < count; i++) {
+            result.add(new AddressData()
+                    .withFirstname(CommonFunctions.randomString(i * 5))
+                    .withLastname(CommonFunctions.randomString(i * 5))
+                    .withEmail(CommonFunctions.randomString(i * 5) + "@example.com")
+                    .withBday(CommonFunctions.randomDay())
+                    .withBmonth(CommonFunctions.randomMonths())
+                    .withByear(CommonFunctions.randomYear())
+                    .withAday(CommonFunctions.randomDay())
+                    .withAmonth(CommonFunctions.randomMonths())
+                    .withAyear(CommonFunctions.randomYear())
+                    .withMobile("99999999999")
+                    .withAddress("Test address"));
+        }
+        return result;
     }
 
     private void save(Object data) throws IOException {
