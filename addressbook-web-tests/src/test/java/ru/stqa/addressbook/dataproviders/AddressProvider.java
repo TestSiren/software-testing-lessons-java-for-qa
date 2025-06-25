@@ -12,11 +12,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AddressProvider {
+    private static String addressFilePath;
+
+    public static void setAddressFilePath(String path) {
+        addressFilePath = path;
+    }
 
     public static List<AddressData> addressProvider() throws IOException {
         var result = new ArrayList<AddressData>();
         ObjectMapper mapper = new ObjectMapper(); // create once, reuse
-        var value = mapper.readValue(new File("src/test/resources/address.json"), new TypeReference<List<AddressData>>() {});
+        var value = mapper.readValue(new File(addressFilePath), new TypeReference<List<AddressData>>() {});
         result.addAll(value);
         return result;
     }

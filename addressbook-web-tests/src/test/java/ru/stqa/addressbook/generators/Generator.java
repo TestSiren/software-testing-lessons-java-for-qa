@@ -27,6 +27,9 @@ public class Generator {
     @Parameter(names={"--count", "-c"})
     int count;
 
+    @Parameter(names = {"--imagesDir", "-id"})
+    String imagesDir = "/images";
+
     public static void main(String ... argv) throws IOException {
             var generator = new Generator();
             JCommander.newBuilder()
@@ -75,7 +78,7 @@ public class Generator {
                     .withLastname(CommonFunctions.randomString(i * 5))
                     .withEmail(CommonFunctions.randomString(i * 5) + "@example.com")
                     .withBday(CommonFunctions.randomDay())
-                    .withPhoto(CommonFunctions.randomFile("/images"))
+                    .withPhoto(CommonFunctions.randomFile(imagesDir))
                     .withBmonth(CommonFunctions.randomMonths())
                     .withByear(CommonFunctions.randomYear())
                     .withAday(CommonFunctions.randomDay())

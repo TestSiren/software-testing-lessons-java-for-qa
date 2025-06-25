@@ -21,6 +21,8 @@ public class TestBase {
             app.init(System.getProperty("browser", "firefox"));
         }
         app.session().auth(properties);
+        ru.stqa.addressbook.dataproviders.GroupProvider.setGroupsFilePath(properties.getProperty("groups.data.file"));
+        ru.stqa.addressbook.dataproviders.AddressProvider.setAddressFilePath(properties.getProperty("address.data.file"));
     }
 
     @AfterEach

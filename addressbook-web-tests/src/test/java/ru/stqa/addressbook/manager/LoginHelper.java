@@ -1,8 +1,6 @@
 package ru.stqa.addressbook.manager;
 
 import org.openqa.selenium.By;
-
-import java.security.PrivateKey;
 import java.util.Properties;
 
 public class LoginHelper extends HelperBase {
