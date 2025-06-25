@@ -4,8 +4,11 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.Alert;
+
+import java.util.ArrayList;
 import java.util.List;
 import ru.stqa.addressbook.models.AddressData;
+import ru.stqa.addressbook.models.GroupData;
 
 public class AddressHelper extends HelperBase {
 
@@ -45,7 +48,10 @@ public class AddressHelper extends HelperBase {
         buttonClick(By.name("submit"));
         buttonClick(By.linkText("home page"));
     }
-
+    private void selectCheckbox(AddressData address){
+        openAddressPage();
+        buttonClick(By.cssSelector(String.format(("input[value ='%s']"), address.id())));
+    }
 
     public int getAddressCount() {
         openAddressPage();
@@ -58,10 +64,8 @@ public class AddressHelper extends HelperBase {
         buttonClick(By.linkText("home"));
     }
 
-    public void deleteAddress() {
-        openAddressPage();
-        WebElement firstCheckbox = driver.findElement(By.cssSelector("input[name='selected[]']"));
-        firstCheckbox.click();
+    public void deleteAddress(AddressData address) {
+        selectCheckbox(address);
         buttonClick(By.xpath("//input[@value='Delete']"));
     }
 
@@ -79,5 +83,34 @@ public class AddressHelper extends HelperBase {
         } catch (NoAlertPresentException e) {
             return false;
         }
+    }
+
+    public List<AddressData> getListAddress() {
+        openAddressPage();
+        var addressList = new ArrayList<AddressData>();
+        var rows = manager.driver.findElements(By.cssSelector("tr[name='entry']"));
+        for (var row : rows) {
+            var cells = row.findElements(By.tagName("td"));
+
+            String id = cells.get(0).findElement(By.name("selected[]")).getAttribute("value");
+            String lastname = cells.get(1).getText();
+            String firstname = cells.get(2).getText();
+            String address = cells.get(3).getText();
+
+            var emailElements = cells.get(4).findElements(By.tagName("a"));
+            String email = emailElements.size() > 0 ? emailElements.get(0).getText() : null;
+            String email2 = emailElements.size() > 1 ? emailElements.get(1).getText() : null;
+            String email3 = emailElements.size() > 2 ? emailElements.get(2).getText() : null;
+
+            addressList.add(new AddressData()
+                    .withId(id)
+                    .withFirstname(firstname)
+                    .withLastname(lastname)
+                    .withAddress(address)
+                    .withEmail(email)
+                    .withEmail2(email2)
+                    .withEmail3(email3));
+        }
+        return addressList;
     }
 }
