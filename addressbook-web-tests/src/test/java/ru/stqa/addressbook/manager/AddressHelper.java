@@ -87,14 +87,22 @@ public class AddressHelper extends HelperBase {
 
     public List<AddressData> getListAddress() {
         openAddressPage();
-        var address = new ArrayList<AddressData>();
+        var addressList = new ArrayList<AddressData>();
         var rows = manager.driver.findElements(By.cssSelector("tr[name='entry']"));
         for (var row : rows) {
-            var name = row.getText();
-            var checkbox = row.findElement(By.name("selected[]"));
-            var id = checkbox.getAttribute("value");
-            address.add(new AddressData().withId(id));
+            var cells = row.findElements(By.tagName("td"));
+
+            String id = cells.get(0).findElement(By.name("selected[]")).getAttribute("value");
+            String lastname = cells.get(1).getText();
+            String firstname = cells.get(2).getText();
+            String address = cells.get(3).getText();
+            //todo добавить получение email/phones?
+            addressList.add(new AddressData()
+                    .withId(id)
+                    .withFirstname(firstname)
+                    .withLastname(lastname)
+                    .withAddress(address));
         }
-        return address;
+        return addressList;
     }
 }

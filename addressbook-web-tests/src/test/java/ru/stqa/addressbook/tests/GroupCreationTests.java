@@ -5,12 +5,8 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 import ru.stqa.addressbook.manager.GroupHelper;
 import ru.stqa.addressbook.models.GroupData;
-
-
+import static ru.stqa.addressbook.comporators.GroupComporators.compareById;
 import java.util.ArrayList;
-import java.util.Comparator;
-
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class GroupCreationTests extends TestBase {
 
@@ -26,9 +22,6 @@ public class GroupCreationTests extends TestBase {
 
     var newGroups = groups.getListGroups();
 
-    Comparator<GroupData> compareById = (o1, o2) -> {
-      return Integer.compare(Integer.parseInt(o1.id()), Integer.parseInt(o2.id()));
-    };
     newGroups.sort(compareById);
 
     var expectedList = new ArrayList<>(oldGroups);

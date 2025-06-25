@@ -58,7 +58,8 @@ public class DeletedAddressBook extends TestBase {
   @Test
   public void alertAppearsOnEmptyDeletionTest() {
     //поменяла название теста
-    // решила, что добавлять проверку списков сюда не имеет смысла, т.к. тут важнее проверка алерта, когда список пустой.
+    //решила, что добавлять проверку списков сюда не имеет смысла, т.к. тут важнее проверка алерта, когда список пустой.
+    //возможно это не правильное решение?
     AddressHelper address = app.address();
 
     int initialSize = address.getAddressCount();
