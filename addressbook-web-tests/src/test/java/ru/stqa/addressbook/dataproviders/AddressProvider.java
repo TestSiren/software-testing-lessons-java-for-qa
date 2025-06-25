@@ -25,6 +25,7 @@ public class AddressProvider {
                             .withAday(randomDay())
                             .withAmonth(randomMonths())
                             .withAyear(randomYear())
+                                    .withPhoto("src/test/resources/images/manul1.jpg")
                             .withMobile("99999999999")
                             .withAddress("Test address"));
                 }

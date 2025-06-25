@@ -43,7 +43,7 @@ public class AddressHelper extends HelperBase {
         type(By.name("ayear"), addressData.ayear());
 
         select(By.name("new_group"), addressData.group());
-
+        attach(By.name("photo"), addressData.photo());
         buttonClick(By.name("submit"));
         buttonClick(By.linkText("home page"));
     }
