@@ -38,11 +38,27 @@ public class CommonFunctions {
         return months.get(rnd.nextInt(months.size()));
     }
 
-    public static String randomFile(String dir) {
-        var fileNames = new File(dir).list();
-        var rnd = new Random();
-        var index = rnd.nextInt(fileNames.length);
+    public static String randomFile(String userDir) {
+        String currentDir = System.getProperty("user.userDir");
+        String absolutePath = Paths.get(currentDir, userDir).toString();
 
-        return Paths.get(dir, fileNames[index]).toString();
+        System.out.println("Resolved image directory: " + absolutePath);
+
+        File folder = new File(absolutePath);
+        if (!folder.exists() || !folder.isDirectory()) {
+            throw new IllegalArgumentException("Directory not found: " + folder.getAbsolutePath());
+        }
+
+        String[] fileNames = folder.list((dir, name) -> name.toLowerCase().endsWith(".jpg"));
+        if (fileNames == null || fileNames.length == 0) {
+            throw new IllegalArgumentException("No .jpg files found in: " + folder.getAbsolutePath());
+        }
+
+        int index = new Random().nextInt(fileNames.length);
+        String result = Paths.get(absolutePath, fileNames[index]).toString();
+        System.out.println("Selected file: " + result);
+
+        return result;
     }
+
 }
