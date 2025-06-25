@@ -53,7 +53,10 @@ public class Generator {
     private Object generateGroups() {
         var result = new ArrayList<GroupData>();
         for (int i = 0; i < count; i++) {
-            result.add(new GroupData().withName(randomString(i * 10)).withHeader(randomString(i * 10)).withFooter(randomString(i * 10)));
+            result.add(new GroupData()
+                    .withName(CommonFunctions.randomString(i * 10))
+                    .withHeader(CommonFunctions.randomString(i * 10))
+                    .withFooter(CommonFunctions.randomString(i * 10)));
         }
         return result;
     }
