@@ -15,7 +15,7 @@ public class TestBase {
     @BeforeEach
     public void setUp() throws IOException {
         var properties = new Properties();
-        properties.load(new FileReader(System.getProperty("target", "local.propreties")));
+        properties.load(new FileReader(System.getProperty("target", "local.properties")));
         if (app==null) {
             app = new ApplicationManager();
             app.init(System.getProperty("browser", "firefox"));

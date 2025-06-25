@@ -14,7 +14,7 @@ public class LoginHelper extends HelperBase {
 
     public void auth(Properties properties) {
         this.properties = properties;
-        driver.get("web.baseUrl");
+        driver.get(properties.getProperty("web.baseUrl"));
         type(By.name("user"), properties.getProperty("web.username"));
         type(By.name("pass"), properties.getProperty("web.password"));
         buttonClick(By.xpath("//input[@value='Login']"));
