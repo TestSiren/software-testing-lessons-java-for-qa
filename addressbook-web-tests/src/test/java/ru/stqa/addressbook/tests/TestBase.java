@@ -4,6 +4,8 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import ru.stqa.addressbook.manager.ApplicationManager;
 
+import java.io.File;
+import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
@@ -46,6 +48,14 @@ public class TestBase {
                     "July", "August", "September", "October", "November", "December"
             );
         return months.get(rnd.nextInt(months.size()));
+    }
+
+    public static String randomFile(String dir) {
+        var fileNames = new File(dir).list();
+        var rnd = new Random();
+        var index = rnd.nextInt(fileNames.length);
+
+        return Paths.get(dir, fileNames[index]).toString();
     }
 
     @AfterEach
