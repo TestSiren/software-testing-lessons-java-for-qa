@@ -1,11 +1,10 @@
 package ru.stqa.addressbook.dataproviders;
 
+import ru.stqa.addressbook.common.CommonFunctions;
 import ru.stqa.addressbook.models.AddressData;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static ru.stqa.addressbook.tests.TestBase.*;
 
 public class AddressProvider {
 
@@ -19,12 +18,12 @@ public class AddressProvider {
                             .withFirstname(firstname)
                             .withLastname(lastname)
                             .withEmail(email)
-                                    .withBday(randomDay())
-                                    .withBmonth(randomMonths())
-                            .withByear(randomYear())
-                            .withAday(randomDay())
-                            .withAmonth(randomMonths())
-                            .withAyear(randomYear())
+                                    .withBday(CommonFunctions.randomDay())
+                                    .withBmonth(CommonFunctions.randomMonths())
+                            .withByear(CommonFunctions.randomYear())
+                            .withAday(CommonFunctions.randomDay())
+                            .withAmonth(CommonFunctions.randomMonths())
+                            .withAyear(CommonFunctions.randomYear())
                             .withMobile("99999999999")
                             .withAddress("Test address"));
                 }
@@ -33,11 +32,11 @@ public class AddressProvider {
 
         for (int i = 0; i < 5; i++) {
             result.add(new AddressData()
-                    .withFirstname(randomString(i * 5))
-                    .withLastname(randomString(i * 5))
-                    .withEmail(randomString(i * 5) + "@example.com")
+                    .withFirstname(CommonFunctions.randomString(i * 5))
+                    .withLastname(CommonFunctions.randomString(i * 5))
+                    .withEmail(CommonFunctions.randomString(i * 5) + "@example.com")
                     .withMobile("99999" + i)
-                    .withPhoto(randomFile("src/test/resources/images/"))
+                    .withPhoto(CommonFunctions.randomFile("src/test/resources/images/"))
                     .withAddress("Random address " + i));
         }
 

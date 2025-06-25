@@ -2,7 +2,7 @@ package ru.stqa.addressbook.dataproviders;
 
 import ru.stqa.addressbook.models.GroupData;
 
-import static ru.stqa.addressbook.tests.TestBase.randomString;
+import static ru.stqa.addressbook.common.CommonFunctions.randomString;
 
 import java.util.ArrayList;
 import java.util.List;
