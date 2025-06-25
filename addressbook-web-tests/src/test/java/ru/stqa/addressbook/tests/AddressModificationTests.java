@@ -30,9 +30,6 @@ public class AddressModificationTests extends TestBase {
         newAddresses.sort(byFirstAndLastName);
         expectedList.sort(byFirstAndLastName);
 
-        System.out.println(newAddresses);
-        System.out.println(expectedList);
-
         for (int i = 0; i < expectedList.size(); i++) {
             Assertions.assertEquals(expectedList.get(i).firstname(), newAddresses.get(i).firstname());
             Assertions.assertEquals(expectedList.get(i).lastname(), newAddresses.get(i).lastname());
@@ -56,6 +53,6 @@ public class AddressModificationTests extends TestBase {
 
         var newAddress = address.getListAddress();
 
-        Assertions.assertEquals(newAddress, oldAddress);
+        Assertions.assertEquals(oldAddress, newAddress);
     }
 }
