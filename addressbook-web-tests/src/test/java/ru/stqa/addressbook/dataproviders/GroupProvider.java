@@ -1,14 +1,18 @@
 package ru.stqa.addressbook.dataproviders;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import ru.stqa.addressbook.models.GroupData;
 
 import static ru.stqa.addressbook.common.CommonFunctions.randomString;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class GroupProvider {
-    public static List<GroupData> groupProvider() {
+    public static List<GroupData> groupProvider() throws IOException {
         var result = new ArrayList<GroupData>();
         for (var name : List.of("", "group name")) {
             for (var header : (List.of("", "group header"))) {
@@ -20,9 +24,9 @@ public class GroupProvider {
                 }
             }
         }
-        for (int i = 0; i < 5; i++) {
-            result.add(new GroupData().withName(randomString(i * 10)).withHeader(randomString(i * 10)).withFooter(randomString(i * 10)));
-        }
+        ObjectMapper mapper = new ObjectMapper(); // create once, reuse
+        var value = mapper.readValue(new File("groups.json"), new TypeReference<List<GroupData>>() {});
+        result.addAll(value);
         return result;
     }
 
