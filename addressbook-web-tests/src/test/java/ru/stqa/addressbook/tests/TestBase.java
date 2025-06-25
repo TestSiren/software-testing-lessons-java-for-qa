@@ -16,9 +16,13 @@ public class TestBase {
     public void setUp() throws IOException {
         var properties = new Properties();
         properties.load(new FileReader(System.getProperty("target", "local.properties")));
+
+        String browserFromConfig = properties.getProperty("browser", "firefox");
+        String browser = System.getProperty("browser", browserFromConfig);
+
         if (app==null) {
             app = new ApplicationManager();
-            app.init(System.getProperty("browser", "firefox"));
+            app.init(browser);
         }
         app.session().auth(properties);
         ru.stqa.addressbook.dataproviders.GroupProvider.setGroupsFilePath(properties.getProperty("groups.data.file"));
