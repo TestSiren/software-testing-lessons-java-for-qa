@@ -12,7 +12,7 @@ public class GroupProvider  {
     public static List<GroupData> groupProvider() throws IOException {
         var result = new ArrayList<GroupData>();
         ObjectMapper mapper = new ObjectMapper(); // create once, reuse
-        var value = mapper.readValue(new File("src/test/resources/generateFiles/groups.json"), new TypeReference<List<GroupData>>() {});
+        var value = mapper.readValue(new File("src/test/resources/groups.json"), new TypeReference<List<GroupData>>() {});
         result.addAll(value);
         return result;
     }

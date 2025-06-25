@@ -37,28 +37,36 @@ public class CommonFunctions {
             );
         return months.get(rnd.nextInt(months.size()));
     }
+    public static String randomFile(String relativeDir) {
+        String projectRoot = Paths.get("").toAbsolutePath().toString();
 
-    public static String randomFile(String userDir) {
-        String currentDir = System.getProperty("user.userDir");
-        String absolutePath = Paths.get(currentDir, userDir).toString();
+        System.out.println("user.dir = " + projectRoot);
 
-        System.out.println("Resolved image directory: " + absolutePath);
+        if (projectRoot == null) {
+            throw new IllegalStateException("System property 'user.dir' is null");
+        }
 
-        File folder = new File(absolutePath);
+        if (relativeDir == null) {
+            throw new IllegalArgumentException("Argument 'relativeDir' cannot be null");
+        }
+
+        File folder = new File(projectRoot, relativeDir);
+        System.out.println("Looking in folder: " + folder.getAbsolutePath());
+
         if (!folder.exists() || !folder.isDirectory()) {
             throw new IllegalArgumentException("Directory not found: " + folder.getAbsolutePath());
         }
 
-        String[] fileNames = folder.list((dir, name) -> name.toLowerCase().endsWith(".jpg"));
+        String[] fileNames = folder.list((d, name) -> name.toLowerCase().endsWith(".jpg"));
+
         if (fileNames == null || fileNames.length == 0) {
             throw new IllegalArgumentException("No .jpg files found in: " + folder.getAbsolutePath());
         }
 
         int index = new Random().nextInt(fileNames.length);
-        String result = Paths.get(absolutePath, fileNames[index]).toString();
-        System.out.println("Selected file: " + result);
-
-        return result;
+        String selectedFile = new File(folder, fileNames[index]).getAbsolutePath();
+        System.out.println("Selected file: " + selectedFile);
+        return selectedFile;
+    }
     }
 
-}

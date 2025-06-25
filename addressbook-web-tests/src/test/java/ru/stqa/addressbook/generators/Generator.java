@@ -12,6 +12,7 @@ import ru.stqa.addressbook.common.CommonFunctions;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Generator {
     @Parameter(names={"--type", "-t"})
@@ -27,13 +28,14 @@ public class Generator {
     int count;
 
     public static void main(String ... argv) throws IOException {
-        var generator = new Generator();
-        JCommander.newBuilder()
-                .addObject(generator)
-                .build()
-                .parse(argv);
-        generator.run();
+            var generator = new Generator();
+            JCommander.newBuilder()
+                    .addObject(generator)
+                    .build()
+                    .parse(argv);
+            generator.run();
     }
+
 
     private void run() throws IOException {
         var data = generate();
@@ -43,7 +45,7 @@ public class Generator {
 
 
     private Object generate() {
-        if ("groups".equals(type)) {
+        if ("groups".equals(type) || "group".equals(type)) {
             return generateGroups();
         } else if ("address".equals(type))
         {
@@ -73,7 +75,7 @@ public class Generator {
                     .withLastname(CommonFunctions.randomString(i * 5))
                     .withEmail(CommonFunctions.randomString(i * 5) + "@example.com")
                     .withBday(CommonFunctions.randomDay())
-                    .withPhoto(CommonFunctions.randomFile("src/test/resources/images"))
+                    .withPhoto(CommonFunctions.randomFile("/images"))
                     .withBmonth(CommonFunctions.randomMonths())
                     .withByear(CommonFunctions.randomYear())
                     .withAday(CommonFunctions.randomDay())

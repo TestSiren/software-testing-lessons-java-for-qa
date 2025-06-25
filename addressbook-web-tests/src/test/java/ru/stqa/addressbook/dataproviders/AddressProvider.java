@@ -16,7 +16,7 @@ public class AddressProvider {
     public static List<AddressData> addressProvider() throws IOException {
         var result = new ArrayList<AddressData>();
         ObjectMapper mapper = new ObjectMapper(); // create once, reuse
-        var value = mapper.readValue(new File("src/test/resources/generateFiles/address.json"), new TypeReference<List<AddressData>>() {});
+        var value = mapper.readValue(new File("src/test/resources/address.json"), new TypeReference<List<AddressData>>() {});
         result.addAll(value);
         return result;
     }
