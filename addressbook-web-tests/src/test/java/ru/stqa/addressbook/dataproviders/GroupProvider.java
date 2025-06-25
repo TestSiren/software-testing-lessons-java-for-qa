@@ -6,7 +6,9 @@ import ru.stqa.addressbook.models.GroupData;
 
 import static ru.stqa.addressbook.common.CommonFunctions.randomString;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +24,15 @@ public class GroupProvider {
 //                            .withHeader(header)
 //                            .withFooter(footer));
 //                }
+//            }
+//        }
+//        var json = "";
+//        try (var reader = new FileReader("src/test/resources/generateFiles/groups.json");
+//        var breader = new BufferedReader(reader)) {
+//            var line = breader.readLine();
+//            while (line != null) {
+//             json = json + line;
+//             line = breader.readLine();
 //            }
 //        }
         ObjectMapper mapper = new ObjectMapper(); // create once, reuse
