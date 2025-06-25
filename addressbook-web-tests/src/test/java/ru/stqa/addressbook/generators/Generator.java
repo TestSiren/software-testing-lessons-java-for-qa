@@ -2,7 +2,7 @@ package ru.stqa.addressbook.generators;
 
 import com.beust.jcommander.JCommander;
 import com.beust.jcommander.Parameter;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.*;
 import ru.stqa.addressbook.models.GroupData;
 import ru.stqa.addressbook.common.CommonFunctions;
 
@@ -71,6 +71,7 @@ public class Generator {
     private void save(Object data) throws IOException {
         if ("json".equals(format)) {
             ObjectMapper mapper = new ObjectMapper(); // create once, reuse
+            mapper.enable(SerializationFeature.INDENT_OUTPUT);
             mapper.writeValue(new File(output), data);
         } else {
            throw new IllegalArgumentException("Неизвестный формат данных" + format);
