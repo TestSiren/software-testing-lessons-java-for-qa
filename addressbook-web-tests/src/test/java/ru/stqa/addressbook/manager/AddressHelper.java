@@ -96,12 +96,20 @@ public class AddressHelper extends HelperBase {
             String lastname = cells.get(1).getText();
             String firstname = cells.get(2).getText();
             String address = cells.get(3).getText();
-            //todo добавить получение email/phones?
+
+            var emailElements = cells.get(4).findElements(By.tagName("a"));
+            String email = emailElements.size() > 0 ? emailElements.get(0).getText() : null;
+            String email2 = emailElements.size() > 1 ? emailElements.get(1).getText() : null;
+            String email3 = emailElements.size() > 2 ? emailElements.get(2).getText() : null;
+
             addressList.add(new AddressData()
                     .withId(id)
                     .withFirstname(firstname)
                     .withLastname(lastname)
-                    .withAddress(address));
+                    .withAddress(address)
+                    .withEmail(email)
+                    .withEmail2(email2)
+                    .withEmail3(email3));
         }
         return addressList;
     }
