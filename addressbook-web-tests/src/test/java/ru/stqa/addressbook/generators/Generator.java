@@ -45,7 +45,7 @@ public class Generator {
 
 
     private Object generate() {
-        if ("groups".equals(type) || "group".equals(type)) {
+        if ("groups".equals(type)) {
             return generateGroups();
         } else if ("address".equals(type))
         {
