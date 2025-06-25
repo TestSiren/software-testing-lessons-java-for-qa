@@ -33,4 +33,22 @@ public class GroupModificationTests extends TestBase {
 
         Assertions.assertEquals(newGroups, expectedList);
     }
+@Test
+    void cannotModifyGroup() {
+        GroupHelper groups = app.groups();
+        if (groups.getGroupsCount() == 0) {
+            groups.createGroup(new GroupData("", "group name", "group header", "group footer"));
+        }
+
+        var oldGroups = groups.getListGroups();
+        var rnd = new Random();
+        var index = rnd.nextInt(oldGroups.size());
+        var testData = new GroupData().withName("modified' name");
+
+        groups.modifyGroup(oldGroups.get(index), testData);
+
+        var newGroups = groups.getListGroups();
+
+        Assertions.assertEquals(newGroups, oldGroups);
+    }
 }
