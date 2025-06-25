@@ -3,15 +3,15 @@ package ru.stqa.addressbook.generators;
 import com.beust.jcommander.JCommander;
 import com.beust.jcommander.Parameter;
 import com.fasterxml.jackson.databind.*;
+import com.fasterxml.jackson.dataformat.xml.XmlMapper;
+import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
+import com.fasterxml.jackson.dataformat.yaml.YAMLMapper;
 import ru.stqa.addressbook.models.GroupData;
 import ru.stqa.addressbook.common.CommonFunctions;
 
-import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-
-import static ru.stqa.addressbook.common.CommonFunctions.randomString;
 
 public class Generator {
     @Parameter(names={"--type", "-t"})
@@ -70,16 +70,20 @@ public class Generator {
     }
 
     private void save(Object data) throws IOException {
-        if ("json".equals(format)) {
-            ObjectMapper mapper = new ObjectMapper(); // create once, reuse
-            mapper.enable(SerializationFeature.INDENT_OUTPUT);
-            var json =  mapper.writeValueAsString(data);
+        ObjectMapper mapper;
 
-            try (var writer = new FileWriter(output)) {
-               writer.write(json);
-            }
-        } else {
-           throw new IllegalArgumentException("Неизвестный формат данных" + format);
+        switch (format) {
+            case "json" -> mapper = new ObjectMapper();
+            case "yaml" -> mapper = new YAMLMapper();
+            case "xml"  -> mapper = new XmlMapper();
+            default     -> throw new IllegalArgumentException("Unsupported format: " + format);
+        }
+
+        mapper.enable(SerializationFeature.INDENT_OUTPUT);
+        String serialized = mapper.writeValueAsString(data);
+
+        try (var writer = new FileWriter(output)) {
+            writer.write(serialized);
         }
     }
 }
