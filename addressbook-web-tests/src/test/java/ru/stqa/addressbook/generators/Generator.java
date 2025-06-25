@@ -73,6 +73,7 @@ public class Generator {
                     .withLastname(CommonFunctions.randomString(i * 5))
                     .withEmail(CommonFunctions.randomString(i * 5) + "@example.com")
                     .withBday(CommonFunctions.randomDay())
+                    .withPhoto(CommonFunctions.randomFile("src/test/resources/images/"))
                     .withBmonth(CommonFunctions.randomMonths())
                     .withByear(CommonFunctions.randomYear())
                     .withAday(CommonFunctions.randomDay())
