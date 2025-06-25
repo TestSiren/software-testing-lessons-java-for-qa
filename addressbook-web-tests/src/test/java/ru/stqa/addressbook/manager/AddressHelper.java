@@ -86,31 +86,9 @@ public class AddressHelper extends HelperBase {
     }
 
     public List<AddressData> getListAddress() {
-        openAddressPage();
-        var addressList = new ArrayList<AddressData>();
-        var rows = manager.driver.findElements(By.cssSelector("tr[name='entry']"));
-        for (var row : rows) {
-            var cells = row.findElements(By.tagName("td"));
+        return null;
+    }
 
-            String id = cells.get(0).findElement(By.name("selected[]")).getAttribute("value");
-            String lastname = cells.get(1).getText();
-            String firstname = cells.get(2).getText();
-            String address = cells.get(3).getText();
-
-            var emailElements = cells.get(4).findElements(By.tagName("a"));
-            String email = emailElements.size() > 0 ? emailElements.get(0).getText() : null;
-            String email2 = emailElements.size() > 1 ? emailElements.get(1).getText() : null;
-            String email3 = emailElements.size() > 2 ? emailElements.get(2).getText() : null;
-
-            addressList.add(new AddressData()
-                    .withId(id)
-                    .withFirstname(firstname)
-                    .withLastname(lastname)
-                    .withAddress(address)
-                    .withEmail(email)
-                    .withEmail2(email2)
-                    .withEmail3(email3));
-        }
-        return addressList;
+    public void modifyAddress(AddressData addressData, Object testData) {
     }
 }

@@ -33,7 +33,7 @@ public class GroupModificationTests extends TestBase {
 
         Assertions.assertEquals(newGroups, expectedList);
     }
-@Test
+    @Test
     void cannotModifyGroup() {
         GroupHelper groups = app.groups();
         if (groups.getGroupsCount() == 0) {

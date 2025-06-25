@@ -2,54 +2,60 @@ package ru.stqa.addressbook.tests;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import ru.stqa.addressbook.manager.GroupHelper;
-import ru.stqa.addressbook.models.GroupData;
+import ru.stqa.addressbook.models.AddressData;
+import ru.stqa.addressbook.manager.AddressHelper;
+import static ru.stqa.addressbook.comporators.AddressComparators.byFirstAndLastName;
 
 import java.util.ArrayList;
 import java.util.Random;
-
-import static ru.stqa.addressbook.comporators.GroupComporators.compareById;
-
-public class AddressModificationTests {
+public class AddressModificationTests extends TestBase {
     @Test
     void canModifyAddress() {
-        GroupHelper groups = app.groups();
-        if (groups.getGroupsCount() == 0) {
-            groups.createGroup(new GroupData("", "group name", "group header", "group footer"));
+        AddressHelper address = app.address();
+        if (address.getAddressCount() == 0) {
+            address.createAddress(new AddressData());
         }
 
-        var oldGroups = groups.getListGroups();
+        var oldAddress = address.getListAddress();
         var rnd = new Random();
-        var index = rnd.nextInt(oldGroups.size());
-        var testData = new GroupData().withName("modified name");
+        var index = rnd.nextInt(oldAddress.size());
+        var testData = new AddressData().withFirstname("modified name");
 
-        groups.modifyGroup(oldGroups.get(index), testData);
+        address.modifyAddress(oldAddress.get(index), testData);
 
-        var newGroups = groups.getListGroups();
-        var expectedList = new ArrayList<>(oldGroups);
-        expectedList.set(index, testData.withId(oldGroups.get(index).id()));
+        var newAddresses = address.getListAddress();
+        var expectedList = new ArrayList<>(oldAddress);
+        expectedList.set(index, testData.withId(oldAddress.get(index).id()));
 
-        newGroups.sort(compareById);
-        expectedList.sort(compareById);
+        newAddresses.sort(byFirstAndLastName);
+        expectedList.sort(byFirstAndLastName);
 
-        Assertions.assertEquals(newGroups, expectedList);
+        System.out.println(newAddresses);
+        System.out.println(expectedList);
+
+        for (int i = 0; i < expectedList.size(); i++) {
+            Assertions.assertEquals(expectedList.get(i).firstname(), newAddresses.get(i).firstname());
+            Assertions.assertEquals(expectedList.get(i).lastname(), newAddresses.get(i).lastname());
+        }
+        Assertions.assertEquals(newAddresses, expectedList);
+
     }
     @Test
     void cannotModifyAddress() {
-        GroupHelper groups = app.groups();
-        if (groups.getGroupsCount() == 0) {
-            groups.createGroup(new GroupData("", "group name", "group header", "group footer"));
+        AddressHelper address = app.address();
+        if (address.getAddressCount() == 0) {
+            address.createAddress(new AddressData());
         }
 
-        var oldGroups = groups.getListGroups();
+        var oldAddress = address.getListAddress();
         var rnd = new Random();
-        var index = rnd.nextInt(oldGroups.size());
-        var testData = new GroupData().withName("modified' name");
+        var index = rnd.nextInt(oldAddress.size());
+        var testData = new AddressData().withFirstname("modified' name");
 
-        groups.modifyGroup(oldGroups.get(index), testData);
+        address.modifyAddress(oldAddress.get(index), testData);
 
-        var newGroups = groups.getListGroups();
+        var newAddress = address.getListAddress();
 
-        Assertions.assertEquals(newGroups, oldGroups);
+        Assertions.assertEquals(newAddress, oldAddress);
     }
 }
