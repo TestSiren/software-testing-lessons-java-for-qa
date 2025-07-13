@@ -1,8 +1,9 @@
 package ru.stqa.addressbook.hbm;
 
 import jakarta.persistence.*;
-
+import java.util.List;
 import java.util.Date;
+import ru.stqa.addressbook.models.AddressData;
 
 @Entity
 @Table(name="group_list")

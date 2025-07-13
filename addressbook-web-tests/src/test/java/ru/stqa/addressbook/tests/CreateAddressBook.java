@@ -52,7 +52,7 @@ public class CreateAddressBook extends TestBase {
   }
 
   @Test
-  public void createAddressBook(AddressData address) {
+  public void createAddressBookWithGroup(AddressData address) {
     AddressHelper addresses = app.address();
     HibernateHelper hbm = app.hbm();
 

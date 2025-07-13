@@ -50,13 +50,13 @@ public class HibernateHelper extends HelperBase {
         ));
     }
 
-    public long getGroupsCount(){
+    public long getGroupsCount() {
         return sessionFactory.fromSession(session ->
                 session.createQuery("select count(*) from GroupRecord", Long.class).getSingleResult()
         );
     }
 
-    public void createGroup(GroupData groupData){
+    public void createGroup(GroupData groupData) {
         sessionFactory.inSession(session -> {
             session.getTransaction().begin();
             session.persist(convertGroup(groupData));
@@ -64,7 +64,7 @@ public class HibernateHelper extends HelperBase {
         });
     }
 
-    static List<AddressData> convertContactList(List<AddressData> records) {
+    static List<AddressData> convertContactList(List<ContactRecord> records) {
         List<AddressData> result = new ArrayList<>();
         for (var record : records) {
             result.add(convertContact(record));
@@ -72,54 +72,50 @@ public class HibernateHelper extends HelperBase {
         return result;
     }
 
-    private static AddressData convertContact(AddressData record) {
+    private static AddressData convertContact(ContactRecord record) {
+        List<String> emails = List.of(
+                record.email != null ? record.email : "",
+                record.email2 != null ? record.email2 : "",
+                record.email3 != null ? record.email3 : ""
+        );
+
+        int bday = record.bday != null ? record.bday.intValue() : 0;
+        int aday = record.aday != null ? record.aday.intValue() : 0;
+
+        String group = "";
+        if (record.group != null) {
+            group = record.group;
+        }
+
         return new AddressData(
                 String.valueOf(record.id),
-                record.firstname,
-                record.middlename,
-                record.lastname,
-                record.nickname,
-                record.company,
-                record.title,
-                record.address,
-                record.addrLong,
-                record.addrLat,
-                record.addrStatus,
-                record.home,
-                record.mobile,
-                record.work,
-                record.fax,
-                record.email,
-                record.email2,
-                record.email3,
-                record.im,
-                record.im2,
-                record.im3,
-                record.homepage,
-                record.bday,
-                record.bmonth,
-                record.byear,
-                record.aday,
-                record.amonth,
-                record.ayear,
-                record.address2,
-                record.phone2,
-                record.notes,
-                record.photo,
-                record.xVcard,
-                record.xActivesync,
-                record.created,
-                record.modified,
-                record.deprecated,
-                record.password,
-                record.login,
-                record.role
+                record.firstname != null ? record.firstname : "",
+                record.middlename != null ? record.middlename : "",
+                record.lastname != null ? record.lastname : "",
+                record.nickname != null ? record.nickname : "",
+                record.title != null ? record.title : "",
+                record.company != null ? record.company : "",
+                record.address != null ? record.address : "",
+                record.home != null ? record.home : "",
+                record.mobile != null ? record.mobile : "",
+                record.work != null ? record.work : "",
+                record.fax != null ? record.fax : "",
+                emails,
+                record.homepage != null ? record.homepage : "",
+                bday,
+                record.bmonth != null ? record.bmonth : "",
+                record.byear != null ? record.byear : "",
+                aday,
+                record.amonth != null ? record.amonth : "",
+                record.ayear != null ? record.ayear : "",
+                group,
+                record.photo != null ? record.photo : ""
         );
     }
 
-    private static AddressRecord convertContact(AddressData data) {
+    private static ContactRecord convertContact(AddressData data) {
         int id = data.id().isEmpty() ? 0 : Integer.parseInt(data.id());
-        AddressData record = new AddressData();
+        ContactRecord record = new ContactRecord();
         record.id = id;
         record.firstname = data.firstname();
         record.middlename = data.middlename();
@@ -128,38 +124,22 @@ public class HibernateHelper extends HelperBase {
         record.company = data.company();
         record.title = data.title();
         record.address = data.address();
-        record.addrLong = data.addr_long();
-        record.addrLat = data.addr_lat();
-        record.addrStatus = data.addr_status();
         record.home = data.home();
         record.mobile = data.mobile();
         record.work = data.work();
         record.fax = data.fax();
-        record.email = data.email();
-        record.email2 = data.email2();
-        record.email3 = data.email3();
-        record.im = data.im();
-        record.im2 = data.im2();
-        record.im3 = data.im3();
+        record.email = data.emails().size() > 0 ? data.emails().get(0) : "";
+        record.email2 = data.emails().size() > 1 ? data.emails().get(1) : "";
+        record.email3 = data.emails().size() > 2 ? data.emails().get(2) : "";
         record.homepage = data.homepage();
-        record.bday = data.bday();
+        record.bday = (byte) data.bday();
         record.bmonth = data.bmonth();
         record.byear = data.byear();
-        record.aday = data.aday();
+        record.aday = (byte) data.aday();
         record.amonth = data.amonth();
         record.ayear = data.ayear();
-        record.address2 = data.address2();
-        record.phone2 = data.phone2();
-        record.notes = data.notes();
+        record.group = data.group();
         record.photo = data.photo();
-        record.xVcard = data.x_vcard();
-        record.xActivesync = data.x_activesync();
-        record.created = data.created();
-        record.modified = data.modified();
-        record.deprecated = data.deprecated();
-        record.password = data.password();
-        record.login = data.login();
-        record.role = data.role();
         return record;
     }
 
@@ -169,13 +149,13 @@ public class HibernateHelper extends HelperBase {
         ));
     }
 
-    public long getContactsCount(){
+    public long getContactsCount() {
         return sessionFactory.fromSession(session ->
                 session.createQuery("select count(*) from ContactRecord", Long.class).getSingleResult()
         );
     }
 
-    public void createContact(AddressData contactData){
+    public void createContact(AddressData contactData) {
         sessionFactory.inSession(session -> {
             session.getTransaction().begin();
             session.persist(convertContact(contactData));
@@ -183,9 +163,10 @@ public class HibernateHelper extends HelperBase {
         });
     }
 
-    public List<AddressData> getContactsInGroup(GroupData group){
+    public List<AddressData> getContactsInGroup(GroupData group) {
         return sessionFactory.fromSession(session -> {
-return convertContactList(session.get(GroupRecord.class, group.id()).contacts);
+            GroupRecord gr = session.get(GroupRecord.class, Integer.parseInt(group.id()));
+            return convertContactList(gr.address);
         });
     }
 }
