@@ -4,10 +4,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import ru.stqa.addressbook.models.AddressData;
 import ru.stqa.addressbook.manager.AddressHelper;
-
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static ru.stqa.addressbook.comporators.AddressComparators.byFirstAndLastName;
-import static ru.stqa.addressbook.manager.AddressHelper.equalsByNamesAndId;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -22,39 +19,22 @@ public class AddressModificationTests extends TestBase {
         var oldAddress = address.getListAddress();
         var rnd = new Random();
         var index = rnd.nextInt(oldAddress.size());
-        var old = oldAddress.get(index);
-        var testData = new AddressData().withId(old.id())
-                .withFirstname("New First Name")
-                .withMiddlename(old.middlename())
-                .withLastname(old.lastname())
-                .withNickname(old.nickname())
-                .withTitle(old.title())
-                .withCompany(old.company())
-                .withAddress(old.address())
-                .withHome(old.home())
-                .withMobile(old.mobile())
-                .withWork(old.work())
-                .withFax(old.fax())
-                .withHomepage(old.homepage())
-                .withEmail(old.emails())
-                .withBday(old.bday())
-                .withBmonth(old.bmonth())
-                .withByear(old.byear())
-                .withAday(old.aday())
-                .withAmonth(old.amonth())
-                .withAyear(old.ayear())
-                .withGroup(old.group());
+        var testData = new AddressData().withFirstname("modified name");
 
-        address.modifyAddress(old, testData);
+        address.modifyAddress(oldAddress.get(index), testData);
 
         var newAddresses = address.getListAddress();
         var expectedList = new ArrayList<>(oldAddress);
-        expectedList.set(index, testData.withId(old.id()));
+        expectedList.set(index, testData.withId(oldAddress.get(index).id()));
 
         newAddresses.sort(byFirstAndLastName);
         expectedList.sort(byFirstAndLastName);
 
-        assertTrue(equalsByNamesAndId(newAddresses, expectedList));
+        for (int i = 0; i < expectedList.size(); i++) {
+            Assertions.assertEquals(expectedList.get(i).firstname(), newAddresses.get(i).firstname());
+            Assertions.assertEquals(expectedList.get(i).lastname(), newAddresses.get(i).lastname());
+        }
+        Assertions.assertEquals(newAddresses, expectedList);
 
     }
     @Test

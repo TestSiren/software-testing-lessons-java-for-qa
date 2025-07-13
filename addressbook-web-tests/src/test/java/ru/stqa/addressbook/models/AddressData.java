@@ -105,6 +105,12 @@ public record AddressData(
                 bmonth, byear, aday, amonth, ayear, group, photo);
     }
 
+    public AddressData withEmail(List<String> value) {
+        return new AddressData(id, firstname, middlename, lastname, nickname, title,
+                company, address, home, mobile, work, fax, value, homepage, bday,
+                bmonth, byear, aday, amonth, ayear, group, photo);
+    }
+
     public AddressData withHomepage(String value) {
         return new AddressData(id, firstname, middlename, lastname, nickname, title,
                 company, address, home, mobile, work, fax, emails, value, bday,
@@ -151,12 +157,6 @@ public record AddressData(
         return new AddressData(id, firstname, middlename, lastname, nickname, title,
                 company, address, home, mobile, work, fax, emails, homepage, bday,
                 bmonth, byear, aday, amonth, ayear, value, photo);
-    }
-
-    public AddressData withEmail(List<String> value) {
-        return new AddressData(id, firstname, middlename, lastname, nickname, title,
-                company, address, home, mobile, work, fax, value, homepage, bday,
-                bmonth, byear, aday, amonth, ayear, group, photo);
     }
 
     public AddressData withPhoto(String photo) {

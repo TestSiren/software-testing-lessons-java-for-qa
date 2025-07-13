@@ -19,13 +19,7 @@ public class AddressHelper extends HelperBase {
 
     public void createAddress(AddressData addressData) {
         buttonClick(By.linkText("add new"));
-        fillAddressForm(addressData);
-        select(By.name("new_group"), addressData.group());
-        buttonClick(By.name("submit"));
-        buttonClick(By.linkText("home page"));
-    }
 
-    private void fillAddressForm(AddressData addressData) {
         type(By.name("firstname"), addressData.firstname());
         type(By.name("middlename"), addressData.middlename());
         type(By.name("lastname"), addressData.lastname());
@@ -56,16 +50,22 @@ public class AddressHelper extends HelperBase {
         select(By.name("aday"), String.valueOf(addressData.aday()));
         select(By.name("amonth"), addressData.amonth());
         type(By.name("ayear"), addressData.ayear());
+
+        select(By.name("new_group"), addressData.group());
+        attach(By.name("photo"), addressData.photo());
+        buttonClick(By.name("submit"));
+        buttonClick(By.linkText("home page"));
     }
-    private void selectCheckbox(AddressData address){
+
+    private void selectCheckbox(AddressData address) {
         openAddressPage();
-        buttonClick(By.cssSelector(String.format(("input[value ='%s']"), address.id())));
+        buttonClick(By.cssSelector(String.format("input[value='%s']", address.id())));
     }
 
     public int getAddressCount() {
         openAddressPage();
         List<WebElement> rows = driver.findElements(By.cssSelector("tbody tr"));
-        int count = rows.size() > 1 ? rows.size() - 1 : 0; // исключаем заголовок
+        int count = rows.size() > 1 ? rows.size() - 1 : 0;
         return count;
     }
 
@@ -107,12 +107,10 @@ public class AddressHelper extends HelperBase {
             String address = cells.get(3).getText();
 
             var emailElements = cells.get(4).findElements(By.tagName("a"));
-
             List<String> emails = new ArrayList<>();
             for (var emailElement : emailElements) {
                 emails.add(emailElement.getText());
             }
-
 
             addressList.add(new AddressData()
                     .withId(id)
@@ -136,31 +134,17 @@ public class AddressHelper extends HelperBase {
             }
         }
         return true;
+    }
 
     public void modifyAddress(AddressData address, AddressData modifiedAddress) {
         openAddressPage();
         editAddress(address);
-        fillAddressForm(modifiedAddress);
+        type(By.name("firstname"), modifiedAddress.firstname());
         buttonClick(By.name("update"));
         openAddressPage();
     }
 
     private void editAddress(AddressData address) {
         buttonClick(By.cssSelector(String.format("a[href='edit.php?id=%s']", address.id())));
-
     }
-
-        public static boolean equalsByNamesAndId(List<AddressData> actual, List<AddressData> expected) {
-            if (actual.size() != expected.size()) return false;
-            for (int i = 0; i < actual.size(); i++) {
-                AddressData a = actual.get(i);
-                AddressData e = expected.get(i);
-                if (!Objects.equals(a.id(), e.id()) ||
-                        !Objects.equals(a.firstname(), e.firstname()) ||
-                        !Objects.equals(a.lastname(), e.lastname())) {
-                    return false;
-                }
-            }
-            return true;
-        }
-    }
+}

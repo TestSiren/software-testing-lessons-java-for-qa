@@ -2,9 +2,9 @@ package ru.stqa.addressbook.dataproviders;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import ru.stqa.addressbook.common.CommonFunctions;
 import ru.stqa.addressbook.models.AddressData;
-import ru.stqa.addressbook.models.GroupData;
+import ru.stqa.addressbook.common.CommonFunctions;
+
 
 import java.io.File;
 import java.io.IOException;
@@ -20,12 +20,12 @@ public class AddressProvider {
 
     public static List<AddressData> addressProvider() throws IOException {
         var result = new ArrayList<AddressData>();
-        ObjectMapper mapper = new ObjectMapper(); // create once, reuse
-        var value = mapper.readValue(new File(addressFilePath), new TypeReference<List<AddressData>>() {});
-        result.addAll(value);
-        return result;
-    }
 
+        if (addressFilePath != null && !addressFilePath.isEmpty()) {
+            ObjectMapper mapper = new ObjectMapper();
+            var fromFile = mapper.readValue(new File(addressFilePath), new TypeReference<List<AddressData>>() {});
+            result.addAll(fromFile);
+        }
 
         for (var firstname : List.of("John")) {
             for (var lastname : List.of("Doe")) {
@@ -34,12 +34,12 @@ public class AddressProvider {
                             .withFirstname(firstname)
                             .withLastname(lastname)
                             .withEmail(List.of(email))
-                                    .withBday(randomDay())
-                                    .withBmonth(randomMonths())
-                            .withByear(randomYear())
-                            .withAday(randomDay())
-                            .withAmonth(randomMonths())
-                            .withAyear(randomYear())
+                            .withBday(CommonFunctions.randomDay())
+                            .withBmonth(CommonFunctions.randomMonths())
+                            .withByear(CommonFunctions.randomYear())
+                            .withAday(CommonFunctions.randomDay())
+                            .withAmonth(CommonFunctions.randomMonths())
+                            .withAyear(CommonFunctions.randomYear())
                             .withMobile("99999999999")
                             .withAddress("Test address"));
                 }
@@ -48,9 +48,9 @@ public class AddressProvider {
 
         for (int i = 0; i < 5; i++) {
             result.add(new AddressData()
-                    .withFirstname(randomString(i * 5))
-                    .withLastname(randomString(i * 5))
-                    .withEmail(List.of(randomString(i * 5) + "@example.com"))
+                    .withFirstname(CommonFunctions.randomString(i * 5))
+                    .withLastname(CommonFunctions.randomString(i * 5))
+                    .withEmail(List.of(CommonFunctions.randomString(i * 5) + "@example.com"))
                     .withMobile("99999" + i)
                     .withAddress("Random address " + i));
         }
@@ -58,13 +58,15 @@ public class AddressProvider {
         return result;
     }
 
-    public static List<AddressData> negativeAddressProvider() {
-        var result = new ArrayList<AddressData>(List.of(
-                new AddressData()
-                        .withFirstname("Bad")
-                        .withLastname("Email")
-                        .withEmail(List.of("bademail'"))
-        ));
+    public static List<AddressData> negativeAddressProvider() throws IOException {
+        var positive = addressProvider();
+        var result = new ArrayList<AddressData>();
+
+        for (AddressData address : positive) {
+            AddressData modified = address.withFirstname("'" + address.firstname());
+            result.add(modified);
+        }
+
         return result;
     }
 }

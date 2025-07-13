@@ -13,6 +13,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class Generator {
     @Parameter(names={"--type", "-t"})
@@ -76,7 +77,7 @@ public class Generator {
             result.add(new AddressData()
                     .withFirstname(CommonFunctions.randomString(i * 5))
                     .withLastname(CommonFunctions.randomString(i * 5))
-                    .withEmail(CommonFunctions.randomString(i * 5) + "@example.com")
+                    .withEmail(List.of(CommonFunctions.randomString(i * 5) + "@example.com"))
                     .withBday(CommonFunctions.randomDay())
                     .withPhoto(CommonFunctions.randomFile(imagesDir))
                     .withBmonth(CommonFunctions.randomMonths())
