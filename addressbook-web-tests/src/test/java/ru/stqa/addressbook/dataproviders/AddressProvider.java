@@ -1,55 +1,36 @@
 package ru.stqa.addressbook.dataproviders;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import ru.stqa.addressbook.common.CommonFunctions;
 import ru.stqa.addressbook.models.AddressData;
+import ru.stqa.addressbook.models.GroupData;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static ru.stqa.addressbook.tests.TestBase.*;
-
 public class AddressProvider {
 
-    public static List<AddressData> addressProvider() {
+    public static List<AddressData> addressProvider() throws IOException {
         var result = new ArrayList<AddressData>();
-
-        for (var firstname : List.of("John")) {
-            for (var lastname : List.of("Doe")) {
-                for (var email : List.of("john@example.com")) {
-                    result.add(new AddressData()
-                            .withFirstname(firstname)
-                            .withLastname(lastname)
-                            .withEmail(email)
-                                    .withBday(randomDay())
-                                    .withBmonth(randomMonths())
-                            .withByear(randomYear())
-                            .withAday(randomDay())
-                            .withAmonth(randomMonths())
-                            .withAyear(randomYear())
-                            .withMobile("99999999999")
-                            .withAddress("Test address"));
-                }
-            }
-        }
-
-        for (int i = 0; i < 5; i++) {
-            result.add(new AddressData()
-                    .withFirstname(randomString(i * 5))
-                    .withLastname(randomString(i * 5))
-                    .withEmail(randomString(i * 5) + "@example.com")
-                    .withMobile("99999" + i)
-                    .withAddress("Random address " + i));
-        }
-
+        ObjectMapper mapper = new ObjectMapper(); // create once, reuse
+        var value = mapper.readValue(new File("src/test/resources/address.json"), new TypeReference<List<AddressData>>() {});
+        result.addAll(value);
         return result;
     }
 
-    public static List<AddressData> negativeAddressProvider() {
-        var result = new ArrayList<AddressData>(List.of(
-                new AddressData()
-                        .withFirstname("Bad")
-                        .withLastname("Email")
-                        .withEmail("bademail'")
-        ));
+    public static List<AddressData> negativeAddressProvider() throws IOException {
+        var positive = addressProvider();
+        var result = new ArrayList<AddressData>();
+
+        for (AddressData address : positive) {
+            AddressData modified = new AddressData()
+                    .withFirstname("'" + address.firstname());
+            result.add(modified);
+        }
+
         return result;
     }
 }
