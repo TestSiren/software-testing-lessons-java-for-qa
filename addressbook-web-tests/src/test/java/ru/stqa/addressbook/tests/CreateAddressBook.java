@@ -33,9 +33,6 @@ public class CreateAddressBook extends TestBase {
 
 
     expectedList.sort(byId);
-    System.out.println(newAddresses);
-    System.out.println(expectedList);
-
     assertTrue(equalsByNamesAndId(newAddresses, expectedList));
 
   }
