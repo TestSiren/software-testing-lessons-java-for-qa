@@ -10,7 +10,6 @@ import java.util.List;
 import java.util.Objects;
 
 import ru.stqa.addressbook.models.AddressData;
-import ru.stqa.addressbook.models.GroupData;
 
 public class AddressHelper extends HelperBase {
 
@@ -53,7 +52,7 @@ public class AddressHelper extends HelperBase {
         type(By.name("ayear"), addressData.ayear());
 
         select(By.name("new_group"), addressData.group());
-
+        attach(By.name("photo"), addressData.photo());
         buttonClick(By.name("submit"));
         buttonClick(By.linkText("home page"));
     }
@@ -136,5 +135,17 @@ public class AddressHelper extends HelperBase {
             }
         }
         return true;
+
+    public void modifyAddress(AddressData address, AddressData modifiedAddress) {
+        openAddressPage();
+        editAddress(address);
+        type(By.name("firstname"), modifiedAddress.firstname());
+        buttonClick(By.name("update"));
+        openAddressPage();
+    }
+
+    private void editAddress(AddressData address) {
+        buttonClick(By.cssSelector(String.format("a[href='edit.php?id=%s']", address.id())));
+
     }
 }

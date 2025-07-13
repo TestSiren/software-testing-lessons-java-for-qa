@@ -1,16 +1,31 @@
 package ru.stqa.addressbook.dataproviders;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import ru.stqa.addressbook.common.CommonFunctions;
 import ru.stqa.addressbook.models.AddressData;
+import ru.stqa.addressbook.models.GroupData;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static ru.stqa.addressbook.tests.TestBase.*;
-
 public class AddressProvider {
+    private static String addressFilePath;
 
-    public static List<AddressData> addressProvider() {
+    public static void setAddressFilePath(String path) {
+        addressFilePath = path;
+    }
+
+    public static List<AddressData> addressProvider() throws IOException {
         var result = new ArrayList<AddressData>();
+        ObjectMapper mapper = new ObjectMapper(); // create once, reuse
+        var value = mapper.readValue(new File(addressFilePath), new TypeReference<List<AddressData>>() {});
+        result.addAll(value);
+        return result;
+    }
+
 
         for (var firstname : List.of("John")) {
             for (var lastname : List.of("Doe")) {
