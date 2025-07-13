@@ -18,7 +18,7 @@ public class AddressProvider {
                     result.add(new AddressData()
                             .withFirstname(firstname)
                             .withLastname(lastname)
-                            .withEmail(email)
+                            .withEmail(List.of(email))
                                     .withBday(randomDay())
                                     .withBmonth(randomMonths())
                             .withByear(randomYear())
@@ -35,7 +35,7 @@ public class AddressProvider {
             result.add(new AddressData()
                     .withFirstname(randomString(i * 5))
                     .withLastname(randomString(i * 5))
-                    .withEmail(randomString(i * 5) + "@example.com")
+                    .withEmail(List.of(randomString(i * 5) + "@example.com"))
                     .withMobile("99999" + i)
                     .withAddress("Random address " + i));
         }
@@ -48,7 +48,7 @@ public class AddressProvider {
                 new AddressData()
                         .withFirstname("Bad")
                         .withLastname("Email")
-                        .withEmail("bademail'")
+                        .withEmail(List.of("bademail'"))
         ));
         return result;
     }

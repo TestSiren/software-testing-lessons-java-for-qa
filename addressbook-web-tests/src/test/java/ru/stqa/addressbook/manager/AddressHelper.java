@@ -30,9 +30,16 @@ public class AddressHelper extends HelperBase {
         type(By.name("mobile"), addressData.mobile());
         type(By.name("work"), addressData.work());
         type(By.name("fax"), addressData.fax());
-        type(By.name("email"), addressData.email());
-        type(By.name("email2"), addressData.email2());
-        type(By.name("email3"), addressData.email3());
+
+        List<String> emails = addressData.emails();
+        String email1 = emails.size() > 0 ? emails.get(0) : "";
+        String email2 = emails.size() > 1 ? emails.get(1) : "";
+        String email3 = emails.size() > 2 ? emails.get(2) : "";
+
+        type(By.name("email"), email1);
+        type(By.name("email2"), email2);
+        type(By.name("email3"), email3);
+
         type(By.name("homepage"), addressData.homepage());
 
         select(By.name("bday"), String.valueOf(addressData.bday()));
@@ -98,18 +105,19 @@ public class AddressHelper extends HelperBase {
             String address = cells.get(3).getText();
 
             var emailElements = cells.get(4).findElements(By.tagName("a"));
-            String email = emailElements.size() > 0 ? emailElements.get(0).getText() : null;
-            String email2 = emailElements.size() > 1 ? emailElements.get(1).getText() : null;
-            String email3 = emailElements.size() > 2 ? emailElements.get(2).getText() : null;
+
+            List<String> emails = new ArrayList<>();
+            for (var emailElement : emailElements) {
+                emails.add(emailElement.getText());
+            }
+
 
             addressList.add(new AddressData()
                     .withId(id)
                     .withFirstname(firstname)
                     .withLastname(lastname)
                     .withAddress(address)
-                    .withEmail(email)
-                    .withEmail2(email2)
-                    .withEmail3(email3));
+                    .withEmail(emails));
         }
         return addressList;
     }
