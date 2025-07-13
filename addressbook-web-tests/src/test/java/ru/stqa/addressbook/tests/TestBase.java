@@ -30,6 +30,9 @@ public class TestBase {
     }
 
     @AfterEach
+    void checkDatabaseConsistency(){
+        app.jdbc().checkConsistency();
+    }
     public void tearDown() {
         app.session().logout();
     }
