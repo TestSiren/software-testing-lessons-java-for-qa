@@ -7,8 +7,6 @@ import org.openqa.selenium.Alert;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
-
 import ru.stqa.addressbook.models.AddressData;
 
 public class AddressHelper extends HelperBase {
@@ -31,16 +29,9 @@ public class AddressHelper extends HelperBase {
         type(By.name("mobile"), addressData.mobile());
         type(By.name("work"), addressData.work());
         type(By.name("fax"), addressData.fax());
-
-        List<String> emails = addressData.emails();
-        String email1 = emails.size() > 0 ? emails.get(0) : "";
-        String email2 = emails.size() > 1 ? emails.get(1) : "";
-        String email3 = emails.size() > 2 ? emails.get(2) : "";
-
-        type(By.name("email"), email1);
-        type(By.name("email2"), email2);
-        type(By.name("email3"), email3);
-
+        type(By.name("email"), addressData.email());
+        type(By.name("email2"), addressData.email2());
+        type(By.name("email3"), addressData.email3());
         type(By.name("homepage"), addressData.homepage());
 
         select(By.name("bday"), String.valueOf(addressData.bday()));
@@ -106,35 +97,22 @@ public class AddressHelper extends HelperBase {
             String address = cells.get(3).getText();
 
             var emailElements = cells.get(4).findElements(By.tagName("a"));
-
-            List<String> emails = new ArrayList<>();
-            for (var emailElement : emailElements) {
-                emails.add(emailElement.getText());
-            }
-
+            String email = emailElements.size() > 0 ? emailElements.get(0).getText() : null;
+            String email2 = emailElements.size() > 1 ? emailElements.get(1).getText() : null;
+            String email3 = emailElements.size() > 2 ? emailElements.get(2).getText() : null;
 
             addressList.add(new AddressData()
                     .withId(id)
                     .withFirstname(firstname)
                     .withLastname(lastname)
                     .withAddress(address)
-                    .withEmail(emails));
+                    .withEmail(email)
+                    .withEmail2(email2)
+                    .withEmail3(email3));
         }
         return addressList;
     }
 
-    public static boolean equalsByNamesAndId(List<AddressData> actual, List<AddressData> expected) {
-        if (actual.size() != expected.size()) return false;
-        for (int i = 0; i < actual.size(); i++) {
-            AddressData a = actual.get(i);
-            AddressData e = expected.get(i);
-            if (!Objects.equals(a.id(), e.id()) ||
-                    !Objects.equals(a.firstname(), e.firstname()) ||
-                    !Objects.equals(a.lastname(), e.lastname())) {
-                return false;
-            }
-        }
-        return true;
 
     public void modifyAddress(AddressData address, AddressData modifiedAddress) {
         openAddressPage();
@@ -146,6 +124,5 @@ public class AddressHelper extends HelperBase {
 
     private void editAddress(AddressData address) {
         buttonClick(By.cssSelector(String.format("a[href='edit.php?id=%s']", address.id())));
-
     }
 }
