@@ -7,6 +7,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import ru.stqa.addressbook.common.CommonFunctions;
+
 
 public class GroupProvider  {
     private static String groupsFilePath;
@@ -16,7 +18,7 @@ public class GroupProvider  {
     }
     public static List<GroupData> groupProvider() throws IOException {
         var result = new ArrayList<GroupData>();
-        ObjectMapper mapper = new ObjectMapper(); // create once, reuse
+        ObjectMapper mapper = new ObjectMapper();
         var value = mapper.readValue(new File(groupsFilePath), new TypeReference<List<GroupData>>() {});
         result.addAll(value);
         return result;
@@ -37,5 +39,11 @@ public class GroupProvider  {
 
         return result;
     }
-
+    public static List<GroupData> singleRandomGroup() {
+        return List.of(new GroupData()
+                .withName(CommonFunctions.randomString(10))
+                .withHeader(CommonFunctions.randomString(10))
+                .withFooter(CommonFunctions.randomString(10))
+                );
+    }
 }

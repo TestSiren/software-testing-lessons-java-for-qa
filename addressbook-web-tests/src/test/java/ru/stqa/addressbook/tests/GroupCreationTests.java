@@ -12,27 +12,29 @@ public class GroupCreationTests extends TestBase {
 
 
   @ParameterizedTest
-  @MethodSource("ru.stqa.addressbook.dataproviders.GroupProvider#groupProvider")
+  @MethodSource("ru.stqa.addressbook.dataproviders.GroupProvider#singleRandomGroup")
   public void creationMultipleGroups(GroupData group){
     GroupHelper groups = app.groups();
 
-    var oldGroups = groups.getListGroups();
+    var oldGroups = app.jdbc().getGroupList();
 
     groups.createGroup(group);
 
-    var newGroups = groups.getListGroups();
+    var newGroups = app.jdbc().getGroupList();
 
     newGroups.sort(compareById);
 
+    var maxId = newGroups.get(newGroups.size() - 1).id();
+
     var expectedList = new ArrayList<>(oldGroups);
-    expectedList.add(group.withId(newGroups.get(newGroups.size() - 1).id()).withHeader("").withFooter(""));
+    expectedList.add(group.withId(maxId));
     expectedList.sort(compareById);
 
     Assertions.assertEquals(newGroups, expectedList);
   }
 
   @ParameterizedTest
-  @MethodSource("ru.stqa.addressbook.dataproviders.GroupProvider#negativeGroupProvider")
+  @MethodSource("ru.stqa.addressbook.dataproviders.GroupProvider#singleRandomGroup")
   public void cannotCreateGroup(GroupData group){
     GroupHelper groups = app.groups();
 
