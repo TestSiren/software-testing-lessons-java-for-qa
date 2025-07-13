@@ -124,6 +124,19 @@ public class AddressHelper extends HelperBase {
         return addressList;
     }
 
+    public static boolean equalsByNamesAndId(List<AddressData> actual, List<AddressData> expected) {
+        if (actual.size() != expected.size()) return false;
+        for (int i = 0; i < actual.size(); i++) {
+            AddressData a = actual.get(i);
+            AddressData e = expected.get(i);
+            if (!Objects.equals(a.id(), e.id()) ||
+                    !Objects.equals(a.firstname(), e.firstname()) ||
+                    !Objects.equals(a.lastname(), e.lastname())) {
+                return false;
+            }
+        }
+        return true;
+
     public void modifyAddress(AddressData address, AddressData modifiedAddress) {
         openAddressPage();
         editAddress(address);
@@ -134,6 +147,7 @@ public class AddressHelper extends HelperBase {
 
     private void editAddress(AddressData address) {
         buttonClick(By.cssSelector(String.format("a[href='edit.php?id=%s']", address.id())));
+
     }
 
         public static boolean equalsByNamesAndId(List<AddressData> actual, List<AddressData> expected) {

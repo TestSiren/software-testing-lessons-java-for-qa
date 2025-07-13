@@ -4,6 +4,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
+import java.nio.file.Paths;
+
 public class HelperBase {
     protected final ApplicationManager manager;
     protected WebDriver driver;
@@ -24,6 +26,13 @@ public class HelperBase {
         element.clear();
         if (text != null && !text.equals(element.getAttribute("value"))) {
             element.sendKeys(text);
+        }
+    }
+
+    protected void attach(By locator, String file) {
+        WebElement element = driver.findElement(locator);
+        if (file != null && !file.equals(element.getAttribute("value"))) {
+            element.sendKeys(Paths.get(file).toAbsolutePath().toString());
         }
     }
 
