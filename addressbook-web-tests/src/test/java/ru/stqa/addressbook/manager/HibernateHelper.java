@@ -19,7 +19,7 @@ public class HibernateHelper extends HelperBase {
         super(manager);
         sessionFactory = new Configuration()
                 .addAnnotatedClass(GroupRecord.class)
-                .setProperty(URL, "jdbc:mysql://localhost/addressbook")
+                .setProperty(URL, "jdbc:mysql://localhost/addressbook?zeroDateTimeBehavior=convertToNull")
                 .setProperty(USER, "root")
                 .setProperty(PASS, "")
                 .buildSessionFactory();
@@ -37,9 +37,30 @@ public class HibernateHelper extends HelperBase {
         return new GroupData(String.valueOf(record.id), record.name, record.header, record.footer);
     }
 
+    private static GroupRecord convert(GroupData data) {
+        var id = data.id();
+        if ("".equals(id)) {
+            id = "0";
+        }
+        return new GroupRecord(Integer.parseInt(data.id()), data.name(), data.header(), data.footer());
+    }
+
     public List<GroupData> getGroupList() {
         return convertList(sessionFactory.fromSession(session -> {
             return session.createQuery("from GroupRecord", GroupRecord.class).list();
         }));
+    }
+
+    public long getGroupsCount(){
+        return sessionFactory.fromSession(session -> {
+            return session.createQuery("select count (*) from GroupRecord", Long.class).getSingleResult();
+        });
+    }
+    public void createGroup(GroupData groupData){
+        sessionFactory.inSession(session -> {
+            session.getTransaction().begin();
+            session.persist(convert(groupData));
+            session.getTransaction().commit();
+        });
     }
 }
