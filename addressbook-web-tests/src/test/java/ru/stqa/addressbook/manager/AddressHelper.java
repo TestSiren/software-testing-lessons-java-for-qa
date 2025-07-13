@@ -19,7 +19,13 @@ public class AddressHelper extends HelperBase {
 
     public void createAddress(AddressData addressData) {
         buttonClick(By.linkText("add new"));
+        fillAddressForm(addressData);
+        select(By.name("new_group"), addressData.group());
+        buttonClick(By.name("submit"));
+        buttonClick(By.linkText("home page"));
+    }
 
+    private void fillAddressForm(AddressData addressData) {
         type(By.name("firstname"), addressData.firstname());
         type(By.name("middlename"), addressData.middlename());
         type(By.name("lastname"), addressData.lastname());
@@ -50,11 +56,6 @@ public class AddressHelper extends HelperBase {
         select(By.name("aday"), String.valueOf(addressData.aday()));
         select(By.name("amonth"), addressData.amonth());
         type(By.name("ayear"), addressData.ayear());
-
-        select(By.name("new_group"), addressData.group());
-
-        buttonClick(By.name("submit"));
-        buttonClick(By.linkText("home page"));
     }
     private void selectCheckbox(AddressData address){
         openAddressPage();
@@ -126,7 +127,7 @@ public class AddressHelper extends HelperBase {
     public void modifyAddress(AddressData address, AddressData modifiedAddress) {
         openAddressPage();
         editAddress(address);
-        type(By.name("firstname"), modifiedAddress.firstname());
+        fillAddressForm(modifiedAddress);
         buttonClick(By.name("update"));
         openAddressPage();
     }
