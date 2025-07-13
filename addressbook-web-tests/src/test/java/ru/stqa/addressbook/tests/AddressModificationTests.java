@@ -23,7 +23,7 @@ public class AddressModificationTests extends TestBase {
 
         address.modifyAddress(oldAddress.get(index), testData);
 
-        var newAddresses = address.getListAddressGir cherry-pick commit hash();
+        var newAddresses = address.getListAddress();
         var expectedList = new ArrayList<>(oldAddress);
         expectedList.set(index, testData.withId(oldAddress.get(index).id()));
 
