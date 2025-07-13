@@ -7,6 +7,8 @@ import org.openqa.selenium.Alert;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+
 import ru.stqa.addressbook.models.AddressData;
 import ru.stqa.addressbook.models.GroupData;
 
@@ -120,5 +122,19 @@ public class AddressHelper extends HelperBase {
                     .withEmail(emails));
         }
         return addressList;
+    }
+
+    public static boolean equalsByNamesAndId(List<AddressData> actual, List<AddressData> expected) {
+        if (actual.size() != expected.size()) return false;
+        for (int i = 0; i < actual.size(); i++) {
+            AddressData a = actual.get(i);
+            AddressData e = expected.get(i);
+            if (!Objects.equals(a.id(), e.id()) ||
+                    !Objects.equals(a.firstname(), e.firstname()) ||
+                    !Objects.equals(a.lastname(), e.lastname())) {
+                return false;
+            }
+        }
+        return true;
     }
 }
