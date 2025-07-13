@@ -11,6 +11,7 @@ public class ApplicationManager {
     private GroupHelper groups;
     private HelperBase helper;
     private AddressHelper address;
+    private JDBCHelper jdbc;
 
 
     public void init(String browser) {
@@ -54,6 +55,14 @@ public class ApplicationManager {
             helper = new HelperBase(this);
         }
         return helper;
+    }
+
+    public JDBCHelper jdbc(){
+        if(jdbc==null) {
+            jdbc = new JDBCHelper(this);
+        }
+
+        return jdbc;
     }
 
 
