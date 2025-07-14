@@ -5,7 +5,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 import ru.stqa.addressbook.manager.GroupHelper;
 import ru.stqa.addressbook.models.GroupData;
-import static ru.stqa.addressbook.comporators.GroupComporators.compareById;
+import static ru.stqa.addressbook.comporators.GroupComporators.compareByIdAndName;
 import java.util.ArrayList;
 
 public class GroupCreationTests extends TestBase {
@@ -22,22 +22,22 @@ public class GroupCreationTests extends TestBase {
 
     var newGroups = app.hbm().getGroupList();
 
-    newGroups.sort(compareById);
+    newGroups.sort(compareByIdAndName);
 
     var maxId = newGroups.get(newGroups.size() - 1).id();
 
     var expectedList = new ArrayList<>(oldGroups);
-    expectedList.add(group.withId(maxId));
-    expectedList.sort(compareById);
+    expectedList.add(group
+            .withId(maxId)
+            .withName(group.name()));
+    expectedList.sort(compareByIdAndName);
 
     Assertions.assertEquals(newGroups, expectedList);
-/*
+
 //id и имя сравнивать
     var NewUIgroups = groups.getListGroups();
-    NewUIgroups.sort(compareById);
+    NewUIgroups.sort(compareByIdAndName);
     Assertions.assertEquals(NewUIgroups, expectedList);
-
- */
 
   }
 
