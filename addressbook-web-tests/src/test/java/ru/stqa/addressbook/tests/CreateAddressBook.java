@@ -4,12 +4,10 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 import ru.stqa.addressbook.manager.AddressHelper;
-import static ru.stqa.addressbook.manager.AddressHelper.equalsByNamesAndId;
 import ru.stqa.addressbook.models.AddressData;
 
 import java.util.ArrayList;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static ru.stqa.addressbook.comporators.AddressComparators.byId;
 
 
@@ -33,7 +31,7 @@ public class CreateAddressBook extends TestBase {
 
 
     expectedList.sort(byId);
-    assertTrue(equalsByNamesAndId(newAddresses, expectedList));
+    Assertions.assertEquals(newAddresses, expectedList);
 
   }
   @ParameterizedTest

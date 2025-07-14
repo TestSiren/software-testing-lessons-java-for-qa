@@ -5,9 +5,7 @@ import org.junit.jupiter.api.Test;
 import ru.stqa.addressbook.models.AddressData;
 import ru.stqa.addressbook.manager.AddressHelper;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static ru.stqa.addressbook.comporators.AddressComparators.byFirstAndLastName;
-import static ru.stqa.addressbook.manager.AddressHelper.equalsByNamesAndId;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -54,7 +52,7 @@ public class AddressModificationTests extends TestBase {
         newAddresses.sort(byFirstAndLastName);
         expectedList.sort(byFirstAndLastName);
 
-        assertTrue(equalsByNamesAndId(newAddresses, expectedList));
+        Assertions.assertEquals(newAddresses, expectedList);
 
     }
     @Test

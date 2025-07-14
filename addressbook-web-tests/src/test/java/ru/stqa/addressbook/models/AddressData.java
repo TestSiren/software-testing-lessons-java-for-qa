@@ -1,6 +1,7 @@
 package ru.stqa.addressbook.models;
 
 import java.util.List;
+import java.util.Objects;
 
 public record AddressData(
         String id,
@@ -164,4 +165,19 @@ public record AddressData(
                 company, address, home, mobile, work, fax, emails, homepage, bday,
                 bmonth, byear, aday, amonth, ayear, group, photo);
     }
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        AddressData that = (AddressData) o;
+        return Objects.equals(id, that.id) &&
+                Objects.equals(firstname, that.firstname) &&
+                Objects.equals(lastname, that.lastname);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, firstname, lastname);
+    }
+
 }
