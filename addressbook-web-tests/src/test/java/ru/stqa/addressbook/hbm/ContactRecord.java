@@ -8,15 +8,12 @@ import jakarta.persistence.Table;
 import java.util.Date;
 
 @Entity
-@Table(name = "contact") // подставьте имя таблицы
+@Table(name = "addressbook")
 public class ContactRecord {
 
     @Id
     @Column(name = "id")
     public int id;
-
-    @Column(name = "domain_id", nullable = false)
-    public int domainId;
 
     @Column(name = "firstname")
     public String firstname;
@@ -137,53 +134,10 @@ public class ContactRecord {
 
     public ContactRecord() {}
 
-    public ContactRecord(int id, int domainId, String firstname, String middlename, String lastname, String nickname,
-                         String company, String title, String address, String addrLong, String addrLat, String addrStatus,
-                         String home, String mobile, String work, String fax, String email, String email2, String email3,
-                         String im, String im2, String im3, String homepage, Byte bday, String bmonth, String byear,
-                         Byte aday, String amonth, String ayear, String address2, String phone2, String notes, String photo,
-                         String xVcard, String xActivesync, Date created, Date modified, Date deprecated,
-                         String password, Date login, String role) {
+    public ContactRecord(int id, String firstname, String lastname, String address) {
         this.id = id;
-        this.domainId = domainId;
         this.firstname = firstname;
-        this.middlename = middlename;
         this.lastname = lastname;
-        this.nickname = nickname;
-        this.company = company;
-        this.title = title;
         this.address = address;
-        this.addrLong = addrLong;
-        this.addrLat = addrLat;
-        this.addrStatus = addrStatus;
-        this.home = home;
-        this.mobile = mobile;
-        this.work = work;
-        this.fax = fax;
-        this.email = email;
-        this.email2 = email2;
-        this.email3 = email3;
-        this.im = im;
-        this.im2 = im2;
-        this.im3 = im3;
-        this.homepage = homepage;
-        this.bday = bday;
-        this.bmonth = bmonth;
-        this.byear = byear;
-        this.aday = aday;
-        this.amonth = amonth;
-        this.ayear = ayear;
-        this.address2 = address2;
-        this.phone2 = phone2;
-        this.notes = notes;
-        this.photo = photo;
-        this.xVcard = xVcard;
-        this.xActivesync = xActivesync;
-        this.created = created;
-        this.modified = modified;
-        this.deprecated = deprecated;
-        this.password = password;
-        this.login = login;
-        this.role = role;
     }
 }

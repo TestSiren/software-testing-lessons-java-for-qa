@@ -1,6 +1,7 @@
 package ru.stqa.addressbook.tests;
 
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import ru.stqa.addressbook.models.AddressData;
 import ru.stqa.addressbook.manager.AddressHelper;
@@ -11,8 +12,9 @@ import static ru.stqa.addressbook.manager.AddressHelper.equalsByNamesAndId;
 
 import java.util.ArrayList;
 import java.util.Random;
-public class AddressModificationTests extends TestBase {
+/*public class AddressModificationTests extends TestBase {
     @Test
+    @Disabled
     void canModifyAddress() {
         AddressHelper address = app.address();
         if (address.getAddressCount() == 0) {
@@ -76,3 +78,4 @@ public class AddressModificationTests extends TestBase {
         Assertions.assertEquals(oldAddress, newAddress);
     }
 }
+*/

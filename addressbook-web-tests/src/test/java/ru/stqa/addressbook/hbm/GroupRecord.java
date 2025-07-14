@@ -23,7 +23,7 @@ public Date deprecated = new Date();
 @JoinTable(name = "address_in_groups",
         joinColumns = @JoinColumn(name = "group_id"),
 inverseJoinColumns = @JoinColumn(name = "id"))
-public List<AddressData> address;
+public List<ContactRecord> contacts;
 
     public GroupRecord(){}
 

@@ -19,10 +19,9 @@ public class AddressHelper extends HelperBase {
         super(manager);
     }
 
-    public void createAddress(AddressData addressData, GroupData group) {
+    public void createAddressInGroup(AddressData addressData, GroupData group) {
         buttonClick(By.linkText("add new"));
         fillAddressForm(addressData);
-        select(By.name("new_group"), addressData.group());
         attach(By.name("photo"), addressData.photo());
         selectGroup(group);
         buttonClick(By.name("submit"));

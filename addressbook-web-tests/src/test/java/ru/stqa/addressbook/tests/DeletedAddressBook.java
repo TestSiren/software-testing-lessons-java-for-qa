@@ -12,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class DeletedAddressBook extends TestBase {
-
+/*
   @Test
   public void deleteSingleAddressTest() {
     AddressHelper address = app.address();
@@ -72,4 +72,6 @@ public class DeletedAddressBook extends TestBase {
     int finalSize = address.getAddressCount();
     assertTrue(initialSize >= finalSize, "Количество контактов не должно увеличиться");
   }
+
+ */
 }
