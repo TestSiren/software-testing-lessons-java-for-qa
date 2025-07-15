@@ -20,7 +20,7 @@ public class AddressProvider {
 
     public static List<AddressData> addressProvider() throws IOException {
         var result = new ArrayList<AddressData>();
-        ObjectMapper mapper = new ObjectMapper(); // create once, reuse
+        ObjectMapper mapper = new ObjectMapper();
         var value = mapper.readValue(new File(addressFilePath), new TypeReference<List<AddressData>>() {});
         result.addAll(value);
         return result;

@@ -17,6 +17,7 @@ public class GroupModificationTests extends TestBase {
             groups.createGroup(new GroupData("", "group name", "group header", "group footer"));
         }
 
+
         var oldGroups = groups.getListGroups();
         var rnd = new Random();
         var index = rnd.nextInt(oldGroups.size());
