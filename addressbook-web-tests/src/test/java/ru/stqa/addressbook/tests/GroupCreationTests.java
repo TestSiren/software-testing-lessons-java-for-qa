@@ -5,7 +5,8 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 import ru.stqa.addressbook.manager.GroupHelper;
 import ru.stqa.addressbook.models.GroupData;
-import static ru.stqa.addressbook.comporators.GroupComporators.compareByIdAndName;
+import ru.stqa.addressbook.manager.HibernateHelper;
+import static ru.stqa.addressbook.comporators.GroupComporators.compareById;
 import java.util.ArrayList;
 
 public class GroupCreationTests extends TestBase {
@@ -15,14 +16,15 @@ public class GroupCreationTests extends TestBase {
   @MethodSource("ru.stqa.addressbook.dataproviders.GroupProvider#singleRandomGroup")
   public void creationMultipleGroups(GroupData group){
     GroupHelper groups = app.groups();
+    HibernateHelper hbm = app.hbm();
 
-    var oldGroups = app.hbm().getGroupList();
+    var oldGroups = hbm.getGroupList();
 
     groups.createGroup(group);
 
-    var newGroups = app.hbm().getGroupList();
+    var newGroups = hbm.getGroupList();
 
-    newGroups.sort(compareByIdAndName);
+    newGroups.sort(compareById);
 
     var maxId = newGroups.get(newGroups.size() - 1).id();
 
@@ -30,29 +32,29 @@ public class GroupCreationTests extends TestBase {
     expectedList.add(group
             .withId(maxId)
             .withName(group.name()));
-    expectedList.sort(compareByIdAndName);
+    expectedList.sort(compareById);
+    var NewUIgroups = groups.getListGroups();
+    NewUIgroups.sort(compareById);
 
     Assertions.assertEquals(newGroups, expectedList);
-
-//id и имя сравнивать
-    var NewUIgroups = groups.getListGroups();
-    NewUIgroups.sort(compareByIdAndName);
     Assertions.assertEquals(NewUIgroups, expectedList);
-
   }
 
   @ParameterizedTest
   @MethodSource("ru.stqa.addressbook.dataproviders.GroupProvider#negativeGroupProvider")
   public void cannotCreateGroup(GroupData group){
     GroupHelper groups = app.groups();
+    HibernateHelper hbm = app.hbm();
 
-    var oldGroups = groups.getListGroups();
+    var oldGroups = hbm.getGroupList();
 
     groups.createGroup(group);
 
-    var newGroups = groups.getListGroups();
+    var newGroups = hbm.getGroupList();
+    var NewUIgroups = groups.getListGroups();
+    NewUIgroups.sort(compareById);
 
     Assertions.assertEquals(newGroups, oldGroups);
-
+    Assertions.assertEquals(NewUIgroups, oldGroups);
   }
 }

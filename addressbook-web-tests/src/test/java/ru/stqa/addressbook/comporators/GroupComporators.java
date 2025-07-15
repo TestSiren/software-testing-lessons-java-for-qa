@@ -8,8 +8,5 @@ public class GroupComporators {
     public static final Comparator<GroupData> compareById = (o1, o2) -> {
         return Integer.compare(Integer.parseInt(o1.id()), Integer.parseInt(o2.id()));
     };
-    public static final Comparator<GroupData> compareByIdAndName =
-            Comparator.comparing((GroupData gr) -> Integer.parseInt(gr.id()))
-            .thenComparing(GroupData::name);
 
 }

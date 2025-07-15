@@ -57,23 +57,13 @@ public final class GroupData {
         if (obj == null || obj.getClass() != this.getClass()) return false;
         var that = (GroupData) obj;
         return Objects.equals(this.id, that.id) &&
-                Objects.equals(this.name, that.name) &&
-                Objects.equals(this.header, that.header) &&
-                Objects.equals(this.footer, that.footer);
+                Objects.equals(this.name, that.name);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, header, footer);
+        return Objects.hash(id, name);
     }
 
-    @Override
-    public String toString() {
-        return "GroupData[" +
-                "id=" + id + ", " +
-                "name=" + name + ", " +
-                "header=" + header + ", " +
-                "footer=" + footer + ']';
-    }
 
 }
