@@ -12,7 +12,7 @@ import static ru.stqa.addressbook.manager.AddressHelper.equalsByNamesAndId;
 
 import java.util.ArrayList;
 import java.util.Random;
-/*public class AddressModificationTests extends TestBase {
+public class AddressModificationTests extends TestBase {
     @Test
     @Disabled
     void canModifyAddress() {
@@ -78,4 +78,4 @@ import java.util.Random;
         Assertions.assertEquals(oldAddress, newAddress);
     }
 }
-*/
+

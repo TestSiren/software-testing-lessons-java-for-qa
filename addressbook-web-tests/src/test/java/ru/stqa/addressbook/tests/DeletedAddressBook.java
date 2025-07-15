@@ -12,7 +12,6 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class DeletedAddressBook extends TestBase {
-/*
   @Test
   public void deleteSingleAddressTest() {
     AddressHelper address = app.address();
@@ -57,9 +56,6 @@ public class DeletedAddressBook extends TestBase {
 
   @Test
   public void alertAppearsOnEmptyDeletionTest() {
-    //поменяла название теста
-    //решила, что добавлять проверку списков сюда не имеет смысла, т.к. тут важнее проверка алерта, когда список пустой.
-    //возможно это не правильное решение?
     AddressHelper address = app.address();
 
     int initialSize = address.getAddressCount();
@@ -73,5 +69,4 @@ public class DeletedAddressBook extends TestBase {
     assertTrue(initialSize >= finalSize, "Количество контактов не должно увеличиться");
   }
 
- */
 }

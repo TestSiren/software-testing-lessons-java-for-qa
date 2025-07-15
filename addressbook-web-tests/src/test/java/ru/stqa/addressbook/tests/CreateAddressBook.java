@@ -18,7 +18,6 @@ import static ru.stqa.addressbook.comporators.AddressComparators.byId;
 
 
 public class CreateAddressBook extends TestBase {
-/*
   @ParameterizedTest
   @MethodSource("ru.stqa.addressbook.dataproviders.AddressProvider#addressProvider")
   public void createAddressBook(AddressData address) {
@@ -53,7 +52,6 @@ public class CreateAddressBook extends TestBase {
 
     Assertions.assertEquals(newAddresses, oldAddress);
   }
-*/
 @Test
   public void createAddressBookWithGroup() {
   var address = new AddressData()
