@@ -1,6 +1,8 @@
 package ru.stqa.addressbook.tests;
 
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import ru.stqa.addressbook.manager.ApplicationManager;
 
@@ -13,8 +15,8 @@ import java.util.Properties;
 public class TestBase {
     public static ApplicationManager app;
 
-    @BeforeEach
-    public void setUp() throws IOException {
+    @BeforeAll
+    public static void setUp() throws IOException {
         var properties = new Properties();
         properties.load(new FileReader(System.getProperty("target", "local.properties")));
 
@@ -34,7 +36,8 @@ public class TestBase {
     void checkDatabaseConsistency(){
         app.jdbc().checkConsistency();
     }
-    public void tearDown() {
+    @AfterAll
+    public static void tearDown() {
         app.session().logout();
     }
 }
