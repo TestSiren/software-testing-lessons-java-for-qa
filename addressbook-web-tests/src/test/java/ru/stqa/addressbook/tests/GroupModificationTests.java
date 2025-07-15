@@ -5,10 +5,10 @@ import org.junit.jupiter.api.Test;
 import ru.stqa.addressbook.models.GroupData;
 import ru.stqa.addressbook.manager.GroupHelper;
 import static ru.stqa.addressbook.comporators.GroupComporators.compareById;
-
+import ru.stqa.addressbook.manager.HibernateHelper;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.Random;
+
 public class GroupModificationTests extends TestBase {
     @Test
     void canModifyGroup() {
@@ -17,8 +17,9 @@ public class GroupModificationTests extends TestBase {
             groups.createGroup(new GroupData("", "group name", "group header", "group footer"));
         }
 
+        HibernateHelper hbm = app.hbm();
 
-        var oldGroups = groups.getListGroups();
+        var oldGroups = hbm.getGroupList();
         var rnd = new Random();
         var index = rnd.nextInt(oldGroups.size());
         var testData = new GroupData().withName("modified name");
@@ -32,7 +33,11 @@ public class GroupModificationTests extends TestBase {
         newGroups.sort(compareById);
         expectedList.sort(compareById);
 
+        var NewUIgroups = groups.getListGroups();
+        NewUIgroups.sort(compareById);
+
         Assertions.assertEquals(newGroups, expectedList);
+        Assertions.assertEquals(NewUIgroups, expectedList);
     }
     @Test
     void cannotModifyGroup() {
@@ -40,16 +45,20 @@ public class GroupModificationTests extends TestBase {
         if (groups.getGroupsCount() == 0) {
             groups.createGroup(new GroupData("", "group name", "group header", "group footer"));
         }
-
-        var oldGroups = groups.getListGroups();
+        HibernateHelper hbm = app.hbm();
+        var oldGroups =  hbm.getGroupList();
         var rnd = new Random();
         var index = rnd.nextInt(oldGroups.size());
         var testData = new GroupData().withName("modified' name");
 
         groups.modifyGroup(oldGroups.get(index), testData);
 
-        var newGroups = groups.getListGroups();
+        var newGroups = hbm.getGroupList();
+
+        var NewUIgroups = groups.getListGroups();
+        NewUIgroups.sort(compareById);
 
         Assertions.assertEquals(newGroups, oldGroups);
+        Assertions.assertEquals(NewUIgroups, oldGroups);
     }
 }

@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.util.Properties;
 
 public class TestBase {
-   public static ApplicationManager app;
+    public static ApplicationManager app;
 
     @BeforeEach
     public void setUp() throws IOException {
