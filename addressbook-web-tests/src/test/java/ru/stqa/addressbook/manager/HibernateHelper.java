@@ -146,22 +146,4 @@ public class HibernateHelper extends HelperBase {
         });
     }
 
-    public List<AddressData> getContactsInGroup(GroupData group) {
-        return sessionFactory.fromSession(session -> {
-            GroupRecord record = session.get(GroupRecord.class, Integer.parseInt(group.id()));
-            return record != null && record.contacts != null
-                    ? convertContactList(record.contacts)
-                    : List.of();
-        });
-    }
-    public List<ContactInGroup> getContactInGroups() {
-        return session().createQuery("from ContactInGroup", ContactInGroup.class).list();
-    }
-
-    public List<ContactInGroup> getContactInGroupsByGroup(int groupId) {
-        return session().createQuery("from ContactInGroup where id.groupId = :groupId", ContactInGroup.class)
-                .setParameter("groupId", groupId)
-                .list();
-    }
-
 }
