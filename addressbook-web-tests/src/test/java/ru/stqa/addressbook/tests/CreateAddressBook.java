@@ -25,7 +25,7 @@ public class CreateAddressBook extends TestBase {
 
     var oldAddress = hbm.getContactList();
     oldAddress.sort(byId);
-    addresses.createAddress(address);
+    addresses.createAddress(address, null);
 
     var newAddresses = hbm.getContactList();
     newAddresses.sort(byId);
@@ -65,7 +65,7 @@ public class CreateAddressBook extends TestBase {
 
     var oldAddress = hbm.getContactList();
 
-    addresses.createAddress(address);
+    addresses.createAddress(address, null);
 
     var newAddresses = hbm.getContactList();
 
@@ -94,7 +94,7 @@ public class CreateAddressBook extends TestBase {
     }
     var group = hbm.getGroupList().get(0);
     var oldRelated = hbm.getContactsInGroup(group);
-    addresses.createAddressInGroup(address, group);
+    addresses.createAddress(address, group);
     var newRelated = hbm.getContactsInGroup(group);
     Assertions.assertEquals(oldRelated.size()+1, newRelated.size()); // сделать более сложную проверку.
 

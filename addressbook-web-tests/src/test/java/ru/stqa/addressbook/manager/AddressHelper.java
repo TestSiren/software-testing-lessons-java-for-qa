@@ -7,7 +7,6 @@ import org.openqa.selenium.Alert;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 import org.openqa.selenium.support.ui.Select;
 import ru.stqa.addressbook.models.AddressData;
@@ -19,25 +18,17 @@ public class AddressHelper extends HelperBase {
         super(manager);
     }
 
-    public void createAddressInGroup(AddressData addressData, GroupData group) {
+    public void createAddress(AddressData addressData, GroupData group) {
         buttonClick(By.linkText("add new"));
         fillAddressForm(addressData);
         attach(By.name("photo"), addressData.photo());
-        selectGroup(group);
-        buttonClick(By.name("submit"));
-        buttonClick(By.linkText("home page"));
-    }
-    public void createAddress(AddressData addressData) {
-        buttonClick(By.linkText("add new"));
-        fillAddressForm(addressData);
-        select(By.name("new_group"), addressData.group());
-        attach(By.name("photo"), addressData.photo());
+        selectGroup(group, By.name("new_group"));
         buttonClick(By.name("submit"));
         buttonClick(By.linkText("home page"));
     }
 
-    private void selectGroup(GroupData group) {
-        new Select(manager.driver.findElement(By.name("new_group"))).selectByValue(group.id());
+    private void selectGroup(GroupData group, By locators) {
+        new Select(manager.driver.findElement(locators)).selectByValue(group.id());
     }
 
     private void fillAddressForm(AddressData addressData) {
@@ -147,6 +138,21 @@ public class AddressHelper extends HelperBase {
 
     private void editAddress(AddressData address) {
         buttonClick(By.cssSelector(String.format("a[href='edit.php?id=%s']", address.id())));
+    }
+
+    private void selectManyCheckboxes() {
+        var checkboxes = driver.findElements(By.name("selected[]"));
+        for (var checkbox : checkboxes) {
+            checkbox.click();
+        }
+    }
+
+    public void addressesAddToGroup(List<AddressData> addresses, GroupData group)
+    {
+        openAddressPage();
+        selectManyCheckboxes();
+        selectGroup(group, By.name("to_group"));
+        buttonClick(By.name("add"));
     }
 
 }

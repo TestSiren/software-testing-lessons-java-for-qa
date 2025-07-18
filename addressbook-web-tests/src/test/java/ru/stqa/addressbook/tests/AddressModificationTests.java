@@ -17,7 +17,7 @@ public class AddressModificationTests extends TestBase {
         HibernateHelper hbm = app.hbm();
 
         if (hbm.getContactList().isEmpty()) {
-            address.createAddress(new AddressData());
+            address.createAddress(new AddressData(), null);
         }
 
         var oldAddress = address.getListAddress();
@@ -63,7 +63,7 @@ public class AddressModificationTests extends TestBase {
         HibernateHelper hbm = app.hbm();
 
         if (hbm.getContactsCount()==0) {
-            address.createAddress(new AddressData());
+            address.createAddress(new AddressData(), null);
         }
 
         var oldAddress = hbm.getContactList();
