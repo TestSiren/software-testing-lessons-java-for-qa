@@ -7,14 +7,11 @@ import ru.stqa.addressbook.manager.AddressHelper;
 import ru.stqa.addressbook.manager.HibernateHelper;
 import ru.stqa.addressbook.models.AddressData;
 import static ru.stqa.addressbook.comporators.AddressComparators.byId;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
 
 import java.util.ArrayList;
 import java.util.Random;
 public class AddressModificationTests extends TestBase {
     @Test
-    @Disabled
     void canModifyAddress() {
         AddressHelper address = app.address();
         HibernateHelper hbm = app.hbm();

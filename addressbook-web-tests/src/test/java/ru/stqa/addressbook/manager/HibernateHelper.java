@@ -78,16 +78,52 @@ public class HibernateHelper extends HelperBase {
         return new AddressData()
                 .withId(String.valueOf(record.id))
                 .withFirstname(record.firstname)
-                        .withLastname(record.lastname)
-                        .withAddress(record.address);
+                .withMiddlename(record.middlename)
+                .withLastname(record.lastname)
+                .withNickname(record.nickname)
+                .withTitle(record.title)
+                .withCompany(record.company)
+                .withAddress(record.address)
+                .withHome(record.home)
+                .withMobile(record.mobile)
+                .withWork(record.work)
+                .withFax(record.fax)
+                .withHomepage(record.homepage)
+                .withBday(record.bday)
+                .withBmonth(record.bmonth)
+                .withByear(record.byear)
+                .withAday(record.aday)
+                .withAmonth(record.amonth)
+                .withAyear(record.ayear);
     }
+
 
     private static ContactRecord convert(AddressData data) {
     var id = data.id();
     if ("".equals(id)){
         id = "0";
     }
-    return new ContactRecord(Integer.parseInt(id),data.firstname(),data.lastname(),data.address());
+        return new ContactRecord(
+                Integer.parseInt(id),
+                data.firstname(),
+                data.middlename(),
+                data.lastname(),
+                data.nickname(),
+                data.title(),
+                data.company(),
+                data.address(),
+                data.home(),
+                data.mobile(),
+                data.work(),
+                data.fax(),
+                data.homepage(),
+                data.bday(),
+                data.bmonth(),
+                data.byear(),
+                data.aday(),
+                data.amonth(),
+                data.ayear()
+        );
     }
 
     public List<AddressData> getContactList() {

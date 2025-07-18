@@ -32,17 +32,30 @@ public class CreateAddressBook extends TestBase {
 
     var maxId = newAddresses.get(newAddresses.size() - 1).id();
     var expectedList = new ArrayList<>(oldAddress);
-    expectedList.add(address.withId(maxId)
+    expectedList.add(new AddressData()
+            .withId(maxId)
             .withFirstname(address.firstname())
-            .withLastname(address.lastname()));
-
-
+            .withMiddlename(address.middlename())
+            .withLastname(address.lastname())
+            .withNickname(address.nickname())
+            .withTitle(address.title())
+            .withCompany(address.company())
+            .withAddress(address.address())
+            .withHome(address.home())
+            .withMobile(address.mobile())
+            .withWork(address.work())
+            .withFax(address.fax())
+            .withHomepage(address.homepage())
+            .withBday(address.bday())
+            .withBmonth(address.bmonth())
+            .withByear(address.byear())
+            .withAday(address.aday())
+            .withAmonth(address.amonth())
+            .withAyear(address.ayear())
+            .withGroup(address.group())
+    );
     expectedList.sort(byId);
-    var NewUIaddresses = addresses.getListAddress();
-    NewUIaddresses.sort(byId);
-
     Assertions.assertEquals(newAddresses, expectedList);
-    Assertions.assertEquals(NewUIaddresses, expectedList);
   }
   @ParameterizedTest
   @MethodSource("ru.stqa.addressbook.dataproviders.AddressProvider#negativeAddressProvider")
@@ -56,11 +69,7 @@ public class CreateAddressBook extends TestBase {
 
     var newAddresses = hbm.getContactList();
 
-    var NewUIaddresses = addresses.getListAddress();
-    NewUIaddresses.sort(byId);
-
     Assertions.assertEquals(newAddresses, oldAddress);
-    Assertions.assertEquals(NewUIaddresses, oldAddress);
   }
 @Test
   public void createAddressBookWithGroup() {

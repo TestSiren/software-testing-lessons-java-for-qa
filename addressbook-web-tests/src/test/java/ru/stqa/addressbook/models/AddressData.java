@@ -171,21 +171,31 @@ public record AddressData(
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         AddressData that = (AddressData) o;
-        return Objects.equals(id, that.id) &&
+        return bday == that.bday &&
+                aday == that.aday &&
+                Objects.equals(id, that.id) &&
                 Objects.equals(firstname, that.firstname) &&
+                Objects.equals(middlename, that.middlename) &&
                 Objects.equals(lastname, that.lastname) &&
+                Objects.equals(nickname, that.nickname) &&
+                Objects.equals(title, that.title) &&
+                Objects.equals(company, that.company) &&
+                Objects.equals(address, that.address) &&
+                Objects.equals(home, that.home) &&
+                Objects.equals(work, that.work) &&
+                Objects.equals(fax, that.fax) &&
+                Objects.equals(mobile, that.mobile) &&
+                Objects.equals(homepage, that.homepage) &&
                 Objects.equals(bmonth, that.bmonth) &&
                 Objects.equals(byear, that.byear) &&
                 Objects.equals(amonth, that.amonth) &&
-                Objects.equals(ayear, that.ayear) &&
-                Objects.equals(mobile, that.mobile) &&
-                Objects.equals(address, that.address);
+                Objects.equals(ayear, that.ayear);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, firstname, lastname, bday, bmonth, byear,
-                aday, amonth, ayear, mobile, address);
+        return Objects.hash(id, firstname, middlename, lastname, nickname, title, company,
+                address, home, mobile, work, fax, emails, mobile, homepage,
+                bday, bmonth, byear, aday, amonth, ayear, group);
     }
-
 }
