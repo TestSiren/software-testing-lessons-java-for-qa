@@ -71,6 +71,7 @@ public class CreateAddressBook extends TestBase {
 
     Assertions.assertEquals(newAddresses, oldAddress);
   }
+
 @Test
   public void createAddressBookWithGroup() {
   var address = new AddressData()
