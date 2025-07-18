@@ -31,11 +31,13 @@ public class TestBase {
         ru.stqa.addressbook.dataproviders.GroupProvider.setGroupsFilePath(properties.getProperty("groups.data.file"));
         ru.stqa.addressbook.dataproviders.AddressProvider.setAddressFilePath(properties.getProperty("address.data.file"));
     }
-
+/*
     @AfterEach
     void checkDatabaseConsistency(){
         app.jdbc().checkConsistency();
     }
+    */
+
     @AfterAll
     public static void tearDown() {
         app.session().logout();

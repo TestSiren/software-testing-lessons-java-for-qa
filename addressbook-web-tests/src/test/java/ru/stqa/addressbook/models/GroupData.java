@@ -2,11 +2,12 @@ package ru.stqa.addressbook.models;
 
 import java.util.Objects;
 
-public final class GroupData {
-    private final String id;
-    private final String name;
-    private final String header;
-    private final String footer;
+public record GroupData(
+    String id,
+    String name,
+    String header,
+    String footer)
+{
 
     public GroupData(String id, String name, String header, String footer) {
         this.id = id;

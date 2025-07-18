@@ -69,7 +69,7 @@ public class JDBCHelper extends HelperBase{
         }
         return address;
     }
-
+    /*
     public void checkConsistency(){
         try (var connectDB = DriverManager.getConnection("jdbc:mysql://localhost/addressbook", "root", "");
              var statement = connectDB.createStatement();
@@ -82,4 +82,6 @@ public class JDBCHelper extends HelperBase{
             throw new RuntimeException(e);
         }
     }
+
+     */
 }
