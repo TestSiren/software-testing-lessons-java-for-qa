@@ -146,4 +146,13 @@ public class HibernateHelper extends HelperBase {
         });
     }
 
+    public List<AddressData> getContactsInGroup(GroupData group) {
+        return sessionFactory.fromSession(session -> {
+            GroupRecord record = session.get(GroupRecord.class, Integer.parseInt(group.id()));
+            return record != null && record.contacts != null
+                    ? convertContactList(record.contacts)
+                    : List.of();
+        });
+    }
+
 }
