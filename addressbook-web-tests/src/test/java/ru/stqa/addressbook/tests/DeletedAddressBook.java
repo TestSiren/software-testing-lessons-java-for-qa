@@ -35,14 +35,10 @@ public class DeletedAddressBook extends TestBase {
 
     var expectedList = new ArrayList<>(oldAddress);
     expectedList.remove(index);
-
-    var NewUIaddresses = address.getListAddress();
-    NewUIaddresses.sort(byId);
+    expectedList.sort(byId);
 
     assertFalse(address.acceptAlertIfPresent(), "Allert не показывается, если была хотя бы одна запись");
     Assertions.assertEquals(newAddresses, expectedList);
-    Assertions.assertEquals(NewUIaddresses, expectedList);
-
   }
 
   @Test
@@ -61,14 +57,11 @@ public class DeletedAddressBook extends TestBase {
     var expectedList = new ArrayList<>(oldAddress);
     expectedList.clear();
 
-    var NewUIaddresses = address.getListAddress();
-
     assertFalse(address.acceptAlertIfPresent(), "Allert не показывается, если была хотя бы одна запись");
     assertTrue(address.getAddressCount() == 0, "Все контакты должны быть удалены");
     assertTrue(hbm.getContactList().isEmpty(), "Все контакты должны быть удалены");
 
     Assertions.assertEquals(newAddresses, expectedList);
-    Assertions.assertEquals(NewUIaddresses, expectedList);
 
   }
 

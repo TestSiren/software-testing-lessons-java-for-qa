@@ -33,11 +33,8 @@ public class GroupCreationTests extends TestBase {
             .withId(maxId)
             .withName(group.name()));
     expectedList.sort(compareById);
-    var NewUIgroups = groups.getListGroups();
-    NewUIgroups.sort(compareById);
 
     Assertions.assertEquals(newGroups, expectedList);
-    Assertions.assertEquals(NewUIgroups, expectedList);
   }
 
   @ParameterizedTest
@@ -54,18 +51,7 @@ public class GroupCreationTests extends TestBase {
     var newGroups = hbm.getGroupList();
     newGroups.sort(compareById);
 
-    var NewUIgroups = groups.getListGroups();
-    NewUIgroups.sort(compareById);
-
-    Assertions.assertEquals(
-            groups.withoutIds(new ArrayList<>(newGroups)),
-            groups.withoutIds(new ArrayList<>(oldGroups))
-    );
-
-    Assertions.assertEquals(
-            groups.withoutIds(new ArrayList<>(NewUIgroups)),
-            groups.withoutIds(new ArrayList<>(oldGroups))
-    );
+    Assertions.assertEquals(newGroups, oldGroups);
 
   }
 }

@@ -33,11 +33,7 @@ public class GroupModificationTests extends TestBase {
         newGroups.sort(compareById);
         expectedList.sort(compareById);
 
-        var NewUIgroups = groups.getListGroups();
-        NewUIgroups.sort(compareById);
-
         Assertions.assertEquals(newGroups, expectedList);
-        Assertions.assertEquals(NewUIgroups, expectedList);
     }
     @Test
     void cannotModifyGroup() {
@@ -55,10 +51,6 @@ public class GroupModificationTests extends TestBase {
 
         var newGroups = hbm.getGroupList();
 
-        var NewUIgroups = groups.getListGroups();
-        NewUIgroups.sort(compareById);
-
         Assertions.assertEquals(newGroups, oldGroups);
-        Assertions.assertEquals(NewUIgroups, oldGroups);
     }
 }

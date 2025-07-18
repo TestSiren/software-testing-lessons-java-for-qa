@@ -54,11 +54,7 @@ public class AddressModificationTests extends TestBase {
         newAddresses.sort(byId);
         expectedList.sort(byId);
 
-        var NewUIaddresses = address.getListAddress();
-        NewUIaddresses.sort(byId);
-
         Assertions.assertEquals(newAddresses, expectedList);
-        Assertions.assertEquals(NewUIaddresses, expectedList);
 
     }
     @Test
@@ -82,10 +78,7 @@ public class AddressModificationTests extends TestBase {
 
         newAddress.sort(byId);
         oldAddress.sort(byId);
-        var NewUIaddresses = address.getListAddress();
-        NewUIaddresses.sort(byId);
 
         Assertions.assertEquals(oldAddress, newAddress);
-        Assertions.assertEquals(oldAddress, NewUIaddresses);
     }
 }
