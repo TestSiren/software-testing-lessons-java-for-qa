@@ -50,7 +50,7 @@ public class DeletedAddressBook extends TestBase {
     AddressHelper address = app.address();
     HibernateHelper hbm = app.hbm();
 
-    if (hbm.getContactList().isEmpty()) {
+    if (hbm.getContactsCount()==0) {
       address.createAddress(new AddressData());}
 
     var oldAddress= hbm.getContactList();
@@ -77,14 +77,14 @@ public class DeletedAddressBook extends TestBase {
     AddressHelper address = app.address();
     HibernateHelper hbm = app.hbm();
 
-    int initialSize = address.getAddressCount();
-    if (!hbm.getContactList().isEmpty()) {
+    var initialSize = hbm.getContactsCount();
+    if (hbm.getContactsCount()!=0) {
       address.deleteAllAddress();}
 
     address.deleteAllAddress();
     assertTrue(address.acceptAlertIfPresent(), "Должен появиться alert при попытке удалить без выбора");
 
-    int finalSize = address.getAddressCount();
+    var finalSize = hbm.getContactsCount();
     assertTrue(initialSize >= finalSize, "Количество контактов не должно увеличиться");
   }
 
