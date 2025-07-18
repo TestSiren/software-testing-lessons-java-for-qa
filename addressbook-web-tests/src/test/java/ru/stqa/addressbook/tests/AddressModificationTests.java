@@ -1,14 +1,14 @@
-/*package ru.stqa.addressbook.tests;
+package ru.stqa.addressbook.tests;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
-import ru.stqa.addressbook.models.AddressData;
 import ru.stqa.addressbook.manager.AddressHelper;
-
+import ru.stqa.addressbook.manager.HibernateHelper;
+import ru.stqa.addressbook.models.AddressData;
+import static ru.stqa.addressbook.comporators.AddressComparators.byId;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static ru.stqa.addressbook.comporators.AddressComparators.byFirstAndLastName;
-import static ru.stqa.addressbook.manager.AddressHelper.equalsByNamesAndId;
+
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -17,7 +17,9 @@ public class AddressModificationTests extends TestBase {
     @Disabled
     void canModifyAddress() {
         AddressHelper address = app.address();
-        if (address.getAddressCount() == 0) {
+        HibernateHelper hbm = app.hbm();
+
+        if (hbm.getContactList().isEmpty()) {
             address.createAddress(new AddressData());
         }
 
@@ -38,7 +40,6 @@ public class AddressModificationTests extends TestBase {
                 .withWork(old.work())
                 .withFax(old.fax())
                 .withHomepage(old.homepage())
-                .withEmail(old.emails())
                 .withBday(old.bday())
                 .withBmonth(old.bmonth())
                 .withByear(old.byear())
@@ -53,30 +54,41 @@ public class AddressModificationTests extends TestBase {
         var expectedList = new ArrayList<>(oldAddress);
         expectedList.set(index, testData.withId(old.id()));
 
-        newAddresses.sort(byFirstAndLastName);
-        expectedList.sort(byFirstAndLastName);
+        newAddresses.sort(byId);
+        expectedList.sort(byId);
 
-        assertTrue(equalsByNamesAndId(newAddresses, expectedList));
+        var NewUIaddresses = address.getListAddress();
+        NewUIaddresses.sort(byId);
+
+        Assertions.assertEquals(newAddresses, expectedList);
+        Assertions.assertEquals(NewUIaddresses, expectedList);
 
     }
     @Test
     void cannotModifyAddress() {
         AddressHelper address = app.address();
-        if (address.getAddressCount() == 0) {
+        HibernateHelper hbm = app.hbm();
+
+        if (hbm.getContactsCount()==0) {
             address.createAddress(new AddressData());
         }
 
-        var oldAddress = address.getListAddress();
+        var oldAddress = hbm.getContactList();
         var rnd = new Random();
         var index = rnd.nextInt(oldAddress.size());
+
         var testData = new AddressData().withFirstname("modified' name");
 
         address.modifyAddress(oldAddress.get(index), testData);
 
-        var newAddress = address.getListAddress();
+        var newAddress = hbm.getContactList();
+
+        newAddress.sort(byId);
+        oldAddress.sort(byId);
+        var NewUIaddresses = address.getListAddress();
+        NewUIaddresses.sort(byId);
 
         Assertions.assertEquals(oldAddress, newAddress);
+        Assertions.assertEquals(oldAddress, NewUIaddresses);
     }
 }
-
-*/
