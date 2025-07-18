@@ -27,6 +27,14 @@ public class AddressHelper extends HelperBase {
         buttonClick(By.name("submit"));
         buttonClick(By.linkText("home page"));
     }
+    public void createAddress(AddressData addressData) {
+        buttonClick(By.linkText("add new"));
+        fillAddressForm(addressData);
+        select(By.name("new_group"), addressData.group());
+        attach(By.name("photo"), addressData.photo());
+        buttonClick(By.name("submit"));
+        buttonClick(By.linkText("home page"));
+    }
 
     private void selectGroup(GroupData group) {
         new Select(manager.driver.findElement(By.name("new_group"))).selectByValue(group.id());
@@ -141,17 +149,4 @@ public class AddressHelper extends HelperBase {
         buttonClick(By.cssSelector(String.format("a[href='edit.php?id=%s']", address.id())));
     }
 
-    public static boolean equalsByNamesAndId(List<AddressData> actual, List<AddressData> expected) {
-        if (actual.size() != expected.size()) return false;
-        for (int i = 0; i < actual.size(); i++) {
-            AddressData a = actual.get(i);
-            AddressData e = expected.get(i);
-            if (!Objects.equals(a.id(), e.id()) ||
-                    !Objects.equals(a.firstname(), e.firstname()) ||
-                    !Objects.equals(a.lastname(), e.lastname())) {
-                return false;
-            }
-        }
-        return true;
-    }
 }

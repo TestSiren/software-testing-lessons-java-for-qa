@@ -91,4 +91,13 @@ public class GroupHelper extends HelperBase {
         }
         return groups;
     }
+
+    public ArrayList<GroupData> withoutIds(ArrayList<GroupData> groups) {
+        ArrayList<GroupData> result = new ArrayList<>();
+        for (GroupData g : groups) {
+            result.add(g.withId(""));
+        }
+        return result;
+    }
+
 }

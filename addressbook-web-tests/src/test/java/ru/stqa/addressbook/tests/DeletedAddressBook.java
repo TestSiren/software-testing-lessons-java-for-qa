@@ -3,7 +3,10 @@ package ru.stqa.addressbook.tests;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import ru.stqa.addressbook.manager.AddressHelper;
+import ru.stqa.addressbook.manager.HibernateHelper;
 import ru.stqa.addressbook.models.AddressData;
+import static ru.stqa.addressbook.comporators.AddressComparators.byId;
+
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -15,51 +18,67 @@ public class DeletedAddressBook extends TestBase {
   @Test
   public void deleteSingleAddressTest() {
     AddressHelper address = app.address();
+    HibernateHelper hbm = app.hbm();
 
-    if (address.getAddressCount() == 0) {
+    if (hbm.getContactList().isEmpty()) {
       address.createAddress(new AddressData());
     }
 
-    var oldAddress= app.address().getListAddress();
+    var oldAddress= hbm.getContactList();
+    oldAddress.sort(byId);
     var rnd = new Random();
     var index = rnd.nextInt(oldAddress.size());
 
     address.deleteAddress(oldAddress.get(index));
-    var newAddress= app.address().getListAddress();
+    var newAddresses= hbm.getContactList();
+    newAddresses.sort(byId);
 
     var expectedList = new ArrayList<>(oldAddress);
     expectedList.remove(index);
 
+    var NewUIaddresses = address.getListAddress();
+    NewUIaddresses.sort(byId);
+
     assertFalse(address.acceptAlertIfPresent(), "Allert не показывается, если была хотя бы одна запись");
-    Assertions.assertEquals(newAddress, expectedList);
+    Assertions.assertEquals(newAddresses, expectedList);
+    Assertions.assertEquals(NewUIaddresses, expectedList);
 
   }
 
   @Test
   public void deleteAllAddressesTest() {
     AddressHelper address = app.address();
+    HibernateHelper hbm = app.hbm();
 
-    if (address.getAddressCount() == 0) {
+    if (hbm.getContactList().isEmpty()) {
       address.createAddress(new AddressData());}
-    var oldAddress= app.address().getListAddress();
+
+    var oldAddress= hbm.getContactList();
 
     address.deleteAllAddress();
-    var newAddress= app.address().getListAddress();
+
+    var newAddresses= hbm.getContactList();
     var expectedList = new ArrayList<>(oldAddress);
     expectedList.clear();
 
+    var NewUIaddresses = address.getListAddress();
+
     assertFalse(address.acceptAlertIfPresent(), "Allert не показывается, если была хотя бы одна запись");
     assertTrue(address.getAddressCount() == 0, "Все контакты должны быть удалены");
-    Assertions.assertEquals(newAddress, expectedList);
+    assertTrue(hbm.getContactList().isEmpty(), "Все контакты должны быть удалены");
+
+    Assertions.assertEquals(newAddresses, expectedList);
+    Assertions.assertEquals(NewUIaddresses, expectedList);
 
   }
 
   @Test
   public void alertAppearsOnEmptyDeletionTest() {
     AddressHelper address = app.address();
+    HibernateHelper hbm = app.hbm();
 
     int initialSize = address.getAddressCount();
-    if (address.getAddressCount() != 0) {
+    if (!hbm.getContactList().isEmpty()) {
       address.deleteAllAddress();}
 
     address.deleteAllAddress();

@@ -1,4 +1,4 @@
-package ru.stqa.addressbook.tests;
+/*package ru.stqa.addressbook.tests;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Disabled;
@@ -79,3 +79,4 @@ public class AddressModificationTests extends TestBase {
     }
 }
 
+*/

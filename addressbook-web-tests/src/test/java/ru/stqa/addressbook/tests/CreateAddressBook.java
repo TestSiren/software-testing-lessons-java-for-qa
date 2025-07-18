@@ -5,15 +5,14 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 import ru.stqa.addressbook.manager.AddressHelper;
-import static ru.stqa.addressbook.manager.AddressHelper.equalsByNamesAndId;
 import ru.stqa.addressbook.models.AddressData;
 import ru.stqa.addressbook.models.GroupData;
+import ru.stqa.addressbook.manager.HibernateHelper;
 import ru.stqa.addressbook.common.CommonFunctions;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static ru.stqa.addressbook.comporators.AddressComparators.byId;
 
 
@@ -22,35 +21,46 @@ public class CreateAddressBook extends TestBase {
   @MethodSource("ru.stqa.addressbook.dataproviders.AddressProvider#addressProvider")
   public void createAddressBook(AddressData address) {
     AddressHelper addresses = app.address();
+    HibernateHelper hbm = app.hbm();
 
-    var oldAddress = addresses.getListAddress();
+    var oldAddress = hbm.getContactList();
     oldAddress.sort(byId);
     addresses.createAddress(address);
 
-    var newAddresses = addresses.getListAddress();
+    var newAddresses = hbm.getContactList();
     newAddresses.sort(byId);
 
+    var maxId = newAddresses.get(newAddresses.size() - 1).id();
     var expectedList = new ArrayList<>(oldAddress);
-    expectedList.add(address.withId(newAddresses.get(newAddresses.size() - 1).id()).withFirstname(address.firstname())
+    expectedList.add(address.withId(maxId)
+            .withFirstname(address.firstname())
             .withLastname(address.lastname()));
 
 
     expectedList.sort(byId);
-    assertTrue(equalsByNamesAndId(newAddresses, expectedList));
+    var NewUIaddresses = addresses.getListAddress();
+    NewUIaddresses.sort(byId);
 
+    Assertions.assertEquals(newAddresses, expectedList);
+    Assertions.assertEquals(NewUIaddresses, expectedList);
   }
   @ParameterizedTest
   @MethodSource("ru.stqa.addressbook.dataproviders.AddressProvider#negativeAddressProvider")
   public void cannotCreateInvalidAddress(AddressData address) {
     AddressHelper addresses = app.address();
+    HibernateHelper hbm = app.hbm();
 
-    var oldAddress = addresses.getListAddress();
+    var oldAddress = hbm.getContactList();
 
     addresses.createAddress(address);
 
-    var newAddresses = addresses.getListAddress();
+    var newAddresses = hbm.getContactList();
+
+    var NewUIaddresses = addresses.getListAddress();
+    NewUIaddresses.sort(byId);
 
     Assertions.assertEquals(newAddresses, oldAddress);
+    Assertions.assertEquals(NewUIaddresses, oldAddress);
   }
 @Test
   public void createAddressBookWithGroup() {

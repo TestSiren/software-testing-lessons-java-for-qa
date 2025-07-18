@@ -173,12 +173,19 @@ public record AddressData(
         AddressData that = (AddressData) o;
         return Objects.equals(id, that.id) &&
                 Objects.equals(firstname, that.firstname) &&
-                Objects.equals(lastname, that.lastname);
+                Objects.equals(lastname, that.lastname) &&
+                Objects.equals(bmonth, that.bmonth) &&
+                Objects.equals(byear, that.byear) &&
+                Objects.equals(amonth, that.amonth) &&
+                Objects.equals(ayear, that.ayear) &&
+                Objects.equals(mobile, that.mobile) &&
+                Objects.equals(address, that.address);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, firstname, lastname);
+        return Objects.hash(id, firstname, lastname, bday, bmonth, byear,
+                aday, amonth, ayear, mobile, address);
     }
 
 }

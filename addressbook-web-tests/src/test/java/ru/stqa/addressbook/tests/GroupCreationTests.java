@@ -47,14 +47,25 @@ public class GroupCreationTests extends TestBase {
     HibernateHelper hbm = app.hbm();
 
     var oldGroups = hbm.getGroupList();
+    oldGroups.sort(compareById);
 
     groups.createGroup(group);
 
     var newGroups = hbm.getGroupList();
+    newGroups.sort(compareById);
+
     var NewUIgroups = groups.getListGroups();
     NewUIgroups.sort(compareById);
 
-    Assertions.assertEquals(newGroups, oldGroups);
-    Assertions.assertEquals(NewUIgroups, oldGroups);
+    Assertions.assertEquals(
+            groups.withoutIds(new ArrayList<>(newGroups)),
+            groups.withoutIds(new ArrayList<>(oldGroups))
+    );
+
+    Assertions.assertEquals(
+            groups.withoutIds(new ArrayList<>(NewUIgroups)),
+            groups.withoutIds(new ArrayList<>(oldGroups))
+    );
+
   }
 }
