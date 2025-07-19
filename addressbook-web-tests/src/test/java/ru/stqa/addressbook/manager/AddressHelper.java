@@ -170,5 +170,14 @@ public class AddressHelper extends HelperBase {
         By selectLocator = By.name("group");
         select(selectLocator, group);
     }
+    public void removeAddressesFromGroup(List<AddressData> addresses, GroupData group) {
+        openAddressPage();
+        choiceGroupFilter(group.name());
+        for (var address : addresses) {
+            selectCheckbox(address);
+        }
+        buttonClick(By.name("remove"));
+        openAddressPage();
+    }
 
 }

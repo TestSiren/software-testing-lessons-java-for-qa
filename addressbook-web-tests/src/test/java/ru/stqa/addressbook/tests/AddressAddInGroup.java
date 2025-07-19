@@ -75,8 +75,10 @@ public class AddressAddInGroup extends TestBase {
         var oldRelated = hbm.getContactsInGroup(groupA);
         oldRelated.sort(byId);
 
-        // переносим эти контактов в группу B
-        addresses.addressesAddToGroup(oldRelated, groupB, groupA.name());
+        // переносим контакты с удалением из А в группу B
+        addresses.removeAddressesFromGroup(oldRelated, groupA);
+        addresses.addressAddToGroup(contact, groupB, "[none]");
+
 
         // получаем контакты в группе B
         var newRelated = hbm.getContactsInGroup(groupB);
