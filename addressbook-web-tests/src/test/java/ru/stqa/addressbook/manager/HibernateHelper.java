@@ -200,11 +200,4 @@ public class HibernateHelper extends HelperBase {
         });
     }
 
-    public void clearAllAddressInGroupRelations() {
-        sessionFactory.inSession(session -> {
-            session.getTransaction().begin();
-            session.createNativeQuery("DELETE FROM address_in_group").executeUpdate();
-            session.getTransaction().commit();
-        });
-    }
 }

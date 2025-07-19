@@ -31,7 +31,6 @@ public class GroupDeletedTests extends TestBase {
     expectedList.remove(index);
 
     Assertions.assertEquals(newGroups, expectedList);
-    hbm.clearAllAddressInGroupRelations();// чтобы БД не corrupted
   }
 
   @Test
@@ -54,6 +53,5 @@ public class GroupDeletedTests extends TestBase {
     Assertions.assertEquals(newGroups, expectedList);
 
     Assertions.assertEquals(0, hbm.getGroupsCount());
-    hbm.clearAllAddressInGroupRelations();// чтобы БД не corrupted
   }
 }
