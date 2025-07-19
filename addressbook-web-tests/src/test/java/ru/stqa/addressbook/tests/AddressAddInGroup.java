@@ -16,7 +16,7 @@ import static ru.stqa.addressbook.comporators.AddressComparators.byId;
 
 public class AddressAddInGroup extends TestBase {
     @Test
-    public void addressAddToGroup() {
+    public void oneRandomAddressAddToGroup() {
         AddressHelper addresses = app.address();
         GroupHelper groups = app.groups();
         HibernateHelper hbm = app.hbm();
