@@ -39,6 +39,7 @@ public class DeletedAddressBook extends TestBase {
 
     assertFalse(address.acceptAlertIfPresent(), "Allert не показывается, если была хотя бы одна запись");
     Assertions.assertEquals(newAddresses, expectedList);
+    hbm.clearAllAddressInGroupRelations();// чтобы БД не corrupted
   }
 
   @Test
@@ -62,6 +63,7 @@ public class DeletedAddressBook extends TestBase {
     assertTrue(hbm.getContactList().isEmpty(), "Все контакты должны быть удалены");
 
     Assertions.assertEquals(newAddresses, expectedList);
+    hbm.clearAllAddressInGroupRelations();// чтобы БД не corrupted
 
   }
 

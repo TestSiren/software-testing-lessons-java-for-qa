@@ -105,10 +105,10 @@ public class HibernateHelper extends HelperBase {
 
 
     private static ContactRecord convert(AddressData data) {
-    var id = data.id();
-    if ("".equals(id)){
-        id = "0";
-    }
+        var id = data.id();
+        if ("".equals(id)) {
+            id = "0";
+        }
         return new ContactRecord(
                 Integer.parseInt(id),
                 data.firstname(),
@@ -168,6 +168,7 @@ public class HibernateHelper extends HelperBase {
                         .getSingleResult()
         );
     }
+
     public long getCountContactsWithoutGroup() {
         return sessionFactory.fromSession(session ->
                 session.createQuery(
@@ -199,4 +200,11 @@ public class HibernateHelper extends HelperBase {
         });
     }
 
+    public void clearAllAddressInGroupRelations() {
+        sessionFactory.inSession(session -> {
+            session.getTransaction().begin();
+            session.createNativeQuery("DELETE FROM address_in_group").executeUpdate();
+            session.getTransaction().commit();
+        });
+    }
 }
