@@ -197,7 +197,7 @@ public record AddressData(
     @Override
     public int hashCode() {
         return Objects.hash(id, firstname, middlename, lastname, nickname, title, company,
-                address, home, mobile, work, fax, emails, mobile, homepage,
+                address, home, mobile, work, fax, homepage,
                 bday, bmonth, byear, aday, amonth, ayear, group);
     }
 }

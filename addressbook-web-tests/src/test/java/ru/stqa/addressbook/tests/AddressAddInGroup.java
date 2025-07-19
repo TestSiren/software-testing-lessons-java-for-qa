@@ -9,6 +9,7 @@ import ru.stqa.addressbook.manager.HibernateHelper;
 import ru.stqa.addressbook.common.CommonFunctions;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 import static ru.stqa.addressbook.comporators.AddressComparators.byId;
@@ -71,28 +72,39 @@ public class AddressAddInGroup extends TestBase {
         AddressData contact = new AddressData().withFirstname("Test").withLastname("User");
         addresses.createAddress(contact, groupA);
 
-        // получаем контакты в A
-        var oldRelated = hbm.getContactsInGroup(groupA);
-        oldRelated.sort(byId);
+        // получаем контакты в группах до изменений
+        var oldRelatedA = hbm.getContactsInGroup(groupA);
+        var oldRelatedB = hbm.getContactsInGroup(groupB);
+        oldRelatedA.sort(byId);
+        oldRelatedB.sort(byId);
 
-        // переносим контакты с удалением из А в группу B
-        addresses.removeAddressesFromGroup(oldRelated, groupA);
-        addresses.addressAddToGroup(contact, groupB, "[none]");
+        // выбираем контакт для перемещения
+        AddressData toMove = oldRelatedA.get(0);
 
+        // удаляем из группы А
+        addresses.removeAddressesFromGroup(List.of(toMove), groupA);
 
-        // получаем контакты в группе B
-        var newRelated = hbm.getContactsInGroup(groupB);
-        newRelated.sort(byId);
+        // добавляем в группу B
+        addresses.addressAddToGroup(toMove, groupB, "[none]");
 
-        // формируем ожидаемый результат
-        var expectedList = new ArrayList<>(oldRelated);
-        for (int i = 0; i < expectedList.size(); i++) {
-            expectedList.set(i, expectedList.get(i).withGroup(groupB.name()));
-        }
-        expectedList.sort(byId);
+        // получаем актуальные списки
+        var newRelatedA = hbm.getContactsInGroup(groupA);
+        var newRelatedB = hbm.getContactsInGroup(groupB);
+        newRelatedA.sort(byId);
+        newRelatedB.sort(byId);
 
-        Assertions.assertEquals(expectedList, newRelated);
-        System.out.println("expectedList: " + expectedList + "\nnewRelated: " + newRelated);
+        // формируем ожидаемые списки
+        var expectedRelatedA = new ArrayList<>(oldRelatedA);
+        expectedRelatedA.remove(toMove);
+        expectedRelatedA.sort(byId);
+
+        var expectedRelatedB = new ArrayList<>(oldRelatedB);
+        expectedRelatedB.add(toMove.withGroup(groupB.name()));
+        expectedRelatedB.sort(byId);
+
+        // проверки
+        Assertions.assertEquals(expectedRelatedA, newRelatedA, "Group A after removal");
+        Assertions.assertEquals(expectedRelatedB, newRelatedB, "Group B after addition");
     }
 
 }
