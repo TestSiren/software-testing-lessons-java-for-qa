@@ -149,15 +149,23 @@ public class AddressHelper extends HelperBase {
         }
     }
 
-    public void addressesAddToGroup(AddressData addresses, GroupData group)
+    public void addressAddToGroup(AddressData addresses, GroupData group, String filter)
     {
         openAddressPage();
-        choiceGroupFilter("[none]");
+        choiceGroupFilter(filter);
         selectCheckbox(addresses);
         selectGroup(group, By.name("to_group"));
         buttonClick(By.name("add"));
     }
 
+    public void addressesAddToGroup(AddressData addresses, GroupData group)
+    {
+        openAddressPage();
+        choiceGroupFilter("[none]");
+        selectManyCheckboxes();
+        selectGroup(group, By.name("to_group"));
+        buttonClick(By.name("add"));
+    }
     private void choiceGroupFilter(String group) {
         By selectLocator = By.name("group");
         select(selectLocator, group);
