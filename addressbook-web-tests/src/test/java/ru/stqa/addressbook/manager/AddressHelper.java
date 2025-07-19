@@ -67,7 +67,6 @@ public class AddressHelper extends HelperBase {
     }
 
     private void selectCheckbox(AddressData address) {
-        openAddressPage();
         buttonClick(By.cssSelector(String.format("input[value='%s']", address.id())));
     }
 
@@ -82,6 +81,7 @@ public class AddressHelper extends HelperBase {
     }
 
     public void deleteAddress(AddressData address) {
+        openAddressPage();
         selectCheckbox(address);
         buttonClick(By.xpath("//input[@value='Delete']"));
     }
@@ -149,11 +149,11 @@ public class AddressHelper extends HelperBase {
         }
     }
 
-    public void addressesAddToGroup(List<AddressData> addresses, GroupData group)
+    public void addressesAddToGroup(AddressData addresses, GroupData group)
     {
         openAddressPage();
         choiceGroupFilter("[none]");
-        selectManyCheckboxes();
+        selectCheckbox(addresses);
         selectGroup(group, By.name("to_group"));
         buttonClick(By.name("add"));
     }

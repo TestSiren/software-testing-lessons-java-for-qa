@@ -42,7 +42,7 @@ public class AddressAddInGroup extends TestBase {
         var oldRelated = hbm.getContactsInGroup(group);
         oldRelated.sort(byId);
 
-        addresses.addressesAddToGroup(List.of(address), group);
+        addresses.addressesAddToGroup(address, group);
 
         var newRelated = hbm.getContactsInGroup(group);
         newRelated.sort(byId);
