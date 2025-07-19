@@ -6,6 +6,7 @@ import ru.stqa.addressbook.manager.GroupHelper;
 import ru.stqa.addressbook.models.AddressData;
 import ru.stqa.addressbook.models.GroupData;
 import ru.stqa.addressbook.manager.HibernateHelper;
+import ru.stqa.addressbook.common.CommonFunctions;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -65,21 +66,28 @@ public class AddressAddInGroup extends TestBase {
 
         //есть 2 группы?  нет -> создать
         if (hbm.getGroupsCount() <= 1) {
-            hbm.createGroup(new GroupData().withName("some name"));
+            hbm.createGroup(new GroupData().withName(CommonFunctions.randomString(5)));
         }
-        //есть контакты? нет -> создать, да -> Проверить в группе ли они. Если не в группе, то добавить.
+        //получаем список групп
+        var list_groups = hbm.getGroupList();
+        var rnd = new Random();
+        var rndGroup = rnd.nextInt(list_groups.size());
+        var group = list_groups.get(rndGroup);
 
+        //есть контакты? нет -> создать,
+        if (hbm.getContactsCount()==0) {
+            address.createAddress(new AddressData(), group);
+        }
+        else { //да -> Проверить в группе ли они. Если не в группе, то добавить.
+            if (!contains(hbm.getContactsInGroup(group))) {
+
+            }
+        }
 
         //получаем "старый список"
         var oldAddress = hbm.getContactsWithoutGroup();
 
-        //получаем список групп
-        var list_groups = hbm.getGroupList();
-
         //нужно проверить что контакт не в группе А. Если в группе А, взять Б, если в Б, взять А
-        var rnd = new Random();
-        var rndGroup = rnd.nextInt(list_groups.size());
-        var group = list_groups.get(rndGroup);
 
 
         var rndContact = rnd.nextInt(oldAddress.size());
