@@ -59,58 +59,38 @@ public class AddressAddInGroup extends TestBase {
     }
 
     @Test
-    public void addressWithGroupAddToGroupB() {
+    public void addressesWithGroupAddToGroupB() {
         AddressHelper addresses = app.address();
         GroupHelper groups = app.groups();
         HibernateHelper hbm = app.hbm();
 
-        //есть 2 группы?  нет -> создать
-        if (hbm.getGroupsCount() <= 1) {
-            hbm.createGroup(new GroupData().withName(CommonFunctions.randomString(5)));
-        }
-        //получаем список групп
-        var list_groups = hbm.getGroupList();
-        var rnd = new Random();
-        var rndGroup = rnd.nextInt(list_groups.size());
-        var group = list_groups.get(rndGroup);
+        GroupData groupA = groups.getOrCreateGroup("Group A");
+        GroupData groupB = groups.getOrCreateGroup("Group B");
 
-        //есть контакты? нет -> создать,
-        if (hbm.getContactsCount()==0) {
-            address.createAddress(new AddressData(), group);
-        }
-        else { //да -> Проверить в группе ли они. Если не в группе, то добавить.
-            if (!contains(hbm.getContactsInGroup(group))) {
+        // создаём контакт в группе A
+        AddressData contact = new AddressData().withFirstname("Test").withLastname("User");
+        addresses.createAddress(contact, groupA);
 
-            }
-        }
-
-        //получаем "старый список"
-        var oldAddress = hbm.getContactsWithoutGroup();
-
-        //нужно проверить что контакт не в группе А. Если в группе А, взять Б, если в Б, взять А
-
-
-        var rndContact = rnd.nextInt(oldAddress.size());
-        var address = oldAddress.get(rndContact);
-
-        var oldRelated = hbm.getContactsInGroup(group);
+        // получаем контакты в A
+        var oldRelated = hbm.getContactsInGroup(groupA);
         oldRelated.sort(byId);
 
-        // меняем группу контакту
-        var filter = "[none]";
-        addresses.addressAddToGroup(address, group, filter);
+        // переносим эти контактов в группу B
+        addresses.addressesAddToGroup(oldRelated, groupB, groupA.name());
 
-        var newRelated = hbm.getContactsInGroup(group);
+        // получаем контакты в группе B
+        var newRelated = hbm.getContactsInGroup(groupB);
         newRelated.sort(byId);
 
         // формируем ожидаемый результат
         var expectedList = new ArrayList<>(oldRelated);
-        var modifiedContact = address.withGroup(group.name());
-        expectedList.add(modifiedContact);
-
+        for (int i = 0; i < expectedList.size(); i++) {
+            expectedList.set(i, expectedList.get(i).withGroup(groupB.name()));
+        }
         expectedList.sort(byId);
-// постусловие
+
         Assertions.assertEquals(expectedList, newRelated);
         System.out.println("expectedList: " + expectedList + "\nnewRelated: " + newRelated);
     }
+
 }

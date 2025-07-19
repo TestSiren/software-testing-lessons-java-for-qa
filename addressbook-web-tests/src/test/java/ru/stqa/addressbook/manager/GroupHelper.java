@@ -99,5 +99,22 @@ public class GroupHelper extends HelperBase {
         }
         return result;
     }
+    public GroupData getOrCreateGroup(String name) {
+        List<GroupData> allGroups = manager.hbm().getGroupList();
+        for (GroupData group : allGroups) {
+            if (group.name().equals(name)) {
+                return group;
+            }
+        }
+        GroupData newGroup = new GroupData().withName(name);
+        manager.hbm().createGroup(newGroup);
+        allGroups = manager.hbm().getGroupList();
+        for (GroupData group : allGroups) {
+            if (group.name().equals(name)) {
+                return group;
+            }
+        }
+        throw new RuntimeException("Не удалось найти или создать группу: " + name);
+    }
 
 }

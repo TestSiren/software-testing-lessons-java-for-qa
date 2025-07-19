@@ -158,10 +158,10 @@ public class AddressHelper extends HelperBase {
         buttonClick(By.name("add"));
     }
 
-    public void addressesAddToGroup(AddressData addresses, GroupData group)
+    public void addressesAddToGroup(List<AddressData> addresses, GroupData group, String filter)
     {
         openAddressPage();
-        choiceGroupFilter("[none]");
+        choiceGroupFilter(filter);
         selectManyCheckboxes();
         selectGroup(group, By.name("to_group"));
         buttonClick(By.name("add"));
