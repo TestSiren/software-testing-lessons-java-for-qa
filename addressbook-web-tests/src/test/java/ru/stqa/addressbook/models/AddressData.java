@@ -189,7 +189,9 @@ public record AddressData(
                 Objects.equals(bmonth, that.bmonth) &&
                 Objects.equals(byear, that.byear) &&
                 Objects.equals(amonth, that.amonth) &&
-                Objects.equals(ayear, that.ayear);
+                Objects.equals(ayear, that.ayear) &&
+                Objects.equals(group, that.group)
+                ;
     }
 
     @Override

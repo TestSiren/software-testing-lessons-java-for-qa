@@ -22,7 +22,9 @@ public class AddressHelper extends HelperBase {
         buttonClick(By.linkText("add new"));
         fillAddressForm(addressData);
         attach(By.name("photo"), addressData.photo());
-        selectGroup(group, By.name("new_group"));
+        if (group != null) {
+            selectGroup(group, By.name("new_group"));
+        }
         buttonClick(By.name("submit"));
         buttonClick(By.linkText("home page"));
     }

@@ -72,20 +72,20 @@ public class CreateAddressBook extends TestBase {
     Assertions.assertEquals(newAddresses, oldAddress);
   }
 
-@Test
+  @Test
   public void createAddressBookWithGroup() {
-  var address = new AddressData()
-          .withFirstname(CommonFunctions.randomString(5))
-          .withLastname(CommonFunctions.randomString(5))
-          .withEmail(List.of(CommonFunctions.randomString(5) + "@example.com"))
-          .withBday(CommonFunctions.randomDay())
-          .withBmonth(CommonFunctions.randomMonths())
-          .withByear(CommonFunctions.randomYear())
-          .withAday(CommonFunctions.randomDay())
-          .withAmonth(CommonFunctions.randomMonths())
-          .withAyear(CommonFunctions.randomYear())
-          .withMobile("99999999999")
-          .withAddress("Address with Group");
+    var address = new AddressData()
+            .withFirstname(CommonFunctions.randomString(5))
+            .withLastname(CommonFunctions.randomString(5))
+            .withEmail(List.of(CommonFunctions.randomString(5) + "@example.com"))
+            .withBday(CommonFunctions.randomDay())
+            .withBmonth(CommonFunctions.randomMonths())
+            .withByear(CommonFunctions.randomYear())
+            .withAday(CommonFunctions.randomDay())
+            .withAmonth(CommonFunctions.randomMonths())
+            .withAyear(CommonFunctions.randomYear())
+            .withMobile("99999999999")
+            .withAddress("Address with Group");
     var addresses = app.address();
     var hbm = app.hbm();
 
@@ -94,19 +94,19 @@ public class CreateAddressBook extends TestBase {
     }
 
     var group = hbm.getGroupList().get(0);
-   var oldRelated = hbm.getContactsInGroup(group);
+    var oldRelated = hbm.getContactsInGroup(group);
 
     addresses.createAddress(address, group);
 
     var newRelated = hbm.getContactsInGroup(group);
-  //получить id созданного контакта
-  newRelated.sort(byId);
-  var last_contact = newRelated.get(newRelated.size() - 1);
+    //получить id созданного контакта
+    newRelated.sort(byId);
+    var last_contact = newRelated.get(newRelated.size() - 1);
 
- //   Assertions.assertEquals(oldRelated.size()+1, newRelated.size()); // сделать более сложную проверку.
-  Assertions.assertTrue(newRelated.contains(last_contact),
-          "Контакт с id: " +  last_contact.id() + ", не найден в группе: " + group.name());
-  System.out.println("ID: " + last_contact.id() + ", Name: " + group.name());
+    //   Assertions.assertEquals(oldRelated.size()+1, newRelated.size()); // сделать более сложную проверку.
+    Assertions.assertTrue(newRelated.contains(last_contact),
+            "Контакт с id: " +  last_contact.id() + ", не найден в группе: " + group.name());
+    System.out.println("ID: " + last_contact.id() + ", Name: " + group.name());
 
   }
 
