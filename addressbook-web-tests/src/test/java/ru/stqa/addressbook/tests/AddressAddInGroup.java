@@ -8,6 +8,7 @@ import ru.stqa.addressbook.models.GroupData;
 import ru.stqa.addressbook.manager.HibernateHelper;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 import static ru.stqa.addressbook.comporators.AddressComparators.byId;
@@ -35,38 +36,25 @@ public class AddressAddInGroup extends TestBase {
         var rndGroup = rnd.nextInt(list_groups.size());
         var group = list_groups.get(rndGroup);
 
+        var rndContact = rnd.nextInt(oldAddress.size());
+        var address = oldAddress.get(rndContact);
+
         var oldRelated = hbm.getContactsInGroup(group);
         oldRelated.sort(byId);
-        //добавление
-        addresses.addressesAddToGroup(oldAddress, group);
-        System.out.println("group" + group);
+
+        addresses.addressesAddToGroup(List.of(address), group);
+
         var newRelated = hbm.getContactsInGroup(group);
         newRelated.sort(byId);
-        //формируем ожидаемый результат
 
         var expectedList = new ArrayList<>(oldRelated);
-        AddressData contactToAdd = null;
-        for (AddressData contact : oldAddress) {
-            if (!oldRelated.contains(contact)) {
-                contactToAdd = contact;
-                break;
-            }
-        }
-        if (contactToAdd != null) {
-            AddressData modifiedContact = contactToAdd.withGroup(group.name());
-            expectedList.add(modifiedContact);
-        }
+        var modifiedContact = address.withGroup(group.name());
+        expectedList.add(modifiedContact);
 
         expectedList.sort(byId);
 
-
-
-
         Assertions.assertEquals(expectedList, newRelated);
-        System.out.println("expectedList: " + expectedList + "\n newRelated: " + newRelated);
-
-        //постусловие
-
+        System.out.println("expectedList: " + expectedList + "\nnewRelated: " + newRelated);
     }
 /*
     @Test
