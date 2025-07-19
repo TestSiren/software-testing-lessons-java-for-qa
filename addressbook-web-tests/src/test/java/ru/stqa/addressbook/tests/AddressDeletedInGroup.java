@@ -9,6 +9,7 @@ import ru.stqa.addressbook.manager.HibernateHelper;
 import ru.stqa.addressbook.common.CommonFunctions;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 import static ru.stqa.addressbook.comporators.AddressComparators.byId;
@@ -17,39 +18,48 @@ import static ru.stqa.addressbook.comporators.AddressComparators.byId;
 public class AddressDeletedInGroup extends TestBase {
 
     @Test
-    public void addressesWithGroupAddToGroupB() {
+    public void addressesWithGroupDeleted() {
         AddressHelper addresses = app.address();
         GroupHelper groups = app.groups();
         HibernateHelper hbm = app.hbm();
 
-        GroupData groupA = groups.getOrCreateGroup("Group A");
-        GroupData groupB = groups.getOrCreateGroup("Group B");
-
-        // создаём контакт в группе A
-        AddressData contact = new AddressData().withFirstname("Test").withLastname("User");
-        addresses.createAddress(contact, groupA);
-
-        // получаем контакты в A
-        var oldRelated = hbm.getContactsInGroup(groupA);
-        oldRelated.sort(byId);
-
-        // переносим контакты с удалением из А в группу B
-        addresses.removeAddressesFromGroup(oldRelated, groupA);
-        addresses.addressAddToGroup(contact, groupB, "[none]");
-
-
-        // получаем контакты в группе B
-        var newRelated = hbm.getContactsInGroup(groupB);
-        newRelated.sort(byId);
-
-        // формируем ожидаемый результат
-        var expectedList = new ArrayList<>(oldRelated);
-        for (int i = 0; i < expectedList.size(); i++) {
-            expectedList.set(i, expectedList.get(i).withGroup(groupB.name()));
+        // Проверяем есть ли группы, если нет — создаём
+        if (hbm.getGroupsCount() == 0) {
+            GroupData newGroup = new GroupData().withName("Default Group");
+            hbm.createGroup(newGroup);
         }
-        expectedList.sort(byId);
 
-        Assertions.assertEquals(expectedList, newRelated);
-        System.out.println("expectedList: " + expectedList + "\nnewRelated: " + newRelated);
+        // Обновляем список групп
+        var allGroups = hbm.getGroupList();
+
+        GroupData groupWithContacts = null;
+        List<AddressData> contactsInGroup = null;
+
+        // Ищем группу, в которой есть контакты
+        for (GroupData group : allGroups) {
+            contactsInGroup = hbm.getContactsInGroup(group);
+            if (!contactsInGroup.isEmpty()) {
+                groupWithContacts = group;
+                break;
+            }
+        }
+
+        // Если ни в одной группе нет контактов — создаём контакт в первой группе
+        if (groupWithContacts == null) {
+            groupWithContacts = allGroups.get(0);
+            AddressData contact = new AddressData().withFirstname("Test").withLastname("User");
+            addresses.createAddress(contact, groupWithContacts);
+            contactsInGroup = hbm.getContactsInGroup(groupWithContacts);
+        }
+
+        // Теперь удаляем все контакты из найденной группы
+        addresses.removeAddressesFromGroup(contactsInGroup, groupWithContacts);
+
+        // Проверяем, что контактов в группе больше нет
+        var contactsAfterRemoval = hbm.getContactsInGroup(groupWithContacts);
+        Assertions.assertTrue(contactsAfterRemoval.isEmpty(),
+                "Группа должна быть пустой после удаления всех контактов");
+
+        System.out.println("Удалены все контакты из группы: " + groupWithContacts.name());
     }
 }
