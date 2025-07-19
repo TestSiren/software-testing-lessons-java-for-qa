@@ -102,12 +102,14 @@ public class CreateAddressBook extends TestBase {
     //получить id созданного контакта
     newRelated.sort(byId);
     var last_contact = newRelated.get(newRelated.size() - 1);
-
+    var expectedList = new ArrayList<>(oldRelated);
+    expectedList.add(last_contact);
     //   Assertions.assertEquals(oldRelated.size()+1, newRelated.size()); // сделать более сложную проверку.
     Assertions.assertTrue(newRelated.contains(last_contact),
             "Контакт с id: " +  last_contact.id() + ", не найден в группе: " + group.name());
     System.out.println("ID: " + last_contact.id() + ", Name: " + group.name());
 
+    Assertions.assertEquals(expectedList, newRelated);
   }
 
 }
