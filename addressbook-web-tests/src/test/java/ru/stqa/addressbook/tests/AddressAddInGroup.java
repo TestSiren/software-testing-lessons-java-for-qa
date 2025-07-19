@@ -7,6 +7,7 @@ import ru.stqa.addressbook.models.AddressData;
 import ru.stqa.addressbook.models.GroupData;
 import ru.stqa.addressbook.manager.HibernateHelper;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 import static ru.stqa.addressbook.comporators.AddressComparators.byId;
@@ -18,13 +19,17 @@ public class AddressAddInGroup extends TestBase {
         AddressHelper addresses = app.address();
         GroupHelper groups = app.groups();
         HibernateHelper hbm = app.hbm();
+
         //обеспечение предусловий
-        if (hbm.getContactsCount()==0) {
-            addresses.createAddress(new AddressData(), null);
+        if (hbm.getContactsCountWithGroup()==0) {
+            if (hbm.getContactsCount() == 0) {
+                addresses.createAddress(new AddressData(), null);
+            }
+            if (hbm.getGroupsCount() == 0) {
+                hbm.createGroup(new GroupData().withName("some name"));
+            }
         }
-        if (hbm.getGroupsCount() == 0) {
-            hbm.createGroup(new GroupData().withName("some name"));
-        }
+
         var oldAddress = hbm.getContactList();
 
         var list_groups = hbm.getGroupList();
@@ -36,12 +41,33 @@ public class AddressAddInGroup extends TestBase {
         oldRelated.sort(byId);
         //добавление
         addresses.addressesAddToGroup(oldAddress, group);
-
+        System.out.println("group" + group);
         var newRelated = hbm.getContactsInGroup(group);
         newRelated.sort(byId);
+        //формируем ожидаемый результат
+
+        var expectedList = new ArrayList<>(oldRelated);
+        AddressData contactToAdd = null;
+        for (AddressData contact : oldAddress) {
+            if (!oldRelated.contains(contact)) {
+                contactToAdd = contact;
+                break;
+            }
+        }
+        if (contactToAdd != null) {
+            AddressData modifiedContact = contactToAdd.withGroup(group.name());
+            expectedList.add(modifiedContact);
+        }
+
+        expectedList.sort(byId);
+
+
+
+
         Assertions.assertEquals(newRelated, oldRelated);
         System.out.println("oldRelated: " + oldRelated + "\n newRelated: " + newRelated);
 
         //постусловие
+
     }
 }

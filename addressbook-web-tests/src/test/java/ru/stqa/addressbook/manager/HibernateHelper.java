@@ -161,4 +161,21 @@ public class HibernateHelper extends HelperBase {
         });
     }
 
+    public long getContactsCountWithGroup() {
+        return sessionFactory.fromSession(session ->
+                session.createQuery(
+                                "select count(distinct c) from ContactRecord c join c.groups g", Long.class)
+                        .getSingleResult()
+        );
+    }
+
+    public long getContactsCountInGroup(GroupData group) {
+        return sessionFactory.fromSession(session ->
+                session.createQuery(
+                                "select count(c) from ContactRecord c join c.groups g where g.id = :groupId", Long.class)
+                        .setParameter("groupId", Integer.parseInt(group.id()))
+                        .getSingleResult()
+        );
+    }
+
 }
