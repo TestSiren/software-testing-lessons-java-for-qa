@@ -6,10 +6,8 @@ import ru.stqa.addressbook.manager.GroupHelper;
 import ru.stqa.addressbook.models.AddressData;
 import ru.stqa.addressbook.models.GroupData;
 import ru.stqa.addressbook.manager.HibernateHelper;
-import ru.stqa.addressbook.common.CommonFunctions;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Random;
 
 import static ru.stqa.addressbook.comporators.AddressComparators.byId;
 
@@ -28,7 +26,12 @@ public class AddressAddInGroup extends TestBase {
             hbm.createGroup(new GroupData().withName("some name"));
         }
         var oldAddress = hbm.getContactList();
-        var group = hbm.getGroupList().get(0);
+
+        var list_groups = hbm.getGroupList();
+        var rnd = new Random();
+        var rndGroup = rnd.nextInt(list_groups.size());
+        var group = list_groups.get(rndGroup);
+
         var oldRelated = hbm.getContactsInGroup(group);
         oldRelated.sort(byId);
         //добавление
@@ -37,6 +40,8 @@ public class AddressAddInGroup extends TestBase {
         var newRelated = hbm.getContactsInGroup(group);
         newRelated.sort(byId);
         Assertions.assertEquals(newRelated, oldRelated);
-                //постусловие
+        System.out.println("oldRelated: " + oldRelated + "\n newRelated: " + newRelated);
+
+        //постусловие
     }
 }

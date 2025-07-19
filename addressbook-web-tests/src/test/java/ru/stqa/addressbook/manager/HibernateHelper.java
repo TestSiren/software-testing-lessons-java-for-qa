@@ -134,7 +134,7 @@ public class HibernateHelper extends HelperBase {
 
     public List<AddressData> getContactList() {
         return convertContactList(sessionFactory.fromSession(session ->
-                session.createQuery("from ContactRecord", ContactRecord.class).list()
+                session.createQuery("select distinct c from ContactRecord c left join fetch c.groups", ContactRecord.class).list()
         ));
     }
 
