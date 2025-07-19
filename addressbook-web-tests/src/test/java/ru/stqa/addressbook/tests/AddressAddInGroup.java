@@ -8,7 +8,6 @@ import ru.stqa.addressbook.models.GroupData;
 import ru.stqa.addressbook.manager.HibernateHelper;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 
 import static ru.stqa.addressbook.comporators.AddressComparators.byId;
