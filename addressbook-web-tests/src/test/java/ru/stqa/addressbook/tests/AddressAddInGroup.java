@@ -20,19 +20,17 @@ public class AddressAddInGroup extends TestBase {
         GroupHelper groups = app.groups();
         HibernateHelper hbm = app.hbm();
 
-        //обеспечение предусловий
-        if (hbm.getContactsCountWithGroup()==0) {
-            if (hbm.getContactsCount() == 0) {
-                addresses.createAddress(new AddressData(), null);
-            }
-            if (hbm.getGroupsCount() == 0) {
-                hbm.createGroup(new GroupData().withName("some name"));
-            }
+        if (hbm.getGroupsCount() == 0) {
+            hbm.createGroup(new GroupData().withName("some name"));
+        }
+        if (hbm.getCountContactsWithoutGroup()==0){
+            addresses.createAddress(new AddressData(), null);
         }
 
-        var oldAddress = hbm.getContactList();
+        var oldAddress = hbm.getContactsWithoutGroup();
 
         var list_groups = hbm.getGroupList();
+
         var rnd = new Random();
         var rndGroup = rnd.nextInt(list_groups.size());
         var group = list_groups.get(rndGroup);
@@ -64,10 +62,69 @@ public class AddressAddInGroup extends TestBase {
 
 
 
+        Assertions.assertEquals(expectedList, newRelated);
+        System.out.println("expectedList: " + expectedList + "\n newRelated: " + newRelated);
+
+        //постусловие
+
+    }
+/*
+    @Test
+    public void addressNoneGroupAddToGroup() {
+        AddressHelper addresses = app.address();
+        GroupHelper groups = app.groups();
+        HibernateHelper hbm = app.hbm();
+
+        //обеспечение предусловий
+        if (hbm.getContactsCountWithGroup()==0) {
+            if (hbm.getContactsCount() == 0) {
+                addresses.createAddress(new AddressData(), null);
+            }
+            if (hbm.getGroupsCount() == 0) {
+                hbm.createGroup(new GroupData().withName("some name"));
+            }
+        }
+
+        var oldAddress = hbm.getContactList();
+
+        var list_groups = hbm.getGroupList();
+        var rnd = new Random();
+        var rndGroup = rnd.nextInt(list_groups.size());
+        var group = list_groups.get(rndGroup);
+
+        var oldRelated = hbm.getContactsInGroup(group);
+        oldRelated.sort(byId);
+        //добавление
+        addresses.addressesAddToGroup(oldAddress, "none");
+
+        var newRelated = hbm.getContactsInGroup(group);
+        newRelated.sort(byId);
+        //формируем ожидаемый результат
+
+        var expectedList = new ArrayList<>(oldRelated);
+        AddressData contactToAdd = null;
+        for (AddressData contact : oldAddress) {
+            if (!oldRelated.contains(contact)) {
+                contactToAdd = contact;
+                break;
+            }
+        }
+        if (contactToAdd != null) {
+            AddressData modifiedContact = contactToAdd.withGroup(group.name());
+            expectedList.add(modifiedContact);
+        }
+
+        expectedList.sort(byId);
+
+
+
+
         Assertions.assertEquals(newRelated, oldRelated);
         System.out.println("oldRelated: " + oldRelated + "\n newRelated: " + newRelated);
 
         //постусловие
 
     }
+
+ */
 }

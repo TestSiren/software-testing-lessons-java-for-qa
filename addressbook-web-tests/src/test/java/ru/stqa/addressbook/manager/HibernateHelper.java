@@ -168,14 +168,35 @@ public class HibernateHelper extends HelperBase {
                         .getSingleResult()
         );
     }
-
-    public long getContactsCountInGroup(GroupData group) {
+    public long getCountContactsWithoutGroup() {
         return sessionFactory.fromSession(session ->
                 session.createQuery(
-                                "select count(c) from ContactRecord c join c.groups g where g.id = :groupId", Long.class)
-                        .setParameter("groupId", Integer.parseInt(group.id()))
-                        .getSingleResult()
+                        "select count(c) from ContactRecord c where c.groups is empty",
+                        Long.class
+                ).getSingleResult()
         );
+    }
+
+    public List<AddressData> getContactsWithoutGroup() {
+        return sessionFactory.fromSession(session ->
+                convertContactList(
+                        session.createQuery(
+                                "select c from ContactRecord c where c.groups is empty",
+                                ContactRecord.class
+                        ).list()
+                )
+        );
+    }
+
+    public long getContactsCountInGroup(GroupData group) {
+        return sessionFactory.fromSession(session -> {
+            return session.createQuery(
+                            "select count(*) from ContactRecord c join c.groups g where g.id = :groupId",
+                            Long.class
+                    )
+                    .setParameter("groupId", Integer.parseInt(group.id()))
+                    .getSingleResult();
+        });
     }
 
 }
