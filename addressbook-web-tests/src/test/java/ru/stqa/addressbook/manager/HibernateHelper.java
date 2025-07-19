@@ -75,6 +75,11 @@ public class HibernateHelper extends HelperBase {
     }
 
     private static AddressData convert(ContactRecord record) {
+        String groupName = "[none]";
+        if (record.groups != null && !record.groups.isEmpty()) {
+            groupName = record.groups.get(0).name;
+        }
+
         return new AddressData()
                 .withId(String.valueOf(record.id))
                 .withFirstname(record.firstname)
@@ -94,7 +99,8 @@ public class HibernateHelper extends HelperBase {
                 .withByear(record.byear)
                 .withAday(record.aday)
                 .withAmonth(record.amonth)
-                .withAyear(record.ayear);
+                .withAyear(record.ayear)
+                .withGroup(groupName);
     }
 
 

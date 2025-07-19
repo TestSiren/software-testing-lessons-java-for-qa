@@ -110,6 +110,7 @@ public class CreateAddressBook extends TestBase {
     System.out.println("ID: " + last_contact.id() + ", Name: " + group.name());
 
     Assertions.assertEquals(expectedList, newRelated);
+    System.out.println("expectedList: " + expectedList + "\n newRelated: " + newRelated);
   }
 
 }
