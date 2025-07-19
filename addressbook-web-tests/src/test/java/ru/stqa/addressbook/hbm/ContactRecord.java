@@ -1,11 +1,9 @@
 package ru.stqa.addressbook.hbm;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "addressbook")
@@ -131,6 +129,12 @@ public class ContactRecord {
 
     @Column(name = "role")
     public String role;
+
+    @ManyToMany
+    @JoinTable(name = "address_in_groups",
+            inverseJoinColumns  = @JoinColumn(name = "group_id"),
+            joinColumns = @JoinColumn(name = "id"))
+    public List<GroupRecord> groups;
 
     public ContactRecord() {}
 

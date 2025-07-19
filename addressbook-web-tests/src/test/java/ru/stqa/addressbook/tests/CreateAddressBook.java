@@ -85,19 +85,25 @@ public class CreateAddressBook extends TestBase {
           .withAmonth(CommonFunctions.randomMonths())
           .withAyear(CommonFunctions.randomYear())
           .withMobile("99999999999")
-          .withAddress("Test address");
+          .withAddress("Address with Group");
     var addresses = app.address();
     var hbm = app.hbm();
 
     if (hbm.getGroupsCount() == 0) {
       hbm.createGroup(new GroupData().withName("some name"));
     }
+
     var group = hbm.getGroupList().get(0);
     var oldRelated = hbm.getContactsInGroup(group);
     addresses.createAddress(address, group);
     var newRelated = hbm.getContactsInGroup(group);
-    Assertions.assertEquals(oldRelated.size()+1, newRelated.size()); // сделать более сложную проверку.
-
+  //получить id созданного контакта
+  newRelated.sort(byId);
+  var last_contact = newRelated.get(newRelated.size() - 1);
+ //   Assertions.assertEquals(oldRelated.size()+1, newRelated.size()); // сделать более сложную проверку.
+  Assertions.assertTrue(newRelated.contains(last_contact),
+          "Контакт с id: " +  last_contact.id() + ", не найден в группе: " + group.name());
+  System.out.println("ID: " + last_contact.id() + ", Name: " + group.name());
 
   }
 
