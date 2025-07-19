@@ -94,12 +94,15 @@ public class CreateAddressBook extends TestBase {
     }
 
     var group = hbm.getGroupList().get(0);
-    var oldRelated = hbm.getContactsInGroup(group);
+   var oldRelated = hbm.getContactsInGroup(group);
+
     addresses.createAddress(address, group);
+
     var newRelated = hbm.getContactsInGroup(group);
   //получить id созданного контакта
   newRelated.sort(byId);
   var last_contact = newRelated.get(newRelated.size() - 1);
+
  //   Assertions.assertEquals(oldRelated.size()+1, newRelated.size()); // сделать более сложную проверку.
   Assertions.assertTrue(newRelated.contains(last_contact),
           "Контакт с id: " +  last_contact.id() + ", не найден в группе: " + group.name());
